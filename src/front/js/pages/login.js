@@ -21,7 +21,12 @@ export const Login = () => {
     const password = data.get("password");
     const { login } = actions;
     let resp = await login(email, password);
-    console.log(resp);
+    if (resp === true) {
+      navigate("/home")
+    } else {
+      navigate("/signup")
+    }
+    
   }
   return (
     <div id="login-page" className="text-center">

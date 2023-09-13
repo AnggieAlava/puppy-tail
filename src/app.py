@@ -23,7 +23,7 @@ app.url_map.strict_slashes = False
 #JWT
 jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] = os.getenv("FLASK_APP_KEY")
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 5
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 5000
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

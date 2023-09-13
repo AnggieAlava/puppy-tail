@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt
 from flask_bcrypt import Bcrypt 
 from flask import Flask
 from flask_cors import CORS
@@ -63,6 +63,30 @@ def create_keeper():
     db.session.commit()
     return jsonify({"msg": "Keeper created successfully"}), 201
 
+@api.route('/login', methods=['POST'])
+def login_user():
+    email= request.json.get("email")
+    password= request.json.get("password")
+    user=User.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"message": "Usern not found"}), 401
+    if not bcrypt.check_password_hash(user.password, password):
+        return jsonify({"message":"Wrong password"}), 400
+    token = create_access_token(identity = user.id, additional_claims={"role": user.user_type})
+    return jsonify({"message": "Login successful", "token":token}), 201
+
+@api.route('/helloprotected')
+@jwt_required
+def hello_protected():
+    user_id=get_jwt_identity()
+    claims= get_jwt()
+    user=User.query.get(user_id)
+    response={
+        "userId":user_id,
+        "claims":claims,
+        "isActive":user.is_active
+    }
+    return jsonify(response)
 
 @api.route('/owner', methods=["GET"])
 def owners_list():

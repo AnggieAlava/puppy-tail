@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../../styles/login.css";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const params = useParams();
 
   useEffect(() => {
     //Si hay una sesion iniciada andate a la pagina demo
@@ -21,11 +22,17 @@ export const Login = () => {
     const password = data.get("password");
     const { login } = actions;
     let resp = await login(email, password);
-    if (resp === true) {
-      navigate("/home")
-    } else {
-      navigate("/signup")
+    console.log(resp)
+    navigate("/login");
+    if(resp==201){navigate("/home");}
+    else if(resp==401){
+      navigate("/login")
+      alert("Usuario inexistente")
     }
+    else if(resp==400){
+      navigate("/login")
+      alert("Contraseña incorrecta")
+    ;}
     
   }
   return (

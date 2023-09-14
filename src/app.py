@@ -13,6 +13,8 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 
+from api.models import *
+
 #from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -22,9 +24,13 @@ app.url_map.strict_slashes = False
 
 #JWT
 jwt = JWTManager(app)
-app.config["JWT_SECRET_KEY"] = os.getenv("FLASK_APP_KEY")
+app.config["JWT_SECRET_KEY"] =  'your-secret-key'
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 5000
-
+def check_token_blocklist(jwt_header, jwt_payload) -> bool:
+    jti = jwt_payload["jti"]
+    tokenBlocked = TokenBlockedList.query.filter_by(jti=jti).first()
+    return tokenBlocked is not None
+    
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -35,6 +41,7 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
+
 
 # Allow CORS requests to this API
 CORS(app)

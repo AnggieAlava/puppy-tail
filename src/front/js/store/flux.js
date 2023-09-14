@@ -1,4 +1,4 @@
-
+import { useNavigate } from "react-router-dom";
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 	  store: {
@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		signup: [],
 		signupKeeper: [],
 	    login: [], 
+		logout:[]
 	  },
 	  actions: {
 		//Get all pets from the database, including the owners inside the pet object.
@@ -223,30 +224,66 @@ const getState = ({ getStore, getActions, setStore }) => {
 			email,
 			password
 			
+			
 		  ) => {
 			const { apiFetch } = getActions();
 			const resp = await apiFetch("/login", "POST", {
 			 
 			  email,
-			  password
+			  password,
+			  
 			  
 			});
 			if (resp.code == 201) {
 			  console.error("Ingreso correcto");
-			  console.log(resp.code)
+			  localStorage.setItem("accessToken", resp.data.token);
+             localStorage.setItem("refreshToken", resp.data.refreshToken);
+			 
 			  return resp.code;
 			}
 			else if(resp.code==401)
 			{
 				console.error("Usuario inexistente");
-				
+				console.log(resp)
 				return resp.code;
 			}
 			else if(resp.code==400)
 			{
 				console.error("Contraseña incorrecta");
-				
+				console.log(resp)
 				return resp.code;
+			}
+		  },
+		  logout: async () => {
+			const { apiFetch } = getActions();
+			const navigate = useNavigate(); // Obtén la función de navegación
+		  
+			try {
+			  // Realiza una solicitud para cerrar la sesión en el servidor
+			  const resp = await apiFetch("/logout", "POST");
+		  
+			  if (resp.code === 401) {
+				console.error("Sesión cerrada");
+		  
+				// Elimina los tokens del localStorage
+				localStorage.removeItem("accessToken");
+				localStorage.removeItem("refreshToken");
+		 
+				navigate("/signup");
+		  
+			
+				return resp;
+			  } else {
+			
+				console.error("Error al cerrar sesión:", resp);
+		  
+				return resp;
+			  }
+			} catch (error) {
+			  console.error("Error al cerrar sesión:", error);
+		  
+			
+			  return { error: "Error al cerrar sesión" };
 			}
 		  },
 		

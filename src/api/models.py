@@ -96,5 +96,14 @@ class BookingPet (db.Model):
     __tablename__ = 'booking_pet'
     booking_id = db.Column(db.Integer, db.ForeignKey(
         'booking.id'), primary_key=True)
-    pet_id = db.Column(db.Integer, db.ForeignKey(
-        'pet.id'), primary_key=True) #HACER PET DUMMY PARA PTO
+    pet_id = db.Column(db.Integer, db.ForeignKey('pet.id'), primary_key=True) #HACER PET DUMMY PARA PTO
+
+class TokenBlockedList(db.Model, SerializerMixin):
+    __tablename__ = 'token_blocked_list'
+    id = db.Column(db.Integer, primary_key=True)
+    token = db.Column(db.String(1000), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    # __mapper_args__ = {
+       
+    #     "polymorphic_identity": "token_blocked_list",
+    # }

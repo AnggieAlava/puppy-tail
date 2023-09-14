@@ -33,6 +33,8 @@ export const Login = () => {
       navigate("/login")
       alert("Contraseña incorrecta")
     ;}
+   
+
     
   }
   return (
@@ -68,6 +70,7 @@ export const Login = () => {
           <button id="btn-login" type="submit" className="btn">
             Iniciar sesion
           </button>
+          
         </form>
       </div>
     </div>

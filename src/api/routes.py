@@ -2,14 +2,15 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
- 
+
 from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti
 from flask_bcrypt import Bcrypt 
 from flask import Flask
 from flask_cors import CORS
+from datetime import datetime, timezone
 
 api = Blueprint('api', __name__)
 #Agregado al boilerplate
@@ -66,14 +67,54 @@ def create_keeper():
 @api.route('/login', methods=['POST'])
 def login_user():
     email= request.json.get("email")
+    
     password= request.json.get("password")
     user=User.query.filter_by(email=email).first()
     if user is None:
         return jsonify({"message": "Usern not found"}), 401
     if not bcrypt.check_password_hash(user.password, password):
         return jsonify({"message":"Wrong password"}), 400
-    token = create_access_token(identity = user.id, additional_claims={"role": user.user_type})
-    return jsonify({"message": "Login successful", "token":token}), 201
+    acces_token = create_access_token(identity = user.id)
+    acces_jti=get_jti(acces_token)
+    
+    
+    refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
+   
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+
+
+@api.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def user_refresh():
+    #Identificadores de token viejos
+    jti_refresh=get_jwt()["jti"]
+    jti_access=get_jwt()["accesToken"]
+    #Bloquear los tokens viejos
+    accesRevoked=TokenBlockedList(jti=jti_access)
+    refreshRevoked=TokenBlockedList(jti=jti_refresh)
+    db.session.add(accesRevoked)
+    db.session.add(refreshRevoked) 
+    db.session.commit()
+    
+    #Generar nuevos tokens
+    user_id=get_jwt_identity()
+    acces_token = create_access_token(identity = user_id)
+    acces_jti=get_jti(acces_token)
+    refresh_token=create_refresh_token(identity=user_id, additional_claims={"accesToken": acces_jti})
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+
+
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def user_logout():
+   
+    jwt=get_jwt()["jti"]
+    
+    tokenBlocked= TokenBlockedList(jti=jwt)
+    db.session.add(tokenBlocked)
+    db.session.commit()
+    return jsonify({"message": "User logged out"}),401
 
 @api.route('/helloprotected')
 @jwt_required
@@ -209,3 +250,4 @@ def getPetsByOwner(owner_id):
     pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings }
                    for pet in pets]
     return jsonify(pets), 200
+

@@ -13,6 +13,13 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 
+#Firebase for storing pictures
+import firebase_admin
+from firebase_admin import credentials
+
+cred = credentials.Certificate("fb-key.json")
+firebase_admin.initialize_app(cred)
+
 #from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"

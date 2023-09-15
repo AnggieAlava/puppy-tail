@@ -6,7 +6,6 @@ import "../../styles/login.css";
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
-  const params = useParams();
 
   useEffect(() => {
     //Si hay una sesion iniciada andate a la pagina demo
@@ -22,20 +21,7 @@ export const Login = () => {
     const password = data.get("password");
     const { login } = actions;
     let resp = await login(email, password);
-    console.log(resp)
-    navigate("/login");
-    if(resp==201){navigate("/home");}
-    else if(resp==401){
-      navigate("/login")
-      alert("Usuario inexistente")
-    }
-    else if(resp==400){
-      navigate("/login")
-      alert("Contraseña incorrecta")
-    ;}
-   
-
-    
+    console.log(resp);
   }
   return (
     <div id="login-page" className="text-center">
@@ -70,7 +56,6 @@ export const Login = () => {
           <button id="btn-login" type="submit" className="btn">
             Iniciar sesion
           </button>
-          
         </form>
       </div>
     </div>

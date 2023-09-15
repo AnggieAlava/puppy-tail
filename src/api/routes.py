@@ -18,7 +18,6 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 
-
 def signup_by_type(new_user, data):
     new_user.first_name = data["first_name"]
     new_user.last_name =  data["last_name"]
@@ -26,7 +25,6 @@ def signup_by_type(new_user, data):
     new_user.password  = bcrypt.generate_password_hash(str(data["password"])).decode("utf-8")
     new_user.is_active = True
   
-
 @api.route('/signup', methods=['POST'])
 def create_owner():
     data = request.get_json(force=True)
@@ -70,7 +68,6 @@ def login_user():
    
     return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
 
-
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def user_refresh():
@@ -91,7 +88,14 @@ def user_refresh():
     refresh_token=create_refresh_token(identity=user_id, additional_claims={"accesToken": acces_jti})
     return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
 
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
 
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+
+    return jsonify(response_body), 200
 
 @api.route('/logout', methods=['POST'])
 @jwt_required()
@@ -125,7 +129,6 @@ def owners_list():
                    for owner in owners]
     return jsonify(owners_data), 200
 
-
 @api.route('/owner/<int:owner_id>', methods=['GET'])
 def get_owner(owner_id):
     owner = Owner.query.get(owner_id)
@@ -138,14 +141,12 @@ def get_owner(owner_id):
     }
     return jsonify(owner_data), 200
 
-
 @api.route('/owner/<int:owner_id>', methods=['DELETE'])
 def delete_owner(owner_id):
     owner = Owner.query.get(owner_id)
     db.session.delete(owner)
     db.session.commit()
     return jsonify({"msg": "Owner deleted successfully"}), 200
-
 
 
 @api.route('/keeper', methods=["GET"])
@@ -175,7 +176,6 @@ def delete_keeper(keeper_id):
     db.session.delete(keeper)
     db.session.commit()
     return jsonify({"msg": "keeper deleted successfully"}), 200
-
 
 #ENDPOINTS DE PETS
 @api.route('/pets', methods=['POST'])

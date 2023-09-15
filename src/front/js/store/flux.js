@@ -2,6 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       accessToken: null,
+      userInfo: null,
+      message: null,
       pets: [],
       singlePet: [],
       signup: [],
@@ -171,56 +173,74 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
+      apiFetchProtected: async (endpoint, method = "GET", body = null) => {
+        const { accessToken } = getStore();
+        if (!accessToken) {
+          return "No token";
+        }
+        const params = {
+          method,
+          headers: {
+            Authorization: "Bearer " + accessToken,
+          },
+        };
+        if (body) {
+          params.headers["Content-Type"] = "application/json";
+          params.body = JSON.stringify(body);
+        }
+        const resp = await fetch(
+          process.env.BACKEND_URL + "/api" + endpoint,
+          params
+        );
+        const data = await resp.json();
+        return { code: resp.status, data };
+      },
+
+      loadTokens: () => {
+        let token = localStorage.getItem("accessToken");
+        if (token) {
+          setStore({ accessToken: token });
+        }
+      },
+
       login: async (email, password) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/login", "POST", {
           email,
           password,
         });
-        if (resp.code == 201) {
-          //   setStore()//
-          console.error("Ingreso correcto");
-          localStorage.setItem("accessToken", resp.data.token);
-          localStorage.setItem("refreshToken", resp.data.refreshToken);
-          setStore({ accessToken: resp.data.token });
-
-          return resp.code;
-        } else if (resp.code == 401) {
-          console.error("Usuario inexistente");
-          console.log(resp);
-          return resp.code;
-        } else if (resp.code == 400) {
-          console.error("Contraseña incorrecta");
-          console.log(resp);
-          return resp.code;
+        if (resp.code !== 201) {
+          console.error("Login error");
+          return null;
         }
+        console.log({ resp });
+        const { message, token } = resp.data;
+        localStorage.setItem("accessToken", token);
+        setStore({ accessToken: token });
+        return "Login Successful";
       },
-      logout: async () => {
-        const { apiFetch } = getActions();
 
+      logout: () => {
+        setStore({ accessToken: null });
+        localStorage.setItem("accessToken", null);
+      },
+
+      getUserInfo: async () => {
+        const { apiFetchProtected } = getActions();
+        const resp = await apiFetchProtected("/helloprotected");
+        setStore({ userInfo: resp.data });
+        return "Ok";
+      },
+
+      getMessage: async () => {
         try {
-          // Realiza una solicitud para cerrar la sesión en el servidor
-          const resp = await apiFetch("/logout", "POST");
+          const { apiFetch } = getActions();
+          const data = await apiFetch("/hello");
+          setStore({ message: data.data.message });
 
-          if (resp.code === 401) {
-            console.error("Sesión cerrada");
-
-            // Elimina los tokens del localStorage
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            setStore({ accessToken: null });
-
-            navigate("/landing");
-
-            return resp;
-          } else {
-            console.error("Error al cerrar sesión:", resp);
-            return resp;
-          }
+          return data;
         } catch (error) {
-          console.error("Error al cerrar sesión:", error);
-
-          return { error: "Error al cerrar sesión" };
+          console.log("Error loading message from backend", error);
         }
       },
 

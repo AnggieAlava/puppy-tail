@@ -7,17 +7,12 @@ from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti
-from flask_bcrypt import Bcrypt 
 from flask import Flask
 from flask_cors import CORS
-<<<<<<< HEAD
-from datetime import datetime, timezone
-=======
-#Firebase
+from datetime import timezone
 from firebase_admin import storage
 import tempfile
 import datetime
->>>>>>> c793093afec4f41a6a73af50d1c173c27cce66ec
 
 api = Blueprint('api', __name__)
 #Agregado al boilerplate
@@ -256,8 +251,6 @@ def getPetsByOwner(owner_id):
                    for pet in pets]
     return jsonify(pets), 200
 
-<<<<<<< HEAD
-=======
 
 #Endpoint para subir imagenes con firebase
 @api.route('/avatar/<int:user_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL USUARIO CON JWT
@@ -283,4 +276,3 @@ def profilePicture(user_id):
     db.session.add(user)
     db.session.commit()
     return jsonify({"msg":"Profile picture uploaded successfully"}), 201
->>>>>>> c793093afec4f41a6a73af50d1c173c27cce66ec

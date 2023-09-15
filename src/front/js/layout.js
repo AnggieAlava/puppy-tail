@@ -38,8 +38,5 @@ const Layout = () => {
     </div>
   );
 };
-<<<<<<< HEAD
+
 export default injectContext(Layout);
-=======
-export default injectContext(Layout);
->>>>>>> c793093afec4f41a6a73af50d1c173c27cce66ec

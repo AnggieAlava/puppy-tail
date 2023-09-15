@@ -117,7 +117,7 @@ def user_logout():
     return jsonify({"message": "User logged out"}),401
 
 @api.route('/helloprotected')
-@jwt_required
+@jwt_required() #aqui habia solo error de sintaxis, faltaban los parentesis
 def hello_protected():
     user_id=get_jwt_identity()
     claims= get_jwt()

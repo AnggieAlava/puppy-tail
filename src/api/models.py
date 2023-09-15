@@ -41,6 +41,9 @@ class User(db.Model, SerializerMixin):
     last_name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
+    description = db.Column(db.String(1000), unique=False, nullable=True)
+    location = db.Column(db.String(255), unique=False, nullable=False)
+    profile_pic = db.Column(db.String(150), unique=False, nullable=True)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     user_type = db.Column(db.String(50))
 
@@ -59,7 +62,7 @@ class Owner (User, SerializerMixin):
     id = db.mapped_column(db.ForeignKey("user.id"), primary_key=True)
     # Relación one-to-many: Un propietario puede tener varias mascotas
     pets = relationship("Pet", back_populates="owner")
-
+    
     # configuracion del polimorfismo(sus propiedades se heredan de su entidad base USER)
     __mapper_args__ = {
         # y se establece su identidad como subentidad de User, tipo => owner
@@ -70,6 +73,8 @@ class Keeper(User, SerializerMixin):
     __tablename__ = 'keeper'
     id = db.mapped_column(db.ForeignKey("user.id"), primary_key=True)
     hourly_pay = db.Column(db.Float, nullable=False)
+    experience = db.Column(db.Date, nullable=True)
+    services = db.Column(db.ARRAY(db.String(50)), nullable=True)
     #One keeper to many bookings
     booking = relationship("Booking", back_populates='keeper')
 
@@ -84,6 +89,8 @@ class Pet (db.Model, SerializerMixin):
     name = db.Column(db.String(100), nullable=False)
     size = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(500), nullable=True)
+    profile_pic = db.Column(db.String(150), unique=False, nullable=True)
     # Relación many-to-one multiple pets/one owner
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'))
     owner = relationship("Owner", back_populates="pets")

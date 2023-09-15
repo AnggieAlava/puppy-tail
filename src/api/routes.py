@@ -10,7 +10,14 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from flask_bcrypt import Bcrypt 
 from flask import Flask
 from flask_cors import CORS
+<<<<<<< HEAD
 from datetime import datetime, timezone
+=======
+#Firebase
+from firebase_admin import storage
+import tempfile
+import datetime
+>>>>>>> c793093afec4f41a6a73af50d1c173c27cce66ec
 
 api = Blueprint('api', __name__)
 #Agregado al boilerplate
@@ -124,7 +131,7 @@ def hello_protected():
 @api.route('/owner', methods=["GET"])
 def owners_list():
     owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
                    for pet in Pet.query.filter_by(owner_id=owner.id)]}
                    for owner in owners]
     return jsonify(owners_data), 200
@@ -132,11 +139,16 @@ def owners_list():
 @api.route('/owner/<int:owner_id>', methods=['GET'])
 def get_owner(owner_id):
     owner = Owner.query.get(owner_id)
+    #Firebase image url generator
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(owner.profile_pic)
+    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
     owner_data = {
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
         "email": owner.email,
+        "profile_pic": imgUrl,
         "pets": owner.pets
     }
     return jsonify(owner_data), 200
@@ -152,7 +164,7 @@ def delete_owner(owner_id):
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
     keepers = Keeper.query.all()
-    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "hourly_pay": keeper.hourly_pay}
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay}
                    for keeper in keepers]
 
     return jsonify(keepers_data), 200
@@ -161,11 +173,16 @@ def keepers_list():
 @api.route('/keeper/<int:keeper_id>', methods=['GET'])
 def get_keeper(keeper_id):
     keeper = Keeper.query.get(keeper_id)
+    #Firebase img url generator
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(keeper.profile_pic)
+    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
     keeper_data = {
         "id": keeper.id,
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,
         "email": keeper.email,
+        "profile_pic": imgUrl
     }
     return jsonify(keeper_data), 200
 
@@ -239,3 +256,31 @@ def getPetsByOwner(owner_id):
                    for pet in pets]
     return jsonify(pets), 200
 
+<<<<<<< HEAD
+=======
+
+#Endpoint para subir imagenes con firebase
+@api.route('/avatar/<int:user_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL USUARIO CON JWT
+#@jwt_required()
+def profilePicture(user_id):
+    #user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    #Recibir archivo
+    file = request.files["avatar"]
+    #Extraer la extension del archivo
+    extension = file.filename.split(".")[1]
+    #Guardar archivo temporal
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    #Cargar archivo a firebase
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    filename = "avatar/"+str(user_id)+"."+extension
+    #Guardar en firebase
+    resource = bucket.blob(filename)
+    resource.upload_from_filename(temp.name, content_type="image/"+extension)
+    #Agregar la imagen a nuestra base de datos
+    user.profile_pic = filename
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({"msg":"Profile picture uploaded successfully"}), 201
+>>>>>>> c793093afec4f41a6a73af50d1c173c27cce66ec

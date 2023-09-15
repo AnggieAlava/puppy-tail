@@ -1,11 +1,22 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate } from "react-router-dom";
-
+import Card from "../component/card";
+import BarSearch from "../component/barSearch";
 export const Home = () => {
+  const { store, actions } = useContext(Context);
   return (
-    <div>
-      <h1>este es el homepage</h1>
-    </div>
+    <>
+      <BarSearch />
+      <div className="container">
+        <div className="row row-cols-1 row-cols-md-3 g-4">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </div>
+    </>
   );
 };

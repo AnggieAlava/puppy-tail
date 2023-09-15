@@ -17,18 +17,6 @@ api = Blueprint('api', __name__)
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-# @api.route('/login', methods=["POST"])
-# def login_user():
-#     data = request.get_json(force=True)
-#     user = User.query.filter_by(email=data["email"]).first()
-#     if user is None:
-#         return jsonify({"msg": "Incorrect user or password"}), 401
-#     passwordCheck = bcrypt.check_password_hash(user.password, data["password"])
-#     if passwordCheck == False:
-#         return jsonify({"msg":"Wrong password"}), 401
-#     token = create_access_token(identity = data["dni"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
-#     return jsonify({"msg": "Login successful!", "token":token}),200
-
 
 
 def signup_by_type(new_user, data):
@@ -117,7 +105,7 @@ def user_logout():
     return jsonify({"message": "User logged out"}),401
 
 @api.route('/helloprotected')
-@jwt_required() #aqui habia solo error de sintaxis, faltaban los parentesis
+@jwt_required() 
 def hello_protected():
     user_id=get_jwt_identity()
     claims= get_jwt()

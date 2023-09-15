@@ -6,7 +6,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       singlePet: [],
       signup: [],
       signupKeeper: [],
-      // login: false,
     },
     actions: {
       //Get all pets from the database, including the owners inside the pet object.
@@ -153,10 +152,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
-
       apiFetch: async (endpoint, method = "GET", body = null) => {
         var request;
         if (method == "GET") {
@@ -174,41 +169,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         const resp = await request;
         const data = await resp.json();
         return { code: resp.status, data };
-      },
-
-      signup: async (first_name, last_name, email, password) => {
-        const { apiFetch } = getActions();
-        const resp = await apiFetch("/signup", "POST", {
-          last_name,
-          first_name,
-          email,
-          password,
-        });
-        if (resp.code != 201) {
-          console.error("Signup error");
-          return resp;
-        }
-      },
-
-      signupKeeper: async (
-        first_name,
-        last_name,
-        email,
-        password,
-        hourly_pay
-      ) => {
-        const { apiFetch } = getActions();
-        const resp = await apiFetch("/signup/keeper", "POST", {
-          last_name,
-          first_name,
-          email,
-          password,
-          hourly_pay,
-        });
-        if (resp.code != 201) {
-          console.error("Signup error");
-          return resp;
-        }
       },
 
       login: async (email, password) => {
@@ -261,6 +221,41 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error al cerrar sesión:", error);
 
           return { error: "Error al cerrar sesión" };
+        }
+      },
+
+      signup: async (first_name, last_name, email, password) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/signup", "POST", {
+          last_name,
+          first_name,
+          email,
+          password,
+        });
+        if (resp.code != 201) {
+          console.error("Signup error");
+          return resp;
+        }
+      },
+
+      signupKeeper: async (
+        first_name,
+        last_name,
+        email,
+        password,
+        hourly_pay
+      ) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/signup/keeper", "POST", {
+          last_name,
+          first_name,
+          email,
+          password,
+          hourly_pay,
+        });
+        if (resp.code != 201) {
+          console.error("Signup error");
+          return resp;
         }
       },
     },

@@ -2,31 +2,21 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-
 from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token
-from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti
 from flask import Flask
 from flask_cors import CORS
+from datetime import timezone
+from firebase_admin import storage
+import tempfile
+import datetime
 
 api = Blueprint('api', __name__)
 # Agregado al boilerplate
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-
-# @api.route('/login', methods=["POST"])
-# def login_user():
-#     data = request.get_json(force=True)
-#     user = User.query.filter_by(email=data["email"]).first()
-#     if user is None:
-#         return jsonify({"msg": "Incorrect user or password"}), 401
-#     passwordCheck = bcrypt.check_password_hash(user.password, data["password"])
-#     if passwordCheck == False:
-#         return jsonify({"msg":"Wrong password"}), 401
-#     token = create_access_token(identity = data["dni"], additional_claims={"role":"admin"}) #cambiar por tipo de usuario de los modelos pendientes (Enum)
-#     return jsonify({"msg": "Login successful!", "token":token}),200
 
 
 def signup_by_type(new_user, data):
@@ -36,7 +26,6 @@ def signup_by_type(new_user, data):
     new_user.password = bcrypt.generate_password_hash(
         str(data["password"])).decode("utf-8")
     new_user.is_active = True
-
 
 @api.route('/signup', methods=['POST'])
 def create_owner():
@@ -65,28 +54,101 @@ def create_keeper():
     db.session.commit()
     return jsonify({"msg": "Keeper created successfully"}), 201
 
+@api.route('/login', methods=['POST'])
+def login_user():
+    email= request.json.get("email")
+    
+    password= request.json.get("password")
+    user=User.query.filter_by(email=email).first()
+    if user is None:
+        return jsonify({"message": "Usern not found"}), 401
+    if not bcrypt.check_password_hash(user.password, password):
+        return jsonify({"message":"Wrong password"}), 400
+    acces_token = create_access_token(identity = user.id)
+    acces_jti=get_jti(acces_token)
+    
+    
+    refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
+   
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+
+@api.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def user_refresh():
+    #Identificadores de token viejos
+    jti_refresh=get_jwt()["jti"]
+    jti_access=get_jwt()["accesToken"]
+    #Bloquear los tokens viejos
+    accesRevoked=TokenBlockedList(jti=jti_access)
+    refreshRevoked=TokenBlockedList(jti=jti_refresh)
+    db.session.add(accesRevoked)
+    db.session.add(refreshRevoked) 
+    db.session.commit()
+    
+    #Generar nuevos tokens
+    user_id=get_jwt_identity()
+    acces_token = create_access_token(identity = user_id)
+    acces_jti=get_jti(acces_token)
+    refresh_token=create_refresh_token(identity=user_id, additional_claims={"accesToken": acces_jti})
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+
+@api.route('/hello', methods=['POST', 'GET'])
+def handle_hello():
+
+    response_body = {
+        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
+    }
+
+    return jsonify(response_body), 200
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def user_logout():
+   
+    jwt=get_jwt()["jti"]
+    
+    tokenBlocked= TokenBlockedList(jti=jwt)
+    db.session.add(tokenBlocked)
+    db.session.commit()
+    return jsonify({"message": "User logged out"}),401
+
+@api.route('/helloprotected')
+@jwt_required() 
+def hello_protected():
+    user_id=get_jwt_identity()
+    claims= get_jwt()
+    user=User.query.get(user_id)
+    response={
+        "userId":user_id,
+        "claims":claims,
+        "isActive":user.is_active
+    }
+    return jsonify(response)
 
 @api.route('/owner', methods=["GET"])
 def owners_list():
     owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
                    for pet in Pet.query.filter_by(owner_id=owner.id)]}
                    for owner in owners]
     return jsonify(owners_data), 200
 
-
 @api.route('/owner/<int:owner_id>', methods=['GET'])
 def get_owner(owner_id):
     owner = Owner.query.get(owner_id)
+    #Firebase image url generator
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(owner.profile_pic)
+    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
     owner_data = {
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
         "email": owner.email,
+        "profile_pic": imgUrl,
         "pets": owner.pets
     }
     return jsonify(owner_data), 200
-
 
 @api.route('/owner/<int:owner_id>', methods=['DELETE'])
 def delete_owner(owner_id):
@@ -99,13 +161,8 @@ def delete_owner(owner_id):
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
     keepers = Keeper.query.all()
-    keepers_data = [{"id": keeper.id, 
-                     "first_name": keeper.first_name, 
-                     "last_name": keeper.last_name, 
-                     "email": keeper.email,
-                     "hourly_pay": keeper.hourly_pay,
-                     "description": keeper.description}
-                    for keeper in keepers]
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay,"description": keeper.description}
+                   for keeper in keepers]
 
     return jsonify(keepers_data), 200
 
@@ -113,6 +170,10 @@ def keepers_list():
 @api.route('/keeper/<int:keeper_id>', methods=['GET'])
 def get_keeper(keeper_id):
     keeper = Keeper.query.get(keeper_id)
+    #Firebase img url generator
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(keeper.profile_pic)
+    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
     keeper_data = {
         "id": keeper.id,
         "first_name": keeper.first_name,
@@ -120,6 +181,7 @@ def get_keeper(keeper_id):
         "email": keeper.email,
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
+        "profile_pic": imgUrl
     }
     return jsonify(keeper_data), 200
 
@@ -132,7 +194,6 @@ def delete_keeper(keeper_id):
     return jsonify({"msg": "keeper deleted successfully"}), 200
 
 
-# ENDPOINTS DE PETS
 @api.route('/pets', methods=['POST'])
 def createPet():
     data = request.get_json(force=True)
@@ -194,6 +255,36 @@ def getAllPets():
 @api.route('/pets/owner/<int:owner_id>', methods=['GET'])
 def getPetsByOwner(owner_id):
     pets = Pet.query.filter_by(owner_id=owner_id)
+
     pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
             for pet in pets]
     return jsonify(pets), 200
+
+    
+
+
+#Endpoint para subir imagenes con firebase
+@api.route('/avatar/<int:user_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL USUARIO CON JWT
+#@jwt_required()
+def profilePicture(user_id):
+    #user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+    #Recibir archivo
+    file = request.files["avatar"]
+    #Extraer la extension del archivo
+    extension = file.filename.split(".")[1]
+    #Guardar archivo temporal
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    #Cargar archivo a firebase
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    filename = "avatar/"+str(user_id)+"."+extension
+    #Guardar en firebase
+    resource = bucket.blob(filename)
+    resource.upload_from_filename(temp.name, content_type="image/"+extension)
+    #Agregar la imagen a nuestra base de datos
+    user.profile_pic = filename
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({"msg":"Profile picture uploaded successfully"}), 201
+

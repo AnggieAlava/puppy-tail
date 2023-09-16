@@ -290,21 +290,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
 
-      getKeepers: async (first_name, last_name, description) => {
-        const store = getStore();
+     getKeepers: async (first_name, last_name, description) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/keeper", "GET", {
           last_name,
           first_name,
           description,
         });
-        if (resp.code != 200) {
-          console.error("User not found");
-          return resp;
-        }
-        setStore({ keepers: resp.data });
-      },
-
+        if (resp.code === 200) {
+      setStore({ keepers: resp.data }); 
+  }
+},
 
     },
   };

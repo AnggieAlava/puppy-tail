@@ -38,4 +38,5 @@ const Layout = () => {
     </div>
   );
 };
+
 export default injectContext(Layout);

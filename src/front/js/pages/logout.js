@@ -19,12 +19,11 @@ export const Logout = () => {
   };
 
   return (
-    <div className="container">
-      <Link to="/">
-        <button onClick={handleLogout} className="btn btn-danger">
+    <li className="nav-item">
+      <Link to="/" onClick={handleLogout} className="nav-link">
           Logout
-        </button>
       </Link>
-    </div>
+    </li>
   );
 };
+ {/* {(token === null ? "":<button>Profile</button>)} */} 

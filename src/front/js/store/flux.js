@@ -181,13 +181,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         const params = {
           method,
           headers: {
-            Authorization: "Bearer " + accessToken,
+            'Authorization': "Bearer " + accessToken,
           },
         };
         if (body) {
           params.headers["Content-Type"] = "application/json";
           params.body = JSON.stringify(body);
         }
+        console.log(accessToken);
         const resp = await fetch(
           process.env.BACKEND_URL + "/api" + endpoint,
           params

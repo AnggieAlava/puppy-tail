@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/navbar.css";
 import { Link } from "react-router-dom";
+import { Logout } from "../pages/logout";
 
 export const Navbar = () => {
   return (
@@ -24,7 +25,7 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <a className="nav-link active" aria-current="page" href="/home">
                 Home
               </a>
             </li>
@@ -38,11 +39,7 @@ export const Navbar = () => {
                 Signup
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="#">
-                Logout
-              </Link>
-            </li>
+            <Logout/>
             <li className="nav-item">
               <Link className="nav-link" to="/signup/keeper">
                 Quieres ser cuidador?

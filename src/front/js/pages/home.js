@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import Card from "../component/card";
 import BarSearch from "../component/barSearch";
-import { Logout } from "./logout";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -19,7 +18,6 @@ export const Home = () => {
           <Card />
         </div>
       </div>
-      <Logout />
     </>
   );
 };

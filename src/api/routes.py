@@ -160,11 +160,24 @@ def delete_owner(owner_id):
 
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
+    limit = request.args.get('limit', type=int)
     keepers = Keeper.query.all()
-    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay,"description": keeper.description}
-                   for keeper in keepers]
-
+    
+    if limit is not None and limit > 0:
+        keepers = keepers[:limit]
+    
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description} for keeper in keepers]
+    
     return jsonify(keepers_data), 200
+
+# @api.route('/keeper/limited', methods=["GET"])
+# def limited_keepers_list():
+#     limit = request.args.get('limit', type=int)
+#     keepers = Keeper.query.all()
+#     if limit is not None and limit > 0:
+#         keepers = keepers[:limit]
+#     keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description} for keeper in keepers]
+#     return jsonify(keepers_data), 200
 
 
 @api.route('/keeper/<int:keeper_id>', methods=['GET'])

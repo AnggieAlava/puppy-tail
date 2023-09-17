@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import Perfil from "../../img/avatar.jpg";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
-const Keeper = () => {
+const Keepers = () => {
   const { store, actions } = useContext(Context);
-  
+  useEffect(() => {
+    actions.keepersToShow(6);
+  }, []);
   return (
-    <div className="row">
-      {store.keepers.map((keeper, index) => (
-        <div className="col p-3" key={index}>
+    <div className="row row-cols-1 row-cols-sm-3 g-4">
+      {store.keepersToShow.map((keeper, index) => (
+        <div className="col p-4" key={index}>
           <div className="card">
             <img src={Perfil} className="card-img-top" alt="..." />
             <div className="card-body">
@@ -19,9 +21,10 @@ const Keeper = () => {
             <button
               type="button"
               className="btn btn-link"
-              style={{ textDecoration: "none" }}
-            >
-              <Link to={`/profile/${keeper.id}`} style={{ color: "black", textDecoration: "none" }}>
+              style={{ textDecoration: "none" }}>
+              <Link
+                to="/profile"
+                style={{ color: "black", textDecoration: "none" }}>
                 See more...
               </Link>
             </button>
@@ -32,4 +35,4 @@ const Keeper = () => {
   );
 };
 
-export default Keeper;
+export default Keepers;

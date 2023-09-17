@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       singlePet: [],
       signup: [],
       signupKeeper: [],
-      keepers: [],
+      // keepers: [],
+      keepersToShow: []
     },
     actions: {
       //Get all pets from the database, including the owners inside the pet object.
@@ -52,7 +53,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               console.log(data);
               setStore({ pets: data });
               return "ok";
-
             });
         } catch (error) {
           console.error(error);
@@ -66,8 +66,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               method: "POST",
               body: JSON.stringify(obj),
               headers: {
-                "Content-Type": "application/json",
-              },
+                "Content-Type": "application/json"
+              }
             }
           )
             .then((response) => {
@@ -79,7 +79,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             .then((data) => {
               console.log("Successfully created pet: " + data);
               getActions().getOwnerPets(obj.owner_id);
-
             });
         } catch (error) {
           console.error(error);
@@ -94,8 +93,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               method: "PUT",
               body: JSON.stringify(obj),
               headers: {
-                "Content-Type": "application/json",
-              },
+                "Content-Type": "application/json"
+              }
             }
           )
             .then((response) => {
@@ -108,7 +107,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               console.log("Successfully updated pet: " + data);
 
               getActions().getOwnerPets(obj.owner_id);
-
             });
         } catch (error) {
           console.error(error);
@@ -139,7 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           fetch(
             `https://upgraded-cod-464w4v5prv43vrg-3001.app.github.dev/api/pets/${obj.id}`,
             {
-              method: "DELETE",
+              method: "DELETE"
             }
           )
             .then((response) => {
@@ -171,8 +169,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const params = {
             method,
             headers: {
-              "Content-Type": "application/json",
-            },
+              "Content-Type": "application/json"
+            }
           };
           if (body) params.body = JSON.stringify(body);
           request = fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
@@ -190,14 +188,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         const params = {
           method,
           headers: {
-            'Authorization': "Bearer " + accessToken,
-          },
+            /* prettier-ignore */
+            "Authorization": "Bearer " + accessToken
+          }
         };
         if (body) {
           params.headers["Content-Type"] = "application/json";
           params.body = JSON.stringify(body);
         }
-        console.log(accessToken);
         const resp = await fetch(
           process.env.BACKEND_URL + "/api" + endpoint,
           params
@@ -217,7 +215,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/login", "POST", {
           email,
-          password,
+          password
         });
         if (resp.code !== 201) {
           console.error("Login error");
@@ -260,7 +258,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           last_name,
           first_name,
           email,
-          password,
+          password
         });
         if (resp.code != 201) {
           console.error("Signup error");
@@ -281,7 +279,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           first_name,
           email,
           password,
-          hourly_pay,
+          hourly_pay
         });
         if (resp.code != 201) {
           console.error("Signup error");
@@ -289,20 +287,24 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      keepersToShow: async (limit) => {
+        try {
+          const store = getStore();
+          const { apiFetch } = getActions();
 
-     getKeepers: async (first_name, last_name, description) => {
-        const { apiFetch } = getActions();
-        const resp = await apiFetch("/keeper", "GET", {
-          last_name,
-          first_name,
-          description,
-        });
-        if (resp.code === 200) {
-      setStore({ keepers: resp.data }); 
-  }
-},
+          const endpoint = limit ? `/keeper?limit=${limit}` : "/keeper";
+          const resp = await apiFetch(endpoint, "GET");
 
-    },
+          if (resp.code === 200) {
+            setStore({ keepersToShow: resp.data });
+          } else {
+            console.error("Error al obtener los keepers:", resp);
+          }
+        } catch (error) {
+          console.error("Error en keepersToShow:", error);
+        }
+      }
+    }
   };
 };
 

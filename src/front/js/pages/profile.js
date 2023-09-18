@@ -10,8 +10,8 @@ export const Profile = (props) => {
     const [userInfo, setUserInfo] = useState({})
 	const params = useParams();
     
-    let owner_id = 1;
-    let user_type = "owner";
+    let owner_id = params.theid;
+    let user_type = params.type;
 
     useEffect(()=>{
         setUserInfo({
@@ -144,7 +144,7 @@ export const Profile = (props) => {
             </div>
             <hr className="mt-4 mb-2" />
             {/* Componente condicional aqui, pasar user type por props */}
-            {(user_type == "keeper"? < Pets owner_id={owner_id} />:<KeeperForm />)}
+            {(user_type == user_type? < Pets owner_id={owner_id} />:<KeeperForm />)}
 		</div>
 	);
 };

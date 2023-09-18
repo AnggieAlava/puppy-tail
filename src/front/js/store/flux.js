@@ -287,24 +287,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // keepersToShow: async (limit) => {
-      //   try {
-      //     const store = getStore();
-      //     const { apiFetch } = getActions();
-
-      //     const endpoint = limit ? `/keeper?limit=${limit}` : "/keeper";
-      //     const resp = await apiFetch(endpoint, "GET");
-
-      //     if (resp.code === 200) {
-      //       setStore({ keepersToShow: resp.data });
-      //     } else {
-      //       console.error("Error al obtener los keepers:", resp);
-      //     }
-      //   } catch (error) {
-      //     console.error("Error en keepersToShow:", error);
-      //   }
-      // }
-
       getKeepers: async () => {
         try {
           const store = getStore();
@@ -322,13 +304,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // Action para mostrar keepers aleatorios
       keepersToShow: async (limit) => {
         try {
           const store = getStore();
           const { apiFetch } = getActions();
-
-          // Determina si se debe incluir un límite en la consulta
           const endpoint = limit ? `/keeper?limit=${limit}` : "/keeper";
 
           const resp = await apiFetch(endpoint, "GET");
@@ -342,14 +321,12 @@ const getState = ({ getStore, getActions, setStore }) => {
               const randomIndex = Math.floor(Math.random() * keepers.length);
               const randomKeeper = keepers[randomIndex];
 
-              // Verifica si el keeper ya ha sido seleccionado
+              // Aqui estoy verificando si el keeper ya ha sido seleccionado por medio de su id, posdata evito repetir keepers
               if (!selectedKeeperIds.includes(randomKeeper.id)) {
                 randomKeepers.push(randomKeeper);
                 selectedKeeperIds.push(randomKeeper.id);
               }
             }
-
-            // Actualiza el estado con los keepers aleatorios
             setStore({ keepersToShow: randomKeepers });
           } else {
             console.error("Error al obtener los keepers:", resp);

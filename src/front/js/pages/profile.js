@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import stock_avatar from "../../img/avatar.jpg";
 import { KeeperForm } from "../component/keeperForm";
-import  { Pets } from "../component/pets";
+import { Pets } from "../component/pets";
 
 export const Profile = (props) => {
 	const { store, actions } = useContext(Context);
@@ -13,48 +13,57 @@ export const Profile = (props) => {
     let owner_id = params.theid;
     let user_type = params.type;
 
-    useEffect(()=>{
-        setUserInfo({
-            name : "Lucy",
-            description : `Pets are the main reason people require sitters and so their welfare is my main priority and I spend much of the time in their company at your home following your instructions meticulously.
+  useEffect(() => {
+    setUserInfo({
+      name: "Lucy",
+      description: `Pets are the main reason people require sitters and so their welfare is my main priority and I spend much of the time in their company at your home following your instructions meticulously.
 
             I have had numerous cats since I was young and am definitely a cat lover. Through house and pet sitting, I have had the pleasure of looking after and loving many cats, from young kittens to 22 year olds, all with different personalities and some requiring medication; as well as different breeds of dogs, from Labradors to miniature cavoodles, all whose company I thoroughly enjoyed. I also had Beau, my budgie, for quite a few years and taught him to talk! Libby, my sister, who sometimes accompanies me on sits, has had dogs for pets, from a German shepherd to a silky terrier, a cat and a budgie.`,
-            experience : "2+ years",
-            services : ["Dog walker", "Pet sitter"],
-            location : "Miami, FL"
-        })
-    },[])
+      experience: "2+ years",
+      services: ["Dog walker", "Pet sitter"],
+      location: "Miami, FL",
+    });
+  }, []);
 
-    function yearsExperience(b) {
-        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-        // Discard the time and time-zone information.
-        let today = new Date();
-        let startDate = new Date(b);
-        const utc1 = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
-        const utc2 = Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
-        //difference in days (eg. 360 days)
-        let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
-        //Return first digit as string
-        return (difference/365).toString().slice(0,1);
-      }
+  function yearsExperience(b) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    // Discard the time and time-zone information.
+    let today = new Date();
+    let startDate = new Date(b);
+    const utc1 = Date.UTC(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate()
+    );
+    const utc2 = Date.UTC(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
+    );
+    //difference in days (eg. 360 days)
+    let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
+    //Return first digit as string
+    return (difference / 365).toString().slice(0, 1);
+  }
 
-    function updateUser(){
-        //Services
-        let arr = []
-        if(document.getElementById('petWalker').checked) arr.push("Pet Walker");
-        if(document.getElementById('petSitter').checked) arr.push("Pet Sitter");
-        if(document.getElementById('partyPlanner').checked) arr.push("Party Planner");
-        if(arr.length === 0) arr.push("No services yet");
-        //Experience
-        let xp = yearsExperience(document.getElementById('experienceInput').value);
-        setUserInfo({
-            name : document.getElementById('userNameInput').value,
-            description : document.getElementById('descriptionInput').value,
-            experience : xp+"+ years",
-            services : arr,
-            location : document.getElementById('locationInput').value
-        })
-    }
+  function updateUser() {
+    //Services
+    let arr = [];
+    if (document.getElementById("petWalker").checked) arr.push("Pet Walker");
+    if (document.getElementById("petSitter").checked) arr.push("Pet Sitter");
+    if (document.getElementById("partyPlanner").checked)
+      arr.push("Party Planner");
+    if (arr.length === 0) arr.push("No services yet");
+    //Experience
+    let xp = yearsExperience(document.getElementById("experienceInput").value);
+    setUserInfo({
+      name: document.getElementById("userNameInput").value,
+      description: document.getElementById("descriptionInput").value,
+      experience: xp + "+ years",
+      services: arr,
+      location: document.getElementById("locationInput").value,
+    });
+  }
 
 	return (
 		<div className="text-center container w-75 my-2">

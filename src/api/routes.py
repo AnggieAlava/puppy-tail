@@ -2,7 +2,6 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-
 from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
@@ -15,38 +14,41 @@ import tempfile
 import datetime
 
 api = Blueprint('api', __name__)
-#Agregado al boilerplate
+# Agregado al boilerplate
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 
 def signup_by_type(new_user, data):
     new_user.first_name = data["first_name"]
-    new_user.last_name =  data["last_name"]
+    new_user.last_name = data["last_name"]
     new_user.email = data["email"]
-    new_user.password  = bcrypt.generate_password_hash(str(data["password"])).decode("utf-8")
+    new_user.password = bcrypt.generate_password_hash(
+        str(data["password"])).decode("utf-8")
     new_user.is_active = True
-  
+
 @api.route('/signup', methods=['POST'])
 def create_owner():
     data = request.get_json(force=True)
     email = data["email"].lower()
     if Owner.query.filter_by(email=email).first() is not None:
-        return jsonify({"msg":"Email already registered"}), 400
-    new_owner= Owner()
-    signup_by_type(new_owner,data)
+        return jsonify({"msg": "Email already registered"}), 400
+    new_owner = Owner()
+    signup_by_type(new_owner, data)
     db.session.add(new_owner)
     db.session.commit()
-    return jsonify({"msg": "Owner created successfully"}), 201 #siempre devolver el nuevo estado del recurso que se ha modificado 
+    # siempre devolver el nuevo estado del recurso que se ha modificado
+    return jsonify({"msg": "Owner created successfully"}), 201
+
 
 @api.route('/signup/keeper', methods=['POST'])
 def create_keeper():
     data = request.get_json(force=True)
     email = data["email"].lower()
     if Keeper.query.filter_by(email=email).first() is not None:
-        return jsonify({"msg":"Email already registered"}), 400
-    new_keeper= Keeper()
-    signup_by_type(new_keeper,data)
+        return jsonify({"msg": "Email already registered"}), 400
+    new_keeper = Keeper()
+    signup_by_type(new_keeper, data)
     new_keeper.hourly_pay = data["hourly_pay"]
     db.session.add(new_keeper)
     db.session.commit()
@@ -158,10 +160,14 @@ def delete_owner(owner_id):
 
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
+    limit = request.args.get('limit', type=int)
     keepers = Keeper.query.all()
-    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay}
-                   for keeper in keepers]
-
+    
+    if limit is not None and limit > 0:
+        keepers = keepers[:limit]
+    
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description} for keeper in keepers]
+    
     return jsonify(keepers_data), 200
 
 
@@ -177,6 +183,8 @@ def get_keeper(keeper_id):
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,
         "email": keeper.email,
+        "hourly_pay": keeper.hourly_pay,
+        "description": keeper.description,
         "profile_pic": imgUrl
     }
     return jsonify(keeper_data), 200
@@ -189,7 +197,7 @@ def delete_keeper(keeper_id):
     db.session.commit()
     return jsonify({"msg": "keeper deleted successfully"}), 200
 
-#ENDPOINTS DE PETS
+
 @api.route('/pets', methods=['POST'])
 def createPet():
     data = request.get_json(force=True)
@@ -197,32 +205,34 @@ def createPet():
     name = (data["name"].lower()).title()
     owner = Owner.query.filter_by(id=owner_id).first()
     if owner is None:
-        return jsonify({"msg":"Invalid user id"}), 404
-    if Pet.query.filter_by(owner_id = owner_id, name=name).first() is not None:
-        return jsonify({"msg":"Name already registered for this user"}), 400
+        return jsonify({"msg": "Invalid user id"}), 404
+    if Pet.query.filter_by(owner_id=owner_id, name=name).first() is not None:
+        return jsonify({"msg": "Name already registered for this user"}), 400
     size = (data["size"].lower()).title()
-    new_pet=Pet()
+    new_pet = Pet()
     new_pet.name = name
     new_pet.size = size
     new_pet.category = (data["category"].lower()).title()
     new_pet.owner_id = owner_id
     db.session.add(new_pet)
     db.session.commit()
-    return jsonify({"msg": "Pet added successfully"}), 201 #retornar el objeto creado 
+    # retornar el objeto creado
+    return jsonify({"msg": "Pet added successfully"}), 201
+
 
 @api.route('/pets/<int:pet_id>', methods=['GET', 'DELETE', 'PUT'])
 def getPet(pet_id):
     if Pet.query.filter_by(id=pet_id).first() is None:
-        return jsonify({"msg":"Pet does not exist on record"}), 404
+        return jsonify({"msg": "Pet does not exist on record"}), 404
     pet = Pet.query.get(pet_id)
     if request.method == 'GET':
         pet_data = {
             "id": pet.id,
             "name": pet.name,
             "size": pet.size,
-            "category":pet.category,
-            "owner_id":pet.owner_id,
-            "bookings":pet.bookings
+            "category": pet.category,
+            "owner_id": pet.owner_id,
+            "bookings": pet.bookings
         }
         return jsonify(pet_data), 200
     if request.method == 'PUT':
@@ -231,25 +241,30 @@ def getPet(pet_id):
         pet.size = (data["size"].lower()).title()
         pet.category = (data["category"].lower()).title()
         db.session.commit()
-        return jsonify({"msg":"Pet data updated"}), 200
+        return jsonify({"msg": "Pet data updated"}), 200
     if request.method == 'DELETE':
         db.session.delete(pet)
         db.session.commit()
-        return jsonify({"msg":"Pet removed from profile"}), 200
-    
+        return jsonify({"msg": "Pet removed from profile"}), 200
+
+
 @api.route('/pets', methods=['GET'])
 def getAllPets():
     pets = Pet.query.all()
     pets_data = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings, "owner": [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email} for owner in Owner.query.filter_by(id=pet.owner_id)]}
-                   for pet in pets]
+                 for pet in pets]
     return jsonify(pets_data), 200
+
 
 @api.route('/pets/owner/<int:owner_id>', methods=['GET'])
 def getPetsByOwner(owner_id):
     pets = Pet.query.filter_by(owner_id=owner_id)
-    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings }
-                   for pet in pets]
+
+    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+            for pet in pets]
     return jsonify(pets), 200
+
+    
 
 
 #Endpoint para subir imagenes con firebase
@@ -276,3 +291,4 @@ def profilePicture(user_id):
     db.session.add(user)
     db.session.commit()
     return jsonify({"msg":"Profile picture uploaded successfully"}), 201
+

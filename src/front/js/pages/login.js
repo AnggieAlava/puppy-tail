@@ -8,13 +8,13 @@ export const Login = () => {
   const navigate = useNavigate();
  
 
-  //Si hay token mandar a perfil de usuario despues de login
-  // useEffect(() => {
-  //   //Si hay una sesion iniciada andate a la pagina demo
-  //   if (store.accessToken) {
-  //     navigate("/profile");
-  //   }
-  // }, [store.accessToken]);
+  // Si hay token mandar a perfil de usuario despues de login
+  useEffect(() => {
+    //Si hay una sesion iniciada andate a la pagina demo
+    if (store.accessToken) {
+      navigate("/home");
+    }
+  }, [store.accessToken]);
 
   async function login(e) {
     e.preventDefault();

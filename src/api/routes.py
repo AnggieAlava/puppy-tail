@@ -137,16 +137,19 @@ def owners_list():
 def get_owner(owner_id):
     owner = Owner.query.get(owner_id)
     #Firebase image url generator
-    bucket = storage.bucket(name="puppy-tail.appspot.com")
-    resource = bucket.blob(owner.profile_pic)
-    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
+    imgUrl = ""
+    if owner.profile_pic:
+        bucket = storage.bucket(name="puppy-tail.appspot.com")
+        resource = bucket.blob(owner.profile_pic)
+        imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
     owner_data = {
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
         "email": owner.email,
         "profile_pic": imgUrl,
-        "pets": owner.pets
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+            for pet in owner.pets]
     }
     return jsonify(owner_data), 200
 
@@ -175,9 +178,11 @@ def keepers_list():
 def get_keeper(keeper_id):
     keeper = Keeper.query.get(keeper_id)
     #Firebase img url generator
-    bucket = storage.bucket(name="puppy-tail.appspot.com")
-    resource = bucket.blob(keeper.profile_pic)
-    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
+    imgUrl = ''
+    if keeper.profile_pic:
+        bucket = storage.bucket(name="puppy-tail.appspot.com")
+        resource = bucket.blob(keeper.profile_pic)
+        imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
     keeper_data = {
         "id": keeper.id,
         "first_name": keeper.first_name,

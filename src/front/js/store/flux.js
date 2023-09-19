@@ -9,9 +9,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       signup: [],
       signupKeeper: [],
       keepers: [],
-      keepersToShow: []
+      keepersToShow: [],
+      currentUser: []
     },
     actions: {
+      setPets: (obj) => {
+        setStore({pets:obj})
+      },
       //Get all pets from the database, including the owners inside the pet object.
       getPets: async () => {
         const { pets } = getStore();
@@ -36,6 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //Get pets by owner id
       getOwnerPets: async (owner_id) => {
         const { pets } = getStore();
+        console.log(process.env.BACKEND_URL+`/api/pets/owner/${owner_id}`);
         try {
           fetch(
             process.env.BACKEND_URL+`/api/pets/owner/${owner_id}`
@@ -333,6 +338,22 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
         } catch (error) {
           console.error("Error en keepersToShow:", error);
+        }
+      },
+      getOwner: async (id) => {
+        try {
+          fetch(process.env.BACKEND_URL+`/api/owner/${id}`).then(resp=>{
+            if(!resp.ok){
+              console.error(resp.status+": "+resp.statusText)
+            }
+            return resp.json();
+          }).then(data=>{
+            console.log("retrieved owner data successfully => "+data)
+            setStore({currentUser:data})
+            //return data;
+          })
+        } catch (error) {
+          console.error(error);
         }
       }
     }

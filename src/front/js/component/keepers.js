@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Keepers = () => {
   const { store, actions } = useContext(Context);
   useEffect(() => {
-    actions.keepersToShow(6);
+    actions.keepersToShow(2);
   }, []);
   return (
     <div className="row row-cols-1 row-cols-sm-3 g-4">

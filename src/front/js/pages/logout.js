@@ -21,9 +21,11 @@ export const Logout = () => {
   return (
     <li className="nav-item">
       <Link to="/" onClick={handleLogout} className="nav-link">
-          Logout
+        Logout
       </Link>
     </li>
   );
 };
- {/* {(token === null ? "":<button>Profile</button>)} */} 
+{
+  /* {(token === null ? "":<button>Profile</button>)} */
+}

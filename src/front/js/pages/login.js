@@ -6,15 +6,6 @@ import "../../styles/login.css";
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
- 
-
-  // Si hay token mandar a perfil de usuario despues de login
-  useEffect(() => {
-    //Si hay una sesion iniciada andate a la pagina demo
-    if (store.accessToken) {
-      navigate("/home");
-    }
-  }, [store.accessToken]);
 
   async function login(e) {
     e.preventDefault();
@@ -23,7 +14,9 @@ export const Login = () => {
     const password = data.get("password");
     const { login } = actions;
     let resp = await login(email, password);
-    console.log(resp);
+    if (resp === 201) {
+      navigate("/home");
+    }
   }
   return (
     <div id="login-page" className="text-center">

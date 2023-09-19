@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -18,9 +18,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getPets: async () => {
         const { pets } = getStore();
         try {
-          fetch(
-            process.env.BACKEND_URL+'/api/pets'
-          )
+          fetch(process.env.BACKEND_URL + "/api/pets")
             .then((resp) => {
               if (!resp.ok) {
                 console.error(resp.status + ": " + resp.statusText);
@@ -39,9 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getOwnerPets: async (owner_id) => {
         const { pets } = getStore();
         try {
-          fetch(
-            process.env.BACKEND_URL+`/api/pets/owner/${owner_id}`
-          )
+          fetch(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`)
             .then((resp) => {
               if (!resp.ok) {
                 if (resp.status == 404) {
@@ -62,16 +58,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       createPet: async (obj) => {
         try {
-          fetch(
-            process.env.BACKEND_URL+`/api/pets`,
-            {
-              method: "POST",
-              body: JSON.stringify(obj),
-              headers: {
-                "Content-Type": "application/json"
-              }
+          fetch(process.env.BACKEND_URL + `/api/pets`, {
+            method: "POST",
+            body: JSON.stringify(obj),
+            headers: {
+              "Content-Type": "application/json"
             }
-          )
+          })
             .then((response) => {
               if (!response.ok) {
                 throw Error(response.status + ": " + response.statusText);
@@ -89,16 +82,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       updatePet: async (obj) => {
         try {
           //Use email as contact id
-          fetch(
-            process.env.BACKEND_URL+`/api/pets/${obj.id}`,
-            {
-              method: "PUT",
-              body: JSON.stringify(obj),
-              headers: {
-                "Content-Type": "application/json"
-              }
+          fetch(process.env.BACKEND_URL + `/api/pets/${obj.id}`, {
+            method: "PUT",
+            body: JSON.stringify(obj),
+            headers: {
+              "Content-Type": "application/json"
             }
-          )
+          })
             .then((response) => {
               if (!response.ok) {
                 throw Error(response.status + ": " + response.statusText);
@@ -117,9 +107,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getPet: async (id) => {
         const { singlePet } = getStore();
         try {
-          fetch(
-            process.env.BACKEND_URL+`/api/pets/${id}`
-          )
+          fetch(process.env.BACKEND_URL + `/api/pets/${id}`)
             .then((resp) => {
               if (!resp.ok) {
                 console.error(resp.status + ": " + resp.statusText);
@@ -136,12 +124,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       deletePet: async (obj) => {
         try {
-          fetch(
-            process.env.BACKEND_URL+`/api/pets/${obj.id}`,
-            {
-              method: "DELETE"
-            }
-          )
+          fetch(process.env.BACKEND_URL + `/api/pets/${obj.id}`, {
+            method: "DELETE"
+          })
             .then((response) => {
               if (!response.ok) {
                 if (response.status == 404) {
@@ -184,14 +169,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       apiFetchProtected: async (endpoint, method = "GET", body = null) => {
         const { accessToken } = getStore();
-        if (!accessToken) {
-          return "No token";
+        if (!accessToken || accessToken === "null") {
+          return "No token"; //error 422
         }
         const params = {
           method,
           headers: {
             /* prettier-ignore */
-            "Authorization": "Bearer " + accessToken
+            'Authorization': "Bearer " + accessToken
           }
         };
         if (body) {
@@ -221,25 +206,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
         if (resp.code == 401) {
           swal({
-            icon: 'error',
-            title: 'Usuario inexistente',
-            text: 'El usuario no existe en el sistema.'
+            icon: "error",
+            title: "Usuario inexistente",
+            text: "El usuario no existe en el sistema."
           });
-          return null;
         } else if (resp.code == 400) {
           swal({
-            icon: 'error',
-            title: 'Contraseña incorrecta',
-            text: 'La contraseña ingresada es incorrecta.'
+            icon: "error",
+            title: "Contraseña incorrecta",
+            text: "La contraseña ingresada es incorrecta."
           });
-          return null;
-        
         }
         console.log({ resp });
         const { message, token } = resp.data;
         localStorage.setItem("accessToken", token);
         setStore({ accessToken: token });
-        return "Login Successful";
+        return resp.code;
       },
 
       logout: () => {
@@ -274,11 +256,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password
         });
-        if (resp.code != 201) {
-          console.error("Signup error");
+        if (resp.code === 201) {
+          console.log("Signup Succesfully");
           return resp;
         }
         navigate("/login");
+        console.log(resp);
       },
 
       signupKeeper: async (
@@ -296,10 +279,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           password,
           hourly_pay
         });
-        if (resp.code != 201) {
-          console.error("Signup error");
+        if (resp.code === 201) {
+          console.log("Signup Succesfully");
           return resp;
         }
+        navigate("/login");
+        console.log(resp);
       },
 
       getKeepers: async () => {
@@ -331,8 +316,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             const keepers = resp.data;
             let randomKeepers = [];
             const selectedKeeperIds = [];
-        
-            
 
             while (randomKeepers.length < limit) {
               const randomIndex = Math.floor(Math.random() * keepers.length);
@@ -348,10 +331,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else {
             console.error("Error al obtener los keepers:", resp);
           }
-          
         } catch (error) {
           console.error("Error en keepersToShow:", error);
-         
         }
       }
     }

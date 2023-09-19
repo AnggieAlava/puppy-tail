@@ -4,7 +4,7 @@ import "../../styles/footer.css";
 export const Footer = () => (
   <footer className=" text-center text-white">
     <div className="container">
-      <section className="mb-4 py-2">
+      <section className="mb-1 py-2">
         <a
           className="btn btn-outline-light btn-floating m-1"
           href="#!"

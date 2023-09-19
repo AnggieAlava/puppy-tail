@@ -1,3 +1,5 @@
+import { useNavigate, useParams } from "react-router-dom";
+import swal from 'sweetalert';
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -217,9 +219,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password
         });
-        if (resp.code !== 201) {
-          console.error("Login error");
+        if (resp.code == 401) {
+          swal({
+            icon: 'error',
+            title: 'Usuario inexistente',
+            text: 'El usuario no existe en el sistema.'
+          });
           return null;
+        } else if (resp.code == 400) {
+          swal({
+            icon: 'error',
+            title: 'Contraseña incorrecta',
+            text: 'La contraseña ingresada es incorrecta.'
+          });
+          return null;
+        
         }
         console.log({ resp });
         const { message, token } = resp.data;
@@ -264,6 +278,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Signup error");
           return resp;
         }
+        navigate("/login");
       },
 
       signupKeeper: async (
@@ -316,6 +331,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             const keepers = resp.data;
             let randomKeepers = [];
             const selectedKeeperIds = [];
+        
+            
 
             while (randomKeepers.length < limit) {
               const randomIndex = Math.floor(Math.random() * keepers.length);
@@ -331,8 +348,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           } else {
             console.error("Error al obtener los keepers:", resp);
           }
+          
         } catch (error) {
           console.error("Error en keepersToShow:", error);
+         
         }
       }
     }

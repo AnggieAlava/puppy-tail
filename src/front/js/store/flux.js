@@ -333,6 +333,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               }
             }
             setStore({ keepersToShow: randomKeepers });
+            console.log(randomKeepers)
           } else {
             console.error("Error al obtener los keepers:", resp);
           }

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Keepers = () => {
   const { store, actions } = useContext(Context);
   useEffect(() => {
-    actions.keepersToShow(6);
+    actions.keepersToShow(3);
   }, []);
   return (
     <div className="row row-cols-1 row-cols-sm-3 g-4">
@@ -15,7 +15,7 @@ const Keepers = () => {
           <div className="card">
             <img src={Perfil} className="card-img-top" alt="..." />
             <div className="card-body">
-              <h5 className="card-title">{keeper.first_name}</h5>
+              <h5 className="card-title">{keeper.name}</h5>
               <p className="card-text">{keeper.description}</p>
             </div>
             <button
@@ -23,7 +23,7 @@ const Keepers = () => {
               className="btn btn-link"
               style={{ textDecoration: "none" }}>
               <Link
-                to="/profile"
+                to={"/profile/"+"keeper"+"/"+keeper.id} onClick={()=>localStorage.setItem("keeper",JSON.stringify(keeper))}
                 style={{ color: "black", textDecoration: "none" }}>
                 See more...
               </Link>

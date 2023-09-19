@@ -11,27 +11,17 @@ export const Profile = (props) => {
 	const params = useParams();
 
   useEffect(() => {
-      setcurrentUser({
-        name: "-",
-        description: `No description yet`,
-        experience: "0+ years",
-        services: [],
-        location: "-",
-      });
-    actions.getOwner(params.theid)
+    setcurrentUser(JSON.parse(localStorage.getItem(params.type)));
+    
   }, []);
-  
-  async function getOwnerData(){
-    //let response = await actions.getOwner(params.theid)
-    //setcurrentUser(response)
-    //console.log({response});
-  }
 
   function yearsExperience(b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     // Discard the time and time-zone information.
     let today = new Date();
     let startDate = new Date(b);
+    console.log({today})
+    console.log({startDate})
     const utc1 = Date.UTC(
       today.getFullYear(),
       today.getMonth(),
@@ -45,7 +35,7 @@ export const Profile = (props) => {
     //difference in days (eg. 360 days)
     let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
     //Return first digit as string
-    return (difference / 365).toString().slice(0, 1);
+    return (difference / 365).toString().slice(0, 1)+"+ years";
   }
 
   function updateUser() {
@@ -57,11 +47,12 @@ export const Profile = (props) => {
       arr.push("Party Planner");
     if (arr.length === 0) arr.push("No services yet");
     //Experience
+    console.log(document.getElementById("experienceInput").value)
     let xp = yearsExperience(document.getElementById("experienceInput").value);
     setcurrentUser({
       name: document.getElementById("userNameInput").value,
       description: document.getElementById("descriptionInput").value,
-      experience: xp + "+ years",
+      experience: xp,
       services: arr,
       location: document.getElementById("locationInput").value,
     });
@@ -134,7 +125,7 @@ export const Profile = (props) => {
             <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
                 <div className="d-block">
                     <p><strong>Experience</strong></p>
-                    <p>{currentUser.experience}</p>
+                    <p>{yearsExperience(currentUser.experience)}</p>
                 </div>
                 <div className="d-block">
                     <p><i className="fa-solid fa-location-dot"></i><strong> Location</strong></p>

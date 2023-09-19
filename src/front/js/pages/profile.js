@@ -6,12 +6,12 @@ import { KeeperForm } from "../component/keeperForm";
 import { Pets } from "../component/pets";
 
 export const Profile = (props) => {
-  const { store, actions } = useContext(Context);
-  const [userInfo, setUserInfo] = useState({});
-  const params = useParams();
-
-  let owner_id = 1;
-  let user_type = "owner";
+	const { store, actions } = useContext(Context);
+    const [userInfo, setUserInfo] = useState({})
+	const params = useParams();
+    
+    let owner_id = params.theid;
+    let user_type = params.type;
 
   useEffect(() => {
     setUserInfo({
@@ -65,200 +65,95 @@ export const Profile = (props) => {
     });
   }
 
-  return (
-    <div className="text-center container w-75 my-2">
-      <div className="d-flex align-items-center justify-content-end">
-        <button
-          type="button"
-          className="btn btn-outline-dark"
-          data-bs-toggle="modal"
-          data-bs-target="#editUser">
-          Edit
-        </button>
-        {/* <!-- Modal --> */}
-        <div
-          className="modal fade"
-          id="editUser"
-          tabindex="-1"
-          aria-labelledby="editUserLabel"
-          aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h1 className="modal-title fs-5" id="editUserLabel">
-                  Edit
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"></button>
-              </div>
-              <div className="modal-body textLeft">
-                {/* FORM BODY */}
-                <form>
-                  <div class="mb-3">
-                    <label for="nameInput" class="form-label">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="userNameInput"
-                      aria-describedby="nameHelp"
-                      defaultValue={userInfo.name}
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="categoryInput" class="form-label">
-                      Start date (Experience)
-                    </label>
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="experienceInput"
-                      defaultValue=""
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="nameInput" class="form-label">
-                      Location
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="locationInput"
-                      aria-describedby="nameHelp"
-                      defaultValue={userInfo.location}
-                    />
-                  </div>
-                  <div class="mb-3">
-                    <label for="flexSwitchCheckDefault" class="form-label">
-                      Services
-                    </label>
-                    <div class="form-check form-switch">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        role="switch"
-                        id="petWalker"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="flexSwitchCheckDefault">
-                        Pet Walker
-                      </label>
+	return (
+		<div className="text-center container w-75 my-2">
+            <div className="d-flex align-items-center justify-content-end">
+                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" >Edit</button>
+                {/* <!-- Modal --> */}
+                <div className="modal fade" id="editUser" tabindex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5" id="editUserLabel">Edit</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        <div className="modal-body textLeft">
+                            {/* FORM BODY */}
+                            <form>
+                                <div class="mb-3">
+                                    <label for="nameInput" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="userNameInput" aria-describedby="nameHelp" defaultValue={userInfo.name}/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="categoryInput" class="form-label">Start date (Experience)</label>
+                                    <input type="date" class="form-control" id="experienceInput" defaultValue=""/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nameInput" class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="locationInput" aria-describedby="nameHelp" defaultValue={userInfo.location}/>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="flexSwitchCheckDefault" class="form-label">Services</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="petWalker" />
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Pet Walker</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="petSitter" />
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Pet Sitter</label>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="partyPlanner" />
+                                        <label class="form-check-label" for="flexSwitchCheckDefault">Party Planner</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                                    <textarea class="form-control" id="descriptionInput" rows="4" defaultValue={userInfo.description}></textarea>
+                                </div>
+                            </form>
+                            {/* END OF FORM BODY */}
+                        </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" className="btn btn-outline-success" data-bs-dismiss="modal" onClick={updateUser}>Save Changes</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-check form-switch">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        role="switch"
-                        id="petSitter"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="flexSwitchCheckDefault">
-                        Pet Sitter
-                      </label>
-                    </div>
-                    <div class="form-check form-switch">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        role="switch"
-                        id="partyPlanner"
-                      />
-                      <label
-                        class="form-check-label"
-                        for="flexSwitchCheckDefault">
-                        Party Planner
-                      </label>
-                    </div>
-                  </div>
-                  <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">
-                      Description
-                    </label>
-                    <textarea
-                      class="form-control"
-                      id="descriptionInput"
-                      rows="4"
-                      defaultValue={userInfo.description}></textarea>
-                  </div>
-                </form>
-                {/* END OF FORM BODY */}
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-outline-dark"
-                  data-bs-dismiss="modal">
-                  Close
-                </button>
-                <button
-                  type="submit"
-                  className="btn btn-outline-success"
-                  data-bs-dismiss="modal"
-                  onClick={updateUser}>
-                  Save Changes
-                </button>
-              </div>
+                </div>
+                {/* Fin de modal */}
             </div>
-          </div>
-        </div>
-        {/* Fin de modal */}
-      </div>
-      <div className="align-items-center justify-content-center row mb-2">
-        <img
-          src={stock_avatar}
-          style={{
-            borderRadius: "50%",
-            width: "auto",
-            height: "35vh",
-            objectFit: "contain",
-          }}
-        />
-      </div>
-      <div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
-        <h2>{userInfo.name}</h2>
-      </div>
-      <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
-        <div className="d-block">
-          <p>
-            <strong>Experience</strong>
-          </p>
-          <p>{userInfo.experience}</p>
-        </div>
-        <div className="d-block">
-          <p>
-            <i class="fa-solid fa-location-dot"></i>
-            <strong> Location</strong>
-          </p>
-          <p>{userInfo.location}</p>
-        </div>
-        <div className="d-block">
-          <p>
-            <strong>Services</strong>
-          </p>
-          <ul style={{ textAlign: "left" }}>
-            {!Array.isArray(userInfo.services)
-              ? "No services yet"
-              : userInfo.services.map((service, index) => {
-                  return <li index={index}>{service}</li>;
-                })}
-          </ul>
-        </div>
-      </div>
-      <div className="d-block mb-2" style={{ textAlign: "left" }}>
-        <h3>
-          <strong>About me</strong>
-        </h3>
-        <p>{userInfo.description}</p>
-      </div>
-      <hr className="mt-4 mb-2" />
-      {/* Componente condicional aqui, pasar user type por props */}
-      {user_type == "keeper" ? <Pets owner_id={owner_id} /> : <KeeperForm />}
-    </div>
-  );
+			<div className="align-items-center justify-content-center row mb-2">
+                <img src={stock_avatar} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
+            </div>
+			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
+                <h2>{userInfo.name}</h2>
+            </div>
+            <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
+                <div className="d-block">
+                    <p><strong>Experience</strong></p>
+                    <p>{userInfo.experience}</p>
+                </div>
+                <div className="d-block">
+                    <p><i class="fa-solid fa-location-dot"></i><strong> Location</strong></p>
+                    <p>{userInfo.location}</p>
+                </div>
+                <div className="d-block">
+                    <p><strong>Services</strong></p>
+                    <ul style={{textAlign:"left"}}>
+                        {(!Array.isArray(userInfo.services) ? "No services yet": userInfo.services.map((service, index)=> {return (
+                            <li index={index}>{service}</li>
+                        )}))}
+                    </ul>
+                </div>
+            </div>
+            <div className="d-block mb-2"  style={{textAlign:"left"}}>
+                <h3><strong>About me</strong></h3>
+                <p>{userInfo.description}</p>
+            </div>
+            <hr className="mt-4 mb-2" />
+            {/* Componente condicional aqui, pasar user type por props */}
+            {(user_type == user_type? < Pets owner_id={owner_id} />:<KeeperForm />)}
+		</div>
+	);
 };

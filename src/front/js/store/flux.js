@@ -8,6 +8,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: null,
       pets: [],
       singlePet: [],
+      signup: [],
+      signupKeeper: [],
       keepers: [],
       keepersToShow: []
     },
@@ -168,7 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiFetchProtected: async (endpoint, method = "GET", body = null) => {
         const { accessToken } = getStore();
         if (!accessToken || accessToken === "null") {
-          return "No token";
+          return "No token"; //error 422
         }
         const params = {
           method,
@@ -208,20 +210,18 @@ const getState = ({ getStore, getActions, setStore }) => {
             title: "Usuario inexistente",
             text: "El usuario no existe en el sistema."
           });
-          return null;
         } else if (resp.code == 400) {
           swal({
             icon: "error",
             title: "Contraseña incorrecta",
             text: "La contraseña ingresada es incorrecta."
           });
-          return null;
         }
         console.log({ resp });
         const { message, token } = resp.data;
         localStorage.setItem("accessToken", token);
         setStore({ accessToken: token });
-        return "Login Successful";
+        return resp.code;
       },
 
       logout: () => {
@@ -260,6 +260,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Signup Succesfully");
           return resp;
         }
+        navigate("/login");
         console.log(resp);
       },
 
@@ -282,6 +283,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("Signup Succesfully");
           return resp;
         }
+        navigate("/login");
         console.log(resp);
       },
 

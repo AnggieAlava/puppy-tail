@@ -8,14 +8,14 @@ let titles = [
   "Lavamos su pelo por ti",
   "Tu amigo incondicional",
   "Love and pets",
-  "Somos un todo",
+  "Somos un todo"
 ];
 let descriptions = [
   "Discovering beauty in every step",
   "Grooming keeps pets looking great",
   "Regular exercise ensures happy pets",
   "Love and play daily together",
-  "La amistad y el cuidado",
+  "La amistad y el cuidado"
 ];
 
 export const Landing = () => {

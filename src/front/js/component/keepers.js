@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Keepers = () => {
   const { store, actions } = useContext(Context);
-  const limit = 5;
+  const limit = 3;
   useEffect(() => {
     actions.keepersToShow(limit);
   }, []);
@@ -14,7 +14,7 @@ const Keepers = () => {
     <div>
       {store.keepersToShow.length === 0 ? (
         <div className="alert alert-warning" role="alert">
-          Keepers not found
+          <h4>Keepers not found!</h4>
         </div>
       ) : (
         <div className="row row-cols-1 row-cols-sm-3 g-4">

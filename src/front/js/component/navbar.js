@@ -39,7 +39,7 @@ export const Navbar = () => {
                 Signup
               </Link>
             </li>
-            <Logout/>
+            <Logout />
             <li className="nav-item">
               <Link className="nav-link" to="/signup/keeper">
                 Quieres ser cuidador?

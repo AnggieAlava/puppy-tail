@@ -8,6 +8,13 @@ export const Signup = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("/login");
+    }
+  }, [shouldNavigate]);
 
   async function signup(e) {
     e.preventDefault();
@@ -18,15 +25,16 @@ export const Signup = (props) => {
     const password = data.get("password");
     const { signup } = actions;
     let resp = await signup(first_name, last_name, email, password);
+    setShouldNavigate(true);
     console.log(resp);
-    navigate("/login");
   }
+
   return (
     <div id="signup-page" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
         <h1>Welcome Owners</h1>
-        <form className="pe-3" onSubmit={signup}>
+        <form className="pe-3" onSubmit={signup} id="puppySignup">
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
               Name
@@ -82,5 +90,5 @@ export const Signup = (props) => {
   );
 };
 Signup.propTypes = {
-  match: PropTypes.object,
+  match: PropTypes.object
 };

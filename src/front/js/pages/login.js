@@ -6,12 +6,11 @@ import "../../styles/login.css";
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
- 
 
   // Si hay token mandar a perfil de usuario despues de login
   useEffect(() => {
     //Si hay una sesion iniciada andate a la pagina demo
-    if (store.accessToken) {
+    if (!store.accessToken || store.accessToken !== "null") {
       navigate("/home");
     }
   }, [store.accessToken]);

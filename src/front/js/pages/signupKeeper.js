@@ -8,6 +8,13 @@ export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
+  const [shouldNavigate, setShouldNavigate] = useState(false);
+
+  useEffect(() => {
+    if (shouldNavigate) {
+      navigate("/login");
+    }
+  }, [shouldNavigate]);
 
   async function signupKeeper(e) {
     e.preventDefault();
@@ -25,8 +32,8 @@ export const SignupKeeper = (props) => {
       password,
       hourly_pay
     );
+    setShouldNavigate(true);
     console.log(resp);
-    navigate("/login");
   }
   return (
     <div id="signup-page" className="text-center">
@@ -100,5 +107,5 @@ export const SignupKeeper = (props) => {
   );
 };
 SignupKeeper.propTypes = {
-  match: PropTypes.object,
+  match: PropTypes.object
 };

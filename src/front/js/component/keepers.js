@@ -2,10 +2,11 @@ import React, { useContext, useEffect } from "react";
 import Perfil from "../../img/avatar.jpg";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import "../../styles/keepers.css";
 
 const Keepers = () => {
   const { store, actions } = useContext(Context);
-  const limit = 3;
+  const limit = 6;
   useEffect(() => {
     actions.keepersToShow(limit);
   }, []);
@@ -17,9 +18,9 @@ const Keepers = () => {
           <h4>Keepers not found!</h4>
         </div>
       ) : (
-        <div className="row row-cols-1 row-cols-sm-3 g-4">
+        <div className="row row-cols-1 row-cols-sm-3 g-4 card-wrap">
           {store.keepersToShow.map((keeper, index) => (
-            <div className="col p-4" key={index}>
+            <div className="col p-4 " key={index}>
               <div className="card">
                 <img src={Perfil} className="card-img-top" alt="..." />
                 <div className="card-body">

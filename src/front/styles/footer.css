@@ -1,5 +1,8 @@
-footer {
+.footer {
   background-color: black;
   color: white;
-  padding: 10px 0;
+  margin-top: 200px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
 }

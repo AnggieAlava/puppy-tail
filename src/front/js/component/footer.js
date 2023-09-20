@@ -20,8 +20,8 @@ const redesSociales = [
 ];
 
 export const Footer = () => (
-  <footer className="text-center text-white">
-    <div className="container">
+  <footer className="text-center text-white footer">
+    <div className="container-fluid">
       <section className="mb-1 py-2">
         {redesSociales.map((red, index) => (
           <a

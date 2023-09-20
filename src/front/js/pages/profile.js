@@ -5,23 +5,27 @@ import stock_avatar from "../../img/avatar.jpg";
 import { KeeperForm } from "../component/keeperForm";
 import { Pets } from "../component/pets";
 
-export const Profile = (props) => {
+export const Profile = ({keeper}) => {
 	const { store, actions } = useContext(Context);
     const [currentUser, setcurrentUser] = useState({})
 	const params = useParams();
+    //USED TO CHECK SERVICES IN EDIT MENU. REMOVE
+    const localUser = JSON.parse(localStorage.getItem(params.type))
+    const petW = localUser.services.includes("Pet Walker")
+    const petS = localUser.services.includes("Pet Sitter")
+    const partyP = localUser.services.includes("Party Planner")
 
   useEffect(() => {
-    setcurrentUser(JSON.parse(localStorage.getItem(params.type)));
-    
+    setcurrentUser(localUser);
   }, []);
-
+  function imgErrorHandler(e){
+    e.target.src = "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=170667a&w=0&k=20&c=m-F9Doa2ecNYEEjeplkFCmZBlc5tm1pl1F7cBCh9ZzM="
+}
   function yearsExperience(b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     // Discard the time and time-zone information.
     let today = new Date();
     let startDate = new Date(b);
-    console.log({today})
-    console.log({startDate})
     const utc1 = Date.UTC(
       today.getFullYear(),
       today.getMonth(),
@@ -49,13 +53,18 @@ export const Profile = (props) => {
     //Experience
     console.log(document.getElementById("experienceInput").value)
     let xp = yearsExperience(document.getElementById("experienceInput").value);
-    setcurrentUser({
-      name: document.getElementById("userNameInput").value,
-      description: document.getElementById("descriptionInput").value,
-      experience: xp,
-      services: arr,
-      location: document.getElementById("locationInput").value,
-    });
+    let obj = {
+        id: currentUser.id,
+        first_name: document.getElementById("firstNameInput").value,
+        last_name: document.getElementById("lastNameInput").value,
+        hourly_pay: document.getElementById("feeInput").value,
+        description: document.getElementById("descriptionInput").value,
+        experience: document.getElementById("experienceInput").value,
+        services: arr,
+        location: document.getElementById("locationInput").value,
+      }
+    setcurrentUser(obj);
+    actions.updateKeeper(obj);
   }
 
 	return (
@@ -73,13 +82,35 @@ export const Profile = (props) => {
                         <div className="modal-body textLeft">
                             {/* FORM BODY */}
                             <form>
-                                <div className="mb-3">
-                                    <label htmlFor="nameInput" className="form-label">Name</label>
-                                    <input type="text" className="form-control" id="userNameInput" aria-describedby="nameHelp" defaultValue={currentUser.name}/>
+                                <div className="mb-3" style={{borderRadius:"50%", width: "100%", maxWidth:"12rem", maxHeight:"auto", overflow:"hidden", aspectRatio:"1"}}>
+                                    <img onError={imgErrorHandler} src=""></img>
                                 </div>
-                                <div className="mb-3">
-                                    <label htmlFor="categoryInput" className="form-label">Start date (Experience)</label>
-                                    <input type="date" className="form-control" id="experienceInput" defaultValue=""/>
+                                <div className="text-center mb-3">
+                                    <input type="file" id="avatarImg" hidden/>
+                                    <label className="btn btn-outline-dark" htmlFor="avatarImg">Upload a picture</label>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label htmlFor="firstNameInput" className="form-label">First Name</label>
+                                        <input type="text" className="form-control" id="firstNameInput" aria-describedby="nameHelp" defaultValue={currentUser.first_name}/>
+                                    </div>
+                                    <div className="col">
+                                        <label htmlFor="lastNameInput" className="form-label">Last Name</label>
+                                        <input type="text" className="form-control" id="lastNameInput" aria-describedby="nameHelp" defaultValue={currentUser.last_name}/>
+                                    </div>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label htmlFor="categoryInput" className="form-label">Start date (Experience)</label>
+                                        <input type="date" className="form-control" id="experienceInput" defaultValue={currentUser.experience}/>
+                                    </div>
+                                    <div className="col">
+                                        <label htmlFor="feeInput" className="form-label">Hourly Fee</label>
+                                        <div className="input-group">
+                                            <span className="input-group-text">$</span>
+                                            <input type="text" className="form-control" defaultValue={currentUser.hourly_pay} id="feeInput" aria-label="Amount (to the nearest dollar)" />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="nameInput" className="form-label">Location</label>
@@ -88,15 +119,15 @@ export const Profile = (props) => {
                                 <div className="mb-3">
                                     <label htmlFor="flexSwitchCheckDefault" className="form-label">Services</label>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" role="switch" id="petWalker" />
+                                        <input className="form-check-input" type="checkbox" defaultChecked={petW} role="switch" id="petWalker" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Pet Walker</label>
                                     </div>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" role="switch" id="petSitter" />
+                                        <input className="form-check-input" type="checkbox" defaultChecked={petS} role="switch" id="petSitter" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Pet Sitter</label>
                                     </div>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" role="switch" id="partyPlanner" />
+                                        <input className="form-check-input" type="checkbox" defaultChecked={partyP} role="switch" id="partyPlanner" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Party Planner</label>
                                     </div>
                                 </div>
@@ -120,7 +151,7 @@ export const Profile = (props) => {
                 <img src={stock_avatar} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
-                <h2>{currentUser.name}</h2>
+                <h2>{currentUser.first_name}</h2>
             </div>
             <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
                 <div className="d-block">
@@ -135,7 +166,7 @@ export const Profile = (props) => {
                     <p><strong>Services</strong></p>
                     <ul style={{textAlign:"left"}}>
                         {(!Array.isArray(currentUser.services) ? "No services yet": currentUser.services.map((service, index)=> {return (
-                            <li index={index}>{service}</li>
+                            <li key={index}>{service}</li>
                         )}))}
                     </ul>
                 </div>
@@ -146,7 +177,7 @@ export const Profile = (props) => {
             </div>
             <hr className="mt-4 mb-2" />
             {/* Componente condicional aqui, pasar user type por props */}
-            {(params.type == 'owner'? < Pets owner_id={params.theid} />:<KeeperForm />)}
+            {(params.type == 'owner'? < Pets owner_id={params.theid} />:<KeeperForm keeper={currentUser} />)}
 		</div>
 	);
 };

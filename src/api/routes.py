@@ -168,7 +168,7 @@ def keepers_list():
     
     if limit is not None and limit > 0:
         keepers = keepers[:limit]
-    keepers_data = [{"id": keeper.id, "name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "location": keeper.location, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description, "experience": keeper.experience, "services":[[service] for service in keeper.services]} for keeper in keepers]
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "location": keeper.location, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description, "experience": datetime.datetime.strptime((keeper.experience.strftime("%Y/%m/%d")), '%Y/%m/%d').date(), "services":[service for service in keeper.services]} for keeper in keepers]
     
     return jsonify(keepers_data), 200
 
@@ -189,10 +189,34 @@ def get_keeper(keeper_id):
         "email": keeper.email,
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
+        "services": [service for service in keeper.services],
         "profile_pic": imgUrl
     }
     return jsonify(keeper_data), 200
 
+@api.route('/keeper/<int:keeper_id>', methods=["PUT"])
+def updateKeeper(keeper_id):
+    keeper = Keeper.query.get(keeper_id)
+    data = request.get_json(force=True)
+    keeper.first_name = (data["first_name"].lower()).title()
+    keeper.last_name = (data["last_name"].lower()).title()
+    keeper.hourly_pay = data["hourly_pay"]
+    keeper.description = data["description"]
+    keeper.experience = data["experience"]
+    keeper.services = [service for service in data["services"]]
+    keeper.location = data["location"]
+    db.session.commit()
+    keeper = {
+        "id": keeper.id,
+        "first_name":keeper.first_name,
+        "last_name":keeper.last_name,
+        "hourly_pay":keeper.hourly_pay,
+        "description":keeper.description,
+        "experience":keeper.experience,
+        "services": [service for service in keeper.services],
+        "location": keeper.location
+    }
+    return jsonify(keeper),200
 
 @api.route('/keeper/<int:keeper_id>', methods=['DELETE'])
 def delete_keeper(keeper_id):

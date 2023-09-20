@@ -291,7 +291,23 @@ const getState = ({ getStore, getActions, setStore }) => {
           return resp;
         }
       },
-
+      updateKeeper: async (obj) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/keeper/${obj.id}`, "PUT", {
+          "first_name":obj.first_name,
+          "last_name": obj.last_name,
+          "hourly_pay": obj.hourly_pay,
+          "description":obj.description,
+          "experience":obj.experience,
+          "services": obj.services,
+          "location": obj.location
+        });
+        if (resp.code != 200) {
+          console.error("Error saving profile, code: "+ resp.code);
+          return resp;
+        }
+        localStorage.setItem("keeper",JSON.stringify(resp.data))
+      },
       getKeepers: async () => {
         try {
           const store = getStore();
@@ -308,7 +324,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en getKeepers:", error);
         }
       },
-
       keepersToShow: async (limit) => {
         try {
           const store = getStore();

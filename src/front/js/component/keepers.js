@@ -15,7 +15,7 @@ const Keepers = () => {
           <div className="card">
             <img src={Perfil} className="card-img-top" alt="..." />
             <div className="card-body">
-              <h5 className="card-title">{keeper.name}</h5>
+              <h5 className="card-title">{keeper.first_name}</h5>
               <p className="card-text">{keeper.description}</p>
             </div>
             <button

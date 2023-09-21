@@ -168,7 +168,7 @@ def keepers_list():
     
     if limit is not None and limit > 0:
         keepers = keepers[:limit]
-    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "location": keeper.location, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description, "experience": datetime.datetime.strptime((keeper.experience.strftime("%Y/%m/%d")), '%Y/%m/%d').date(), "services":[service for service in keeper.services]} for keeper in keepers]
+    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "location": keeper.location, "hourly_pay": keeper.hourly_pay, "description": keeper.description, "profile_pic": getprofilePic(keeper.id) , "experience": datetime.datetime.strptime((keeper.experience.strftime("%Y/%m/%d")), '%Y/%m/%d').date(), "services":[service for service in keeper.services]} for keeper in keepers]
     
     return jsonify(keepers_data), 200
 
@@ -205,6 +205,9 @@ def updateKeeper(keeper_id):
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]
     keeper.location = data["location"]
+    if data["profile_pic"]:
+        keeper.profile_pic = data["profile_pic"]
+        
     db.session.commit()
     keeper = {
         "id": keeper.id,
@@ -292,7 +295,6 @@ def getPetsByOwner(owner_id):
             for pet in pets]
     return jsonify(pets), 200
 
-    
 
 
 #Endpoint para subir imagenes con firebase
@@ -318,5 +320,16 @@ def profilePicture(user_id):
     user.profile_pic = filename
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg":"Profile picture uploaded successfully"}), 201
+    #Return URL of new image
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return jsonify({"public_url":picture_url, "storable_url": user.profile_pic}), 201
 
+@api.route('/avatar/<int:user_id>', methods=["GET"])
+def getprofilePic(user_id):
+    user = User.query.get(user_id)
+    if user.profile_pic is None:
+        return ""
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(user.profile_pic)
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return picture_url

@@ -14,12 +14,14 @@ export const Profile = ({keeper}) => {
     const petW = localUser.services.includes("Pet Walker")
     const petS = localUser.services.includes("Pet Sitter")
     const partyP = localUser.services.includes("Party Planner")
-
-  useEffect(() => {
+    
+    const [avatar, setAvatar] = useState(localUser.profile_pic)
+  
+    useEffect(() => {
     setcurrentUser(localUser);
   }, []);
   function imgErrorHandler(e){
-    e.target.src = "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=170667a&w=0&k=20&c=m-F9Doa2ecNYEEjeplkFCmZBlc5tm1pl1F7cBCh9ZzM="
+    e.target.src = stock_avatar
 }
   function yearsExperience(b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -82,8 +84,10 @@ export const Profile = ({keeper}) => {
                         <div className="modal-body textLeft">
                             {/* FORM BODY */}
                             <form>
-                                <div className="mb-3" style={{borderRadius:"50%", width: "100%", maxWidth:"12rem", maxHeight:"auto", overflow:"hidden", aspectRatio:"1"}}>
-                                    <img onError={imgErrorHandler} src=""></img>
+                                <div className="mb-3">
+                                    <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
+                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={avatar} className=""></img>
+                                    </div>
                                 </div>
                                 <div className="text-center mb-3">
                                     <input type="file" id="avatarImg" hidden/>
@@ -148,7 +152,7 @@ export const Profile = ({keeper}) => {
                 {/* Fin de modal */}
             </div>
 			<div className="align-items-center justify-content-center row mb-2">
-                <img src={stock_avatar} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
+                <img onError={imgErrorHandler} src={avatar} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
                 <h2>{currentUser.first_name}</h2>

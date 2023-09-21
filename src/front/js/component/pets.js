@@ -49,7 +49,7 @@ export const Pets = (props) => {
             <ul className="p-0 d-flex flex-row flex-wrap justify-content-start align-items-center gap-4">
             {(store.pets.length < 1? "":store.pets.map((pet, index)=>{
             return (
-                <div style={{width: "12rem"}} index={index}>
+                <div style={{width: "12rem"}} key={index}>
                     <div style={{borderRadius:"50%", width: "100%", height:"auto", overflow:"hidden", aspectRatio:"1"}}><img onError={imgErrorHandler}  src="..." className="card-img-top" alt="..." /></div>
                     <div className="card-body">
                         <h5 className="card-title">{pet.name}</h5>

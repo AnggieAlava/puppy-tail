@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import Perfil from "../../img/avatar.jpg";
+import avatar from "../../img/avatar.jpg";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
@@ -8,12 +8,16 @@ const Keepers = () => {
   useEffect(() => {
     actions.keepersToShow(3);
   }, []);
+
+  function imgErrorHandler(e){
+    e.target.src = avatar
+}
   return (
     <div className="row row-cols-1 row-cols-sm-3 g-4">
       {store.keepersToShow.map((keeper, index) => (
         <div className="col p-4" key={index}>
           <div className="card">
-            <img src={Perfil} className="card-img-top" alt="..." />
+            <img onError={imgErrorHandler} src={keeper.profile_pic} className="card-img-top" alt="..." />
             <div className="card-body">
               <h5 className="card-title">{keeper.first_name}</h5>
               <p className="card-text">{keeper.description}</p>

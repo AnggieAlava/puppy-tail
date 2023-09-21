@@ -205,8 +205,6 @@ def updateKeeper(keeper_id):
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]
     keeper.location = data["location"]
-    if data["profile_pic"]:
-        keeper.profile_pic = data["profile_pic"]
         
     db.session.commit()
     keeper = {

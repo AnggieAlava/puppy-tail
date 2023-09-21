@@ -10,7 +10,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       signupKeeper: [],
       keepers: [],
       keepersToShow: [],
-      currentUser: []
+      currentUser: [],
+      profilePic: null
     },
     actions: {
       setPets: (obj) => {
@@ -307,6 +308,28 @@ const getState = ({ getStore, getActions, setStore }) => {
           return resp;
         }
         localStorage.setItem("keeper",JSON.stringify(resp.data))
+      },
+      uploadPicture: async (formData) => {
+        const { accessToken } = getStore();
+        if (!accessToken) {
+          return "No token";
+        }
+        const { userInfo } = getStore();
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/avatar/${userInfo.userId}`, {
+          method:"POST",
+          body:formData,
+          headers:{
+            "Authorization":"Bearer " + accessToken
+          }
+        });
+        if (resp.code != 200) {
+          console.error("Error saving picture, code: "+ resp.code);
+          return resp;
+        }
+        let data = await resp.json()
+        setStore({profilePic: data.public_url})
+       //setStore({profilePic:resp.data}) //Store image from firebase
       },
       getKeepers: async () => {
         try {

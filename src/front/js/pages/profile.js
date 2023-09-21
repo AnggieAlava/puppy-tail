@@ -43,8 +43,16 @@ export const Profile = ({keeper}) => {
     //Return first digit as string
     return (difference / 365).toString().slice(0, 1)+"+ years";
   }
-
-  function updateUser() {
+  async function uploadAvatar(e){
+    //Picture
+}
+async function updateUser(e) {
+    //Picture
+    e.preventDefault()
+    const formData = new FormData(document.getElementById("formID"))
+    console.log({formData})
+    let resp = await actions.uploadPicture(formData)
+    console.log(resp.code)
     //Services
     let arr = [];
     if (document.getElementById("petWalker").checked) arr.push("Pet Walker");
@@ -89,10 +97,10 @@ export const Profile = ({keeper}) => {
                                         <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={avatar} className=""></img>
                                     </div>
                                 </div>
-                                <div className="text-center mb-3">
-                                    <input type="file" id="avatarImg" hidden/>
+                                <form className="text-center mb-3" id="formID">
+                                    <input type="file" name="avatar" id="avatarImg" hidden/>
                                     <label className="btn btn-outline-dark" htmlFor="avatarImg">Upload a picture</label>
-                                </div>
+                                </form>
                                 <div className="row mb-3">
                                     <div className="col">
                                         <label htmlFor="firstNameInput" className="form-label">First Name</label>

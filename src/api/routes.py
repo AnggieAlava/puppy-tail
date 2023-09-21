@@ -18,6 +18,7 @@ api = Blueprint('api', __name__)
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
+#ruta que filtra por ubicacion 
 
 def signup_by_type(new_user, data):
     new_user.first_name = data["first_name"]
@@ -160,11 +161,11 @@ def delete_owner(owner_id):
 
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
-    limit = request.args.get('limit', type=int)
+    # limit = request.args.get('limit', type=int)
     keepers = Keeper.query.all()
     
-    if limit is not None and limit > 0:
-        keepers = keepers[:limit]
+    # if limit is not None and limit > 0:
+    #     keepers = keepers[:limit]
     
     keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description} for keeper in keepers]
     

@@ -10,7 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       singlePet: [],
       signup: [],
       signupKeeper: [],
-      keepers: [],
+      getKeepers: [],
       keepersToShow: []
     },
     actions: {
@@ -295,7 +295,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const resp = await apiFetch("/keeper", "GET");
 
           if (resp.code === 200) {
-            setStore({ keepers: resp.data });
+            setStore({ getKeepers: resp.data });
           } else {
             console.error("Error al obtener los keepers:", resp);
           }
@@ -304,37 +304,37 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      keepersToShow: async (limit) => {
-        try {
-          const store = getStore();
-          const { apiFetch } = getActions();
-          const endpoint = limit ? `/keeper?limit=${limit}` : "/keeper";
+      // keepersToShow: async (limit) => {
+      //   try {
+      //     const store = getStore();
+      //     const { apiFetch } = getActions();
+      //     const endpoint = limit ? `/keeper?limit=${limit}` : "/keeper";
 
-          const resp = await apiFetch(endpoint, "GET");
+      //     const resp = await apiFetch(endpoint, "GET");
 
-          if (resp.code === 200) {
-            const keepers = resp.data;
-            let randomKeepers = [];
-            const selectedKeeperIds = [];
+      //     if (resp.code === 200) {
+      //       const keepers = resp.data;
+      //       let randomKeepers = [];
+      //       const selectedKeeperIds = [];
 
-            while (randomKeepers.length < limit) {
-              const randomIndex = Math.floor(Math.random() * keepers.length);
-              const randomKeeper = keepers[randomIndex];
+      //       while (randomKeepers.length < limit) {
+      //         const randomIndex = Math.floor(Math.random() * keepers.length);
+      //         const randomKeeper = keepers[randomIndex];
 
-              // Aqui estoy verificando si el keeper ya ha sido seleccionado por medio de su id, posdata evito repetir keepers
-              if (!selectedKeeperIds.includes(randomKeeper.id)) {
-                randomKeepers.push(randomKeeper);
-                selectedKeeperIds.push(randomKeeper.id);
-              }
-            }
-            setStore({ keepersToShow: randomKeepers });
-          } else {
-            console.error("Error al obtener los keepers:", resp);
-          }
-        } catch (error) {
-          console.error("Error en keepersToShow:", error);
-        }
-      }
+      //         // Aqui estoy verificando si el keeper ya ha sido seleccionado por medio de su id, posdata evito repetir keepers
+      //         if (!selectedKeeperIds.includes(randomKeeper.id)) {
+      //           randomKeepers.push(randomKeeper);
+      //           selectedKeeperIds.push(randomKeeper.id);
+      //         }
+      //       }
+      //       setStore({ keepersToShow: randomKeepers });
+      //     } else {
+      //       console.error("Error al obtener los keepers:", resp);
+      //     }
+      //   } catch (error) {
+      //     console.error("Error en keepersToShow:", error);
+      //   }
+      // }
     }
   };
 };

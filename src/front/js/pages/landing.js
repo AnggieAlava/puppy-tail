@@ -4,18 +4,18 @@ import "../../styles/landing.css";
 import { Context } from "../store/appContext";
 
 let titles = [
-  "Hazlo por el y por ti",
-  "Lavamos su pelo por ti",
-  "Tu amigo incondicional",
-  "Love and pets",
-  "Somos un todo"
+  "Bienvenido a Puppy Tail",
+  "Explora el mundo de Puppy Tail",
+  "Amor en cada latido de cola",
+  "Tu Compañero, nuestra pasión",
+  "La cola que siempre está en alto",
 ];
 let descriptions = [
-  "Discovering beauty in every step",
-  "Grooming keeps pets looking great",
-  "Regular exercise ensures happy pets",
-  "Love and play daily together",
-  "La amistad y el cuidado"
+  "Cuidado y alegría para mascotas, todo a la medida de tus necesidades",
+  "Tu destino para mascotas felices",
+  "Tu compañero, nuestra pasión",
+  "Sabemos que tu peludo amigo es importante para ti, para nosotros tambien lo es",
+  "La amistad y el cuidado, somo sun todo, tu, tu mascota y nuestra familia de Puppy Tail",
 ];
 
 export const Landing = () => {

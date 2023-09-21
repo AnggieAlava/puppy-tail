@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
+import locations from "../../json/location.json";
 
 export const Signup = (props) => {
   const { store, actions } = useContext(Context);
@@ -80,6 +81,20 @@ export const Signup = (props) => {
               name="password"
               id="inputPassword1"
             />
+          </div>
+          <div className="mb-3">
+            <select defaultValue="0" onChange={(e) => console.log(e.target.value)}>
+              <option value="0" disabled>
+                Seleccione una opcion
+              </option>
+              {locations.map((location, index) => {
+                return (
+                  <option value={location.es_name} key={index}>
+                    {location.es_name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <button id="btn-signup" type="submit" className="btn">
             Registrarse

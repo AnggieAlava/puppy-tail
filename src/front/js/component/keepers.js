@@ -2,9 +2,11 @@ import React, { useContext, useEffect } from "react";
 import avatar from "../../img/avatar.jpg";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import "../../styles/keepers.css";
 
 const Keepers = () => {
   const { store, actions } = useContext(Context);
+  const limit = 6;
   useEffect(() => {
     actions.keepersToShow(3);
   }, []);
@@ -36,7 +38,6 @@ const Keepers = () => {
         </div>
       ))}
     </div>
-  );
+  )
 };
-
 export default Keepers;

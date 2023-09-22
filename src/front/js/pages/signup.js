@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import locations from "../../json/location.json";
+import { HidePassword } from "../component/hidePassword";
 
 export const Signup = (props) => {
   const { store, actions } = useContext(Context);
@@ -34,11 +35,11 @@ export const Signup = (props) => {
     <div id="signup-page" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
-        <h1>Welcome Owners</h1>
+        <h1>BIENVENIDOS</h1>
         <form className="pe-3" onSubmit={signup} id="puppySignup">
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
-              Name
+              Nombre
             </label>
             <input
               type="text"
@@ -49,7 +50,7 @@ export const Signup = (props) => {
           </div>
           <div className="mb-3">
             <label htmlFor="inputLastName" className="form-label">
-              Last Name
+              Apellido
             </label>
             <input
               type="text"
@@ -60,7 +61,7 @@ export const Signup = (props) => {
           </div>
           <div className="mb-3">
             <label htmlFor="inputEmail1" className="form-label">
-              Email address
+              Correo electrónico
             </label>
             <input
               type="email"
@@ -72,18 +73,9 @@ export const Signup = (props) => {
             <div id="emailHelp" className="form-text"></div>
           </div>
           <div className="mb-3">
-            <label htmlFor="inputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              id="inputPassword1"
-            />
-          </div>
-          <div className="mb-3">
-            <select defaultValue="0" onChange={(e) => console.log(e.target.value)}>
+            <select
+              defaultValue="0"
+              onChange={(e) => console.log(e.target.value)}>
               <option value="0" disabled>
                 Seleccione una opcion
               </option>
@@ -96,6 +88,7 @@ export const Signup = (props) => {
               })}
             </select>
           </div>
+          <HidePassword />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>
@@ -105,5 +98,5 @@ export const Signup = (props) => {
   );
 };
 Signup.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
 };

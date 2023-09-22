@@ -21,7 +21,7 @@ export const Logout = () => {
   return (
     <li className="nav-item">
       <Link to="/" onClick={handleLogout} className="nav-link">
-        Logout
+        Cerrar sesión
       </Link>
     </li>
   );

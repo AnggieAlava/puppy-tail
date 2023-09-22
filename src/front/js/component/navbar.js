@@ -33,12 +33,12 @@ export const Navbar = () => {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/login">
-                Login
+                Iniciar sesión
               </Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/signup">
-                Signup
+                Registrarse
               </Link>
             </li>
             <Logout />

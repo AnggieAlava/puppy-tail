@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import swal from "sweetalert";
+import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -11,9 +11,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       signup: [],
       signupKeeper: [],
       keepers: [],
-      keepersToShow: []
+      keepersToShow: [],
+      currentUser: [],
+      profilePic: null
     },
     actions: {
+      setPets: (obj) => {
+        setStore({pets:obj})
+      },
       //Get all pets from the database, including the owners inside the pet object.
       getPets: async () => {
         const { pets } = getStore();
@@ -36,6 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //Get pets by owner id
       getOwnerPets: async (owner_id) => {
         const { pets } = getStore();
+        console.log(process.env.BACKEND_URL+`/api/pets/owner/${owner_id}`);
         try {
           fetch(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`)
             .then((resp) => {
@@ -286,7 +292,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         navigate("/login");
         console.log(resp);
       },
-
+      updateKeeper: async (obj) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/keeper/${obj.id}`, "PUT", {
+          "first_name":obj.first_name,
+          "last_name": obj.last_name,
+          "hourly_pay": obj.hourly_pay,
+          "description":obj.description,
+          "experience":obj.experience,
+          "services": obj.services,
+          "location": obj.location
+        });
+        if (resp.code != 200) {
+          console.error("Error saving profile, code: "+ resp.code);
+          return resp;
+        }
+        localStorage.setItem("keeper",JSON.stringify(resp.data))
+      },
+      uploadPicture: async (formData, id) => {
+        const { accessToken } = getStore();
+        if (!accessToken) {
+          return "No token";
+        }
+        const { userInfo } = getStore();
+        const resp = await fetch(process.env.BACKEND_URL+`/api/avatar/${id}`, {
+          method:"POST",
+          body:formData,
+          headers:{
+            "Authorization":"Bearer " + accessToken
+          }
+        });
+        if (!resp.ok) {
+          console.error("Error saving picture, code: "+ resp.code);
+          return resp;
+        }
+        let data = await resp.json()
+        setStore({profilePic: data.public_url})
+        return data
+      },
       getKeepers: async () => {
         try {
           const store = getStore();
@@ -303,7 +346,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en getKeepers:", error);
         }
       },
-
       keepersToShow: async (limit) => {
         try {
           const store = getStore();
@@ -328,11 +370,28 @@ const getState = ({ getStore, getActions, setStore }) => {
               }
             }
             setStore({ keepersToShow: randomKeepers });
+            console.log(randomKeepers)
           } else {
             console.error("Error al obtener los keepers:", resp);
           }
         } catch (error) {
           console.error("Error en keepersToShow:", error);
+        }
+      },
+      getOwner: async (id) => {
+        try {
+          fetch(process.env.BACKEND_URL+`/api/owner/${id}`).then(resp=>{
+            if(!resp.ok){
+              console.error(resp.status+": "+resp.statusText)
+            }
+            return resp.json();
+          }).then(data=>{
+            console.log("retrieved owner data successfully => "+data)
+            setStore({currentUser:data})
+            //return data;
+          })
+        } catch (error) {
+          console.error(error);
         }
       }
     }

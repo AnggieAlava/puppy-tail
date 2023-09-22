@@ -9,7 +9,7 @@ const BarSearch = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Found a keeper close to you"
+              placeholder="Encuentra a los cuidadores mas cercanos a ti"
             />
           </div>
         </div>

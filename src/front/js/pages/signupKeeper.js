@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
+import { HidePassword } from "../component/hidePassword";
 
 export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
@@ -39,11 +40,11 @@ export const SignupKeeper = (props) => {
     <div id="signup-page" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
-        <h1>Bienvenido Cuidador</h1>
+        <h1>BIENVENIDO CUIDADOR</h1>
         <form className="pe-3" onSubmit={signupKeeper}>
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label">
-              Name
+              Nombre
             </label>
             <input
               type="text"
@@ -54,7 +55,7 @@ export const SignupKeeper = (props) => {
           </div>
           <div className="mb-3">
             <label htmlFor="inputLastName" className="form-label">
-              Last Name
+              Apellido
             </label>
             <input
               type="text"
@@ -65,7 +66,7 @@ export const SignupKeeper = (props) => {
           </div>
           <div className="mb-3">
             <label htmlFor="inputEmail1" className="form-label">
-              Email address
+              Correo electrónico
             </label>
             <input
               type="email"
@@ -76,20 +77,10 @@ export const SignupKeeper = (props) => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="inputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              id="inputPassword1"
-            />
-          </div>
+          <HidePassword />
           <div className="mb-3">
             <label htmlFor="inputPayment" className="form-label">
-              Hourly Pay
+              Tarifa por hora
             </label>
             <input
               type="text"
@@ -107,5 +98,5 @@ export const SignupKeeper = (props) => {
   );
 };
 SignupKeeper.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
 };

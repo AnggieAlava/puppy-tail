@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
+import { HidePassword } from "../component/hidePassword";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -18,15 +19,16 @@ export const Login = () => {
       navigate("/home");
     }
   }
+
   return (
     <div id="login-page" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
-        <h2>Login</h2>
+        <h2></h2>
         <form className="pe-3" onSubmit={login}>
           <div className="mb-3">
             <label htmlFor="inputEmail" className="form-label">
-              Email address
+              Correo electrónico
             </label>
             <input
               type="email"
@@ -37,19 +39,9 @@ export const Login = () => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="inputPassword" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              name="password"
-              id="inputPassword"
-            />
-          </div>
+          <HidePassword />
           <button id="btn-login" type="submit" className="btn">
-            Iniciar sesion
+            Iniciar sesión
           </button>
         </form>
       </div>

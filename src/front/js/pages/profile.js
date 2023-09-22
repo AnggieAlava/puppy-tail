@@ -6,24 +6,21 @@ import { KeeperForm } from "../component/keeperForm";
 import { Pets } from "../component/pets";
 
 export const Profile = ({keeper}) => {
-	const { store, actions } = useContext(Context);
-    const [currentUser, setcurrentUser] = useState({})
 	const params = useParams();
+	const { store, actions } = useContext(Context);
+    const [currentUser, setcurrentUser] = useState(JSON.parse(localStorage.getItem(params.type)))
     //USED TO CHECK SERVICES IN EDIT MENU. REMOVE
-    const localUser = JSON.parse(localStorage.getItem(params.type))
-    const petW = localUser.services.includes("Pet Walker")
-    const petS = localUser.services.includes("Pet Sitter")
-    const partyP = localUser.services.includes("Party Planner")
-    
-    const [avatar, setAvatar] = useState(localUser.profile_pic)
+    const petW = currentUser.services.includes("Pet Walker")
+    const petS = currentUser.services.includes("Pet Sitter")
+    const partyP = currentUser.services.includes("Party Planner")
+    //Profile picture
+    const [file, setFile] = useState(stock_avatar) //TEMP PROFILE PIC. FOR PREVIEW ONLY
+    const [avatar, setAvatar] = useState(currentUser.profile_pic)
   
-    useEffect(() => {
-    setcurrentUser(localUser);
-  }, []);
   function imgErrorHandler(e){
     e.target.src = stock_avatar
 }
-  function yearsExperience(b) {
+function yearsExperience(b) {
     const _MS_PER_DAY = 1000 * 60 * 60 * 24;
     // Discard the time and time-zone information.
     let today = new Date();
@@ -42,17 +39,22 @@ export const Profile = ({keeper}) => {
     let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
     //Return first digit as string
     return (difference / 365).toString().slice(0, 1)+"+ years";
-  }
-  async function uploadAvatar(e){
-    //Picture
 }
-async function updateUser(e) {
+async function uploadAvatar(){
     //Picture
-    e.preventDefault()
-    const formData = new FormData(document.getElementById("formID"))
-    console.log({formData})
-    let resp = await actions.uploadPicture(formData)
-    console.log(resp.code)
+    //e.preventDefault()
+    const formData = new FormData()
+    formData.append("avatar",document.getElementById("avatarImg").files[0])
+    let resp = await actions.uploadPicture(formData, currentUser.id)
+    console.log(resp)
+    //Set picture as avatar in preview
+    setAvatar(resp.public_url)
+    currentUser["profile_pic"] = resp.public_url;
+    localStorage.setItem("keeper",JSON.stringify(currentUser))
+    //Set avatar = file
+    //Call updateUser()
+}
+async function updateUser() {
     //Services
     let arr = [];
     if (document.getElementById("petWalker").checked) arr.push("Pet Walker");
@@ -61,15 +63,17 @@ async function updateUser(e) {
       arr.push("Party Planner");
     if (arr.length === 0) arr.push("No services yet");
     //Experience
-    console.log(document.getElementById("experienceInput").value)
-    let xp = yearsExperience(document.getElementById("experienceInput").value);
+    let xp = document.getElementById("experienceInput").value
+    if(xp ==""){
+        xp = currentUser.experience
+    }
     let obj = {
         id: currentUser.id,
         first_name: document.getElementById("firstNameInput").value,
         last_name: document.getElementById("lastNameInput").value,
         hourly_pay: document.getElementById("feeInput").value,
         description: document.getElementById("descriptionInput").value,
-        experience: document.getElementById("experienceInput").value,
+        experience: xp,
         services: arr,
         location: document.getElementById("locationInput").value,
       }
@@ -91,16 +95,19 @@ async function updateUser(e) {
                             </div>
                         <div className="modal-body textLeft">
                             {/* FORM BODY */}
-                            <form>
+                            <form id="formID">
                                 <div className="mb-3">
                                     <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
-                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={avatar} className=""></img>
+                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={file} className=""></img>
                                     </div>
                                 </div>
-                                <form className="text-center mb-3" id="formID">
-                                    <input type="file" name="avatar" id="avatarImg" hidden/>
-                                    <label className="btn btn-outline-dark" htmlFor="avatarImg">Upload a picture</label>
-                                </form>
+                                <div className="text-center mb-3">
+                                    <input type="file" name="avatar" id="avatarImg" onChange={(event)=>setFile(URL.createObjectURL(event.target.files[0]))} hidden/>
+                                    <div className="d-flex justify-content-center">
+                                        {(file != stock_avatar? <div className="input-group d-flex justify-content-center"><button className="btn btn-outline-dark" type="button" onClick={()=>uploadAvatar(document.getElementById("avatarImg").event)}>Upload</button>
+                                        <button type="button" className="btn btn-outline-danger" onClick={()=>setFile(stock_avatar)}><i className="fa-solid fa-trash"></i></button></div>:<label className="btn btn-outline-dark" htmlFor="avatarImg">Select picture</label>)}
+                                    </div>
+                                </div>
                                 <div className="row mb-3">
                                     <div className="col">
                                         <label htmlFor="firstNameInput" className="form-label">First Name</label>
@@ -114,7 +121,7 @@ async function updateUser(e) {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <label htmlFor="categoryInput" className="form-label">Start date (Experience)</label>
-                                        <input type="date" className="form-control" id="experienceInput" defaultValue={currentUser.experience}/>
+                                        <input type="date" className="form-control" id="experienceInput"/>
                                     </div>
                                     <div className="col">
                                         <label htmlFor="feeInput" className="form-label">Hourly Fee</label>

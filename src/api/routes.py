@@ -302,6 +302,7 @@ def profilePicture(user_id):
     #user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
+    print(request.files)
     file = request.files["avatar"]
     #Extraer la extension del archivo
     extension = file.filename.split(".")[1]

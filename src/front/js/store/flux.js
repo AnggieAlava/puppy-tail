@@ -309,27 +309,26 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         localStorage.setItem("keeper",JSON.stringify(resp.data))
       },
-      uploadPicture: async (formData) => {
+      uploadPicture: async (formData, id) => {
         const { accessToken } = getStore();
         if (!accessToken) {
           return "No token";
         }
         const { userInfo } = getStore();
-        const { apiFetch } = getActions();
-        const resp = await apiFetch(`/avatar/${userInfo.userId}`, {
+        const resp = await fetch(process.env.BACKEND_URL+`/api/avatar/${id}`, {
           method:"POST",
           body:formData,
           headers:{
             "Authorization":"Bearer " + accessToken
           }
         });
-        if (resp.code != 200) {
+        if (!resp.ok) {
           console.error("Error saving picture, code: "+ resp.code);
           return resp;
         }
         let data = await resp.json()
         setStore({profilePic: data.public_url})
-       //setStore({profilePic:resp.data}) //Store image from firebase
+        return data
       },
       getKeepers: async () => {
         try {

@@ -388,7 +388,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }).then(data=>{
             console.log("retrieved owner data successfully => "+data)
             setStore({currentUser:data})
-            //return data;
+            return data;
           })
         } catch (error) {
           console.error(error);

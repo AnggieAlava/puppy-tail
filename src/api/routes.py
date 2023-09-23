@@ -153,6 +153,25 @@ def get_owner(owner_id):
     }
     return jsonify(owner_data), 200
 
+@api.route('/owner/<int:owner_id>', methods=["PUT"])
+def updateOwner(owner_id):
+    owner = Owner.query.get(owner_id)
+    data = request.get_json(force=True)
+    owner.first_name = (data["first_name"].lower()).title()
+    owner.last_name = (data["last_name"].lower()).title()
+    owner.description = data["description"]
+    owner.location = data["location"]
+        
+    db.session.commit()
+    owner = {
+        "id": owner.id,
+        "first_name":owner.first_name,
+        "last_name":owner.last_name,
+        "description":owner.description,
+        "location": owner.location
+    }
+    return jsonify(owner),200
+
 @api.route('/owner/<int:owner_id>', methods=['DELETE'])
 def delete_owner(owner_id):
     owner = Owner.query.get(owner_id)

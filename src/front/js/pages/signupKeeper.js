@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import { HidePassword } from "../component/hidePassword";
+import { FilterLocation } from "../component/filterLocation";
 
 export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
@@ -23,15 +24,15 @@ export const SignupKeeper = (props) => {
     const first_name = data.get("first_name");
     const last_name = data.get("last_name");
     const email = data.get("email");
+    const location = data.get("location");
     const password = data.get("password");
-    const hourly_pay = data.get("hourly_pay");
     const { signupKeeper } = actions;
     let resp = await signupKeeper(
       first_name,
       last_name,
       email,
-      password,
-      hourly_pay
+      location,
+      password
     );
     setShouldNavigate(true);
     console.log(resp);
@@ -77,18 +78,8 @@ export const SignupKeeper = (props) => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
+          <FilterLocation />
           <HidePassword />
-          <div className="mb-3">
-            <label htmlFor="inputPayment" className="form-label">
-              Tarifa por hora
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="hourly_pay"
-              id="inputPayment"
-            />
-          </div>
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>

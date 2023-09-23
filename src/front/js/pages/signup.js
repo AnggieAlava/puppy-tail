@@ -5,6 +5,7 @@ import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import locations from "../../json/location.json";
 import { HidePassword } from "../component/hidePassword";
+import { FilterLocation } from "../component/filterLocation";
 
 export const Signup = (props) => {
   const { store, actions } = useContext(Context);
@@ -24,9 +25,10 @@ export const Signup = (props) => {
     const first_name = data.get("first_name");
     const last_name = data.get("last_name");
     const email = data.get("email");
+    const location = data.get("location");
     const password = data.get("password");
     const { signup } = actions;
-    let resp = await signup(first_name, last_name, email, password);
+    let resp = await signup(first_name, last_name, email, location, password);
     setShouldNavigate(true);
     console.log(resp);
   }
@@ -72,22 +74,7 @@ export const Signup = (props) => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
-          <div className="mb-3">
-            <select
-              defaultValue="0"
-              onChange={(e) => console.log(e.target.value)}>
-              <option value="0" disabled>
-                Seleccione una opcion
-              </option>
-              {locations.map((location, index) => {
-                return (
-                  <option value={location.es_name} key={index}>
-                    {location.es_name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
+          <FilterLocation />
           <HidePassword />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse

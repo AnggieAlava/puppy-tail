@@ -28,9 +28,9 @@
 #inputName,
 #inputLastName,
 #inputEmail1,
-#inputDni,
 #inputPassword1,
-#inputPayment {
+#inputPayment,
+#inputLocation {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;

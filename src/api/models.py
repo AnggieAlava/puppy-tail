@@ -42,7 +42,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
     description = db.Column(db.String(1000), unique=False, nullable=True)
-    location = db.Column(db.String(255), unique=False, nullable=True)
+    location = db.Column(db.String(255), unique=False, nullable=False)
     profile_pic = db.Column(db.String(150), unique=False, nullable=True)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     user_type = db.Column(db.String(50))
@@ -72,7 +72,7 @@ class Owner (User, SerializerMixin):
 class Keeper(User, SerializerMixin):
     __tablename__ = 'keeper'
     id = db.mapped_column(db.ForeignKey("user.id"), primary_key=True)
-    hourly_pay = db.Column(db.Float, nullable=False)
+    hourly_pay = db.Column(db.Float, nullable=True)
     experience = db.Column(db.Date, nullable=True)
     services = db.Column(db.ARRAY(db.String(50)), nullable=True)
     #One keeper to many bookings

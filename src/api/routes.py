@@ -99,7 +99,6 @@ def handle_hello():
     response_body = {
         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
     }
-
     return jsonify(response_body), 200
 
 @api.route('/logout', methods=['POST'])
@@ -165,15 +164,29 @@ def delete_owner(owner_id):
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
     keepers = Keeper.query.all()
-    keepers_data = [{"id": keeper.id, 
-                     "first_name": keeper.first_name, 
-                     "last_name": keeper.last_name, 
-                     "email": keeper.email, 
-                     "location": keeper.location,
-                     "hourly_pay": keeper.hourly_pay, 
-                     "description": keeper.description,
-                     "profile_pic": getprofilePic(keeper.id) , 
-                     "experience": datetime.datetime.strptime((keeper.experience.strftime("%Y/%m/%d")), '%Y/%m/%d').date(), "services":[service for service in keeper.services]} for keeper in keepers]
+    keepers_data = []
+
+    for keeper in keepers:
+        if keeper.experience:
+            experience_date = datetime.datetime.strptime(keeper.experience.strftime("%Y/%m/%d"), '%Y/%m/%d').date()
+        else:
+            experience_date = None
+
+        keeper_data = {
+            "id": keeper.id,
+            "first_name": keeper.first_name,
+            "last_name": keeper.last_name,
+            "email": keeper.email,
+            "location": keeper.location,
+            "hourly_pay": keeper.hourly_pay,
+            "description": keeper.description,
+            "profile_pic": getprofilePic(keeper.id),
+            "experience": experience_date,
+            "services": [service for service in keeper.services]
+        }
+
+        keepers_data.append(keeper_data)
+
     return jsonify(keepers_data), 200
 
 

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import "../../styles/login.css";
@@ -47,4 +48,7 @@ export const Login = () => {
       </div>
     </div>
   );
+};
+Login.propTypes = {
+  match: PropTypes.object,
 };

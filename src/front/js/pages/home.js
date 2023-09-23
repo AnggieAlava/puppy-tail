@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 // import BarSearch from "../component/barSearch";
 import Keepers from "../component/keepers";

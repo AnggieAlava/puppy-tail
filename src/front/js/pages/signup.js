@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
+import locations from "../../json/location.json";
 import { HidePassword } from "../component/hidePassword";
 
 export const Signup = (props) => {
@@ -70,6 +71,22 @@ export const Signup = (props) => {
               aria-describedby="emailHelp"
             />
             <div id="emailHelp" className="form-text"></div>
+          </div>
+          <div className="mb-3">
+            <select
+              defaultValue="0"
+              onChange={(e) => console.log(e.target.value)}>
+              <option value="0" disabled>
+                Seleccione una opcion
+              </option>
+              {locations.map((location, index) => {
+                return (
+                  <option value={location.es_name} key={index}>
+                    {location.es_name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
           <HidePassword />
           <button id="btn-signup" type="submit" className="btn">

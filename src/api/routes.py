@@ -18,6 +18,7 @@ api = Blueprint('api', __name__)
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
+#ruta que filtra por ubicacion 
 
 def signup_by_type(new_user, data):
     new_user.first_name = data["first_name"]
@@ -98,7 +99,6 @@ def handle_hello():
     response_body = {
         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
     }
-
     return jsonify(response_body), 200
 
 @api.route('/logout', methods=['POST'])
@@ -142,7 +142,7 @@ def get_owner(owner_id):
         bucket = storage.bucket(name="puppy-tail.appspot.com")
         resource = bucket.blob(owner.profile_pic)
         imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
-    owner_data = {
+        owner_data = {
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
@@ -163,13 +163,30 @@ def delete_owner(owner_id):
 
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
-    limit = request.args.get('limit', type=int)
     keepers = Keeper.query.all()
-    
-    if limit is not None and limit > 0:
-        keepers = keepers[:limit]
-    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "location": keeper.location, "hourly_pay": keeper.hourly_pay, "description": keeper.description, "profile_pic": getprofilePic(keeper.id) , "experience": datetime.datetime.strptime((keeper.experience.strftime("%Y/%m/%d")), '%Y/%m/%d').date(), "services":[service for service in keeper.services]} for keeper in keepers]
-    
+    keepers_data = []
+
+    for keeper in keepers:
+        if keeper.experience:
+            experience_date = datetime.datetime.strptime(keeper.experience.strftime("%Y/%m/%d"), '%Y/%m/%d').date()
+        else:
+            experience_date = None
+
+        keeper_data = {
+            "id": keeper.id,
+            "first_name": keeper.first_name,
+            "last_name": keeper.last_name,
+            "email": keeper.email,
+            "location": keeper.location,
+            "hourly_pay": keeper.hourly_pay,
+            "description": keeper.description,
+            "profile_pic": getprofilePic(keeper.id),
+            "experience": experience_date,
+            "services": [service for service in keeper.services]
+        }
+
+        keepers_data.append(keeper_data)
+
     return jsonify(keepers_data), 200
 
 
@@ -182,7 +199,7 @@ def get_keeper(keeper_id):
         bucket = storage.bucket(name="puppy-tail.appspot.com")
         resource = bucket.blob(keeper.profile_pic)
         imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
-    keeper_data = {
+        keeper_data = {
         "id": keeper.id,
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,
@@ -205,7 +222,6 @@ def updateKeeper(keeper_id):
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]
     keeper.location = data["location"]
-        
     db.session.commit()
     keeper = {
         "id": keeper.id,

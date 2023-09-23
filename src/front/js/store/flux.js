@@ -10,14 +10,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       singlePet: [],
       signup: [],
       signupKeeper: [],
-      keepers: [],
-      keepersToShow: [],
+      getKeepers: [],
       currentUser: [],
-      profilePic: null
+      profilePic: null,
     },
     actions: {
       setPets: (obj) => {
-        setStore({pets:obj})
+        setStore({ pets: obj });
       },
       //Get all pets from the database, including the owners inside the pet object.
       getPets: async () => {
@@ -41,7 +40,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       //Get pets by owner id
       getOwnerPets: async (owner_id) => {
         const { pets } = getStore();
-        console.log(process.env.BACKEND_URL+`/api/pets/owner/${owner_id}`);
+        console.log(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`);
         try {
           fetch(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`)
             .then((resp) => {
@@ -68,8 +67,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "POST",
             body: JSON.stringify(obj),
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           })
             .then((response) => {
               if (!response.ok) {
@@ -92,8 +91,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             method: "PUT",
             body: JSON.stringify(obj),
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           })
             .then((response) => {
               if (!response.ok) {
@@ -131,7 +130,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deletePet: async (obj) => {
         try {
           fetch(process.env.BACKEND_URL + `/api/pets/${obj.id}`, {
-            method: "DELETE"
+            method: "DELETE",
           })
             .then((response) => {
               if (!response.ok) {
@@ -162,8 +161,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           const params = {
             method,
             headers: {
-              "Content-Type": "application/json"
-            }
+              "Content-Type": "application/json",
+            },
           };
           if (body) params.body = JSON.stringify(body);
           request = fetch(process.env.BACKEND_URL + "/api" + endpoint, params);
@@ -182,8 +181,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           method,
           headers: {
             /* prettier-ignore */
-            'Authorization': "Bearer " + accessToken
-          }
+            'Authorization': "Bearer " + accessToken,
+          },
         };
         if (body) {
           params.headers["Content-Type"] = "application/json";
@@ -208,19 +207,19 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/login", "POST", {
           email,
-          password
+          password,
         });
         if (resp.code == 401) {
           swal({
             icon: "error",
             title: "Usuario inexistente",
-            text: "El usuario no existe en el sistema."
+            text: "El usuario no existe en el sistema.",
           });
         } else if (resp.code == 400) {
           swal({
             icon: "error",
             title: "Contraseña incorrecta",
-            text: "La contraseña ingresada es incorrecta."
+            text: "La contraseña ingresada es incorrecta.",
           });
         }
         console.log({ resp });
@@ -260,7 +259,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           last_name,
           first_name,
           email,
-          password
+          password,
         });
         if (resp.code === 201) {
           console.log("Signup Succesfully");
@@ -283,7 +282,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           first_name,
           email,
           password,
-          hourly_pay
+          hourly_pay,
         });
         if (resp.code === 201) {
           console.log("Signup Succesfully");
@@ -295,19 +294,19 @@ const getState = ({ getStore, getActions, setStore }) => {
       updateKeeper: async (obj) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch(`/keeper/${obj.id}`, "PUT", {
-          "first_name":obj.first_name,
-          "last_name": obj.last_name,
-          "hourly_pay": obj.hourly_pay,
-          "description":obj.description,
-          "experience":obj.experience,
-          "services": obj.services,
-          "location": obj.location
+          first_name: obj.first_name,
+          last_name: obj.last_name,
+          hourly_pay: obj.hourly_pay,
+          description: obj.description,
+          experience: obj.experience,
+          services: obj.services,
+          location: obj.location,
         });
         if (resp.code != 200) {
-          console.error("Error saving profile, code: "+ resp.code);
+          console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        localStorage.setItem("keeper",JSON.stringify(resp.data))
+        localStorage.setItem("keeper", JSON.stringify(resp.data));
       },
       uploadPicture: async (formData, id) => {
         const { accessToken } = getStore();
@@ -315,21 +314,25 @@ const getState = ({ getStore, getActions, setStore }) => {
           return "No token";
         }
         const { userInfo } = getStore();
-        const resp = await fetch(process.env.BACKEND_URL+`/api/avatar/${id}`, {
-          method:"POST",
-          body:formData,
-          headers:{
-            "Authorization":"Bearer " + accessToken
+        const resp = await fetch(
+          process.env.BACKEND_URL + `/api/avatar/${id}`,
+          {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: "Bearer " + accessToken,
+            },
           }
-        });
+        );
         if (!resp.ok) {
-          console.error("Error saving picture, code: "+ resp.code);
+          console.error("Error saving picture, code: " + resp.code);
           return resp;
         }
-        let data = await resp.json()
-        setStore({profilePic: data.public_url})
-        return data
+        let data = await resp.json();
+        setStore({ profilePic: data.public_url });
+        return data;
       },
+
       getKeepers: async () => {
         try {
           const store = getStore();
@@ -338,7 +341,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           const resp = await apiFetch("/keeper", "GET");
 
           if (resp.code === 200) {
-            setStore({ keepers: resp.data });
+            setStore({ getKeepers: resp.data });
           } else {
             console.error("Error al obtener los keepers:", resp);
           }
@@ -346,55 +349,26 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en getKeepers:", error);
         }
       },
-      keepersToShow: async (limit) => {
-        try {
-          const store = getStore();
-          const { apiFetch } = getActions();
-          const endpoint = limit ? `/keeper?limit=${limit}` : "/keeper";
 
-          const resp = await apiFetch(endpoint, "GET");
-
-          if (resp.code === 200) {
-            const keepers = resp.data;
-            let randomKeepers = [];
-            const selectedKeeperIds = [];
-
-            while (randomKeepers.length < limit) {
-              const randomIndex = Math.floor(Math.random() * keepers.length);
-              const randomKeeper = keepers[randomIndex];
-
-              // Aqui estoy verificando si el keeper ya ha sido seleccionado por medio de su id, posdata evito repetir keepers
-              if (!selectedKeeperIds.includes(randomKeeper.id)) {
-                randomKeepers.push(randomKeeper);
-                selectedKeeperIds.push(randomKeeper.id);
-              }
-            }
-            setStore({ keepersToShow: randomKeepers });
-            console.log(randomKeepers)
-          } else {
-            console.error("Error al obtener los keepers:", resp);
-          }
-        } catch (error) {
-          console.error("Error en keepersToShow:", error);
-        }
-      },
       getOwner: async (id) => {
         try {
-          fetch(process.env.BACKEND_URL+`/api/owner/${id}`).then(resp=>{
-            if(!resp.ok){
-              console.error(resp.status+": "+resp.statusText)
-            }
-            return resp.json();
-          }).then(data=>{
-            console.log("retrieved owner data successfully => "+data)
-            setStore({currentUser:data})
-            //return data;
-          })
+          fetch(process.env.BACKEND_URL + `/api/owner/${id}`)
+            .then((resp) => {
+              if (!resp.ok) {
+                console.error(resp.status + ": " + resp.statusText);
+              }
+              return resp.json();
+            })
+            .then((data) => {
+              console.log("retrieved owner data successfully => " + data);
+              setStore({ currentUser: data });
+              //return data;
+            });
         } catch (error) {
           console.error(error);
         }
-      }
-    }
+      },
+    },
   };
 };
 

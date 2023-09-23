@@ -138,16 +138,19 @@ def owners_list():
 def get_owner(owner_id):
     owner = Owner.query.get(owner_id)
     #Firebase image url generator
-    bucket = storage.bucket(name="puppy-tail.appspot.com")
-    resource = bucket.blob(owner.profile_pic)
-    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
-    owner_data = {
+    imgUrl = ""
+    if owner.profile_pic:
+        bucket = storage.bucket(name="puppy-tail.appspot.com")
+        resource = bucket.blob(owner.profile_pic)
+        imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
+        owner_data = {
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
         "email": owner.email,
         "profile_pic": imgUrl,
-        "pets": owner.pets
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+            for pet in owner.pets]
     }
     return jsonify(owner_data), 200
 
@@ -162,9 +165,15 @@ def delete_owner(owner_id):
 @api.route('/keeper', methods=["GET"])
 def keepers_list():
     keepers = Keeper.query.all()
-    
-    keepers_data = [{"id": keeper.id, "first_name": keeper.first_name, "last_name": keeper.last_name, "email": keeper.email, "profile_pic": keeper.profile_pic, "hourly_pay": keeper.hourly_pay, "description": keeper.description} for keeper in keepers]
-    
+    keepers_data = [{"id": keeper.id, 
+                     "first_name": keeper.first_name, 
+                     "last_name": keeper.last_name, 
+                     "email": keeper.email, 
+                     "location": keeper.location,
+                     "hourly_pay": keeper.hourly_pay, 
+                     "description": keeper.description,
+                     "profile_pic": getprofilePic(keeper.id) , 
+                     "experience": datetime.datetime.strptime((keeper.experience.strftime("%Y/%m/%d")), '%Y/%m/%d').date(), "services":[service for service in keeper.services]} for keeper in keepers]
     return jsonify(keepers_data), 200
 
 
@@ -172,20 +181,46 @@ def keepers_list():
 def get_keeper(keeper_id):
     keeper = Keeper.query.get(keeper_id)
     #Firebase img url generator
-    bucket = storage.bucket(name="puppy-tail.appspot.com")
-    resource = bucket.blob(keeper.profile_pic)
-    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
-    keeper_data = {
+    imgUrl = ''
+    if keeper.profile_pic:
+        bucket = storage.bucket(name="puppy-tail.appspot.com")
+        resource = bucket.blob(keeper.profile_pic)
+        imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
+        keeper_data = {
         "id": keeper.id,
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,
         "email": keeper.email,
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
+        "services": [service for service in keeper.services],
         "profile_pic": imgUrl
     }
     return jsonify(keeper_data), 200
 
+@api.route('/keeper/<int:keeper_id>', methods=["PUT"])
+def updateKeeper(keeper_id):
+    keeper = Keeper.query.get(keeper_id)
+    data = request.get_json(force=True)
+    keeper.first_name = (data["first_name"].lower()).title()
+    keeper.last_name = (data["last_name"].lower()).title()
+    keeper.hourly_pay = data["hourly_pay"]
+    keeper.description = data["description"]
+    keeper.experience = data["experience"]
+    keeper.services = [service for service in data["services"]]
+    keeper.location = data["location"]
+    db.session.commit()
+    keeper = {
+        "id": keeper.id,
+        "first_name":keeper.first_name,
+        "last_name":keeper.last_name,
+        "hourly_pay":keeper.hourly_pay,
+        "description":keeper.description,
+        "experience":keeper.experience,
+        "services": [service for service in keeper.services],
+        "location": keeper.location
+    }
+    return jsonify(keeper),200
 
 @api.route('/keeper/<int:keeper_id>', methods=['DELETE'])
 def delete_keeper(keeper_id):
@@ -261,7 +296,6 @@ def getPetsByOwner(owner_id):
             for pet in pets]
     return jsonify(pets), 200
 
-    
 
 
 #Endpoint para subir imagenes con firebase
@@ -271,6 +305,7 @@ def profilePicture(user_id):
     #user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
+    print(request.files)
     file = request.files["avatar"]
     #Extraer la extension del archivo
     extension = file.filename.split(".")[1]
@@ -287,5 +322,16 @@ def profilePicture(user_id):
     user.profile_pic = filename
     db.session.add(user)
     db.session.commit()
-    return jsonify({"msg":"Profile picture uploaded successfully"}), 201
+    #Return URL of new image
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return jsonify({"public_url":picture_url, "storable_url": user.profile_pic}), 201
 
+@api.route('/avatar/<int:user_id>', methods=["GET"])
+def getprofilePic(user_id):
+    user = User.query.get(user_id)
+    if user.profile_pic is None:
+        return ""
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(user.profile_pic)
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return picture_url

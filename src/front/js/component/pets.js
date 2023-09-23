@@ -49,7 +49,7 @@ export const Pets = (props) => {
             <ul className="p-0 d-flex flex-row flex-wrap justify-content-start align-items-center gap-4">
             {(store.pets.length < 1? "":store.pets.map((pet, index)=>{
             return (
-                <div style={{width: "12rem"}} index={index}>
+                <div style={{width: "12rem"}} key={index}>
                     <div style={{borderRadius:"50%", width: "100%", height:"auto", overflow:"hidden", aspectRatio:"1"}}><img onError={imgErrorHandler}  src="..." className="card-img-top" alt="..." /></div>
                     <div className="card-body">
                         <h5 className="card-title">{pet.name}</h5>
@@ -60,7 +60,7 @@ export const Pets = (props) => {
                         {(edit==false?"":<div className="d-flex flex-row justify-content-center gap-3">
                             <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editPet" onClick={()=>setPet(pet)}>Edit</button>
                             {/* <!-- Modal --> */}
-                            <div className="modal fade" id="editPet" tabindex="-1" aria-labelledby="editPetLabel" aria-hidden="true">
+                            <div className="modal fade" id="editPet" tabIndex="-1" aria-labelledby="editPetLabel" aria-hidden="true">
                                 <div className="modal-dialog modal-dialog-centered">
                                     <div className="modal-content">
                                         <div className="modal-header">
@@ -70,22 +70,22 @@ export const Pets = (props) => {
                                     <div className="modal-body textLeft">
                                         {/* FORM BODY */}
                                         <form>
-                                            <div class="mb-3">
-                                                <label for="nameInput" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="nameInput" aria-describedby="nameHelp" defaultValue={currentPet.name}/>
+                                            <div className="mb-3">
+                                                <label htmlFor="nameInput" className="form-label">Name</label>
+                                                <input type="text" className="form-control" id="nameInput" aria-describedby="nameHelp" defaultValue={currentPet.name}/>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="sizeInput" class="form-label">Size</label>
-                                                <select class="form-select" aria-label="Default select example" id="sizeInput" defaultValue={currentPet.size}>
+                                            <div className="mb-3">
+                                                <label htmlFor="sizeInput" className="form-label">Size</label>
+                                                <select className="form-select" aria-label="Default select example" id="sizeInput" defaultValue={currentPet.size}>
                                                     {/* <option selected>{currentPet.size}</option> */}
                                                     <option value="Small">Small (1-8kg)</option>
                                                     <option value="Medium">Medium (8-20kg)</option>
                                                     <option value="Large">Large (20+kg)</option>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="categoryInput" class="form-label">Category</label>
-                                                <input type="text" class="form-control" id="categoryInput" defaultValue={currentPet.category}/>
+                                            <div className="mb-3">
+                                                <label htmlFor="categoryInput" className="form-label">Category</label>
+                                                <input type="text" className="form-control" id="categoryInput" defaultValue={currentPet.category}/>
                                             </div>
                                         </form>
                                         {/* END OF FORM BODY */}
@@ -104,7 +104,7 @@ export const Pets = (props) => {
                                 <i className="fa-solid fa-trash"></i>
                             </button>
                             {/* <!-- Modal --> */}
-                            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div className="modal-dialog modal-dialog-centered">
                                     <div className="modal-content">
                                         <div className="modal-header">
@@ -133,7 +133,7 @@ export const Pets = (props) => {
                         <button className="btn btn-outline-dark rounded-circle" data-bs-toggle="modal" data-bs-target="#addPet" style={{aspectRatio:"1", width:"5rem", height:"5rem", fontSize:"42px", paddingTop:"0"}}>+</button>
                         <h5><strong>Add pet</strong></h5>
                         {/* <!-- Modal --> */}
-                        <div className="modal fade" id="addPet" tabindex="-1" aria-labelledby="addPetLabel" aria-hidden="true">
+                        <div className="modal fade" id="addPet" tabIndex="-1" aria-labelledby="addPetLabel" aria-hidden="true">
                                 <div className="modal-dialog modal-dialog-centered">
                                     <div className="modal-content">
                                         <div className="modal-header">
@@ -143,22 +143,22 @@ export const Pets = (props) => {
                                     <div className="modal-body textLeft">
                                         {/* FORM BODY */}
                                         <form>
-                                            <div class="mb-3">
-                                                <label for="newPetNameInput" class="form-label">Name</label>
-                                                <input type="text" class="form-control" id="newPetNameInput" aria-describedby="nameHelp"/>
+                                            <div className="mb-3">
+                                                <label htmlFor="newPetNameInput" className="form-label">Name</label>
+                                                <input type="text" className="form-control" id="newPetNameInput" aria-describedby="nameHelp"/>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="newPetSizeInput" class="form-label">Size</label>
-                                                <select class="form-select" aria-label="Size by kilograms" id="newPetSizeInput">
+                                            <div className="mb-3">
+                                                <label htmlFor="newPetSizeInput" className="form-label">Size</label>
+                                                <select className="form-select" aria-label="Size by kilograms" id="newPetSizeInput">
                                                     {/* <option selected>{currentPet.size}</option> */}
                                                     <option value="Small">Small (1-8kg)</option>
                                                     <option value="Medium">Medium (8-20kg)</option>
                                                     <option value="Large">Large (20+kg)</option>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="newPetCategoryInput" class="form-label">Category</label>
-                                                <input type="text" class="form-control" id="newPetCategoryInput"/>
+                                            <div className="mb-3">
+                                                <label htmlFor="newPetCategoryInput" className="form-label">Category</label>
+                                                <input type="text" className="form-control" id="newPetCategoryInput"/>
                                             </div>
                                         </form>
                                         {/* END OF FORM BODY */}

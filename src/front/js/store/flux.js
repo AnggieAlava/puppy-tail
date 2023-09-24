@@ -314,7 +314,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (!accessToken) {
           return "No token";
         }
-        const { userInfo } = getStore();
         const resp = await fetch(process.env.BACKEND_URL+`/api/avatar/${id}`, {
           method:"POST",
           body:formData,
@@ -326,9 +325,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving picture, code: "+ resp.code);
           return resp;
         }
+        const {currentUser} = getStore()
         let data = await resp.json()
-        setStore({profilePic: data.public_url})
-        return data
+        let user = currentUser
+        user["profile_pic"] = data.public_url
+        setStore({currentUser: user})
+        console.log("User info updated")
+        //return data
       },
       getKeepers: async () => {
         try {
@@ -393,6 +396,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error(error);
         }
+      },
+      updateOwner: async (obj) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/owner/${obj.id}`, "PUT", {
+          "first_name":obj.first_name,
+          "last_name": obj.last_name,
+          "description":obj.description,
+          "location": obj.location
+        });
+        if (resp.code != 200) {
+          console.error("Error saving profile, code: "+ resp.code);
+          return resp;
+        }
+        setStore({currentUser: resp.data})
       }
     }
   };

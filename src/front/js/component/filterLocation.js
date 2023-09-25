@@ -1,23 +1,26 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
-import "../../styles/login.css";
 import locations from "../../json/location.json";
+import "../../styles/filterLocation.css";
 
-export const FilterLocation = () => {
+export const FilterLocation = ({ onLocationChange }) => {
   const { store, actions } = useContext(Context);
+
+  const handleLocationChange = (e) => {
+    const selectedLocation = e.target.value;
+    onLocationChange(selectedLocation);
+  };
+
   return (
     <>
-      <div className="mb-3">
-        <label htmlFor="inputLocation" className="form-label">
-          Pais
-        </label>
+      <div className="filter-home">
         <select
-          className="form-control"
-          id="inputLocation"
+          className="m-5 form-control"
+          id="inputLocationHome"
           defaultValue="0"
-          onChange={(e) => console.log(e.target.value)}>
+          onChange={handleLocationChange}>
           <option value="0" disabled>
-            Seleccione una opcion
+            Seleccione su ubicación
           </option>
           {locations.map((location, index) => {
             return (

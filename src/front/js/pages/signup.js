@@ -5,13 +5,13 @@ import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import locations from "../../json/location.json";
 import { HidePassword } from "../component/hidePassword";
-import { FilterLocation } from "../component/filterLocation";
 
 export const Signup = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(" ");
 
   useEffect(() => {
     if (shouldNavigate) {
@@ -25,7 +25,7 @@ export const Signup = (props) => {
     const first_name = data.get("first_name");
     const last_name = data.get("last_name");
     const email = data.get("email");
-    const location = data.get("location");
+    const location = selectedLocation;
     const password = data.get("password");
     const { signup } = actions;
     let resp = await signup(first_name, last_name, email, location, password);
@@ -74,7 +74,30 @@ export const Signup = (props) => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
-          <FilterLocation />
+          <div className="mb-3">
+            <label htmlFor="inputLocation" className="form-label">
+              Pais
+            </label>
+            <select
+              className="form-control"
+              id="inputLocation"
+              defaultValue="0"
+              onChange={(e) => setSelectedLocation(e.target.value)}>
+              <option className="option-country" value="0" disabled>
+                Seleccione un pais
+              </option>
+              {locations.map((location, index) => {
+                return (
+                  <option
+                    className="option-country"
+                    value={location.es_name}
+                    key={index}>
+                    {location.es_name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <HidePassword />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse

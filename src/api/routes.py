@@ -24,6 +24,7 @@ def signup_by_type(new_user, data):
     new_user.first_name = data["first_name"]
     new_user.last_name = data["last_name"]
     new_user.email = data["email"]
+    new_user.location = data["location"]
     new_user.password = bcrypt.generate_password_hash(
         str(data["password"])).decode("utf-8")
     new_user.is_active = True
@@ -50,7 +51,6 @@ def create_keeper():
         return jsonify({"msg": "Email already registered"}), 400
     new_keeper = Keeper()
     signup_by_type(new_keeper, data)
-    new_keeper.hourly_pay = data["hourly_pay"]
     db.session.add(new_keeper)
     db.session.commit()
     return jsonify({"msg": "Keeper created successfully"}), 201
@@ -58,7 +58,6 @@ def create_keeper():
 @api.route('/login', methods=['POST'])
 def login_user():
     email= request.json.get("email")
-    
     password= request.json.get("password")
     user=User.query.filter_by(email=email).first()
     if user is None:
@@ -172,6 +171,11 @@ def keepers_list():
         else:
             experience_date = None
 
+        if keeper.services is not None:  # Check if keeper.services is not None
+            services = [service for service in keeper.services]
+        else:
+            services = [] 
+
         keeper_data = {
             "id": keeper.id,
             "first_name": keeper.first_name,
@@ -182,7 +186,7 @@ def keepers_list():
             "description": keeper.description,
             "profile_pic": getprofilePic(keeper.id),
             "experience": experience_date,
-            "services": [service for service in keeper.services]
+            "services": services 
         }
 
         keepers_data.append(keeper_data)

@@ -253,14 +253,14 @@ const getState = ({ getStore, getActions, setStore }) => {
       //   }
       // },
 
-      signup: async (first_name, last_name, email, password, location) => {
+      signup: async (first_name, last_name, email, location, password) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/signup", "POST", {
-          last_name,
           first_name,
+          last_name,
           email,
-          password,
           location,
+          password,
         });
         if (resp.code === 201) {
           console.log("Signup Succesfully");
@@ -274,18 +274,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         first_name,
         last_name,
         email,
-        password,
-        hourly_pay,
-        location
+        location,
+        password
       ) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/signup/keeper", "POST", {
-          last_name,
           first_name,
+          last_name,
           email,
-          password,
-          hourly_pay,
           location,
+          password,
         });
         if (resp.code === 201) {
           console.log("Signup Succesfully");

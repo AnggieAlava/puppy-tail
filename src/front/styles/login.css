@@ -38,6 +38,11 @@
   transition: none;
 }
 
+.option-country {
+  background-color: white;
+  color: black;
+}
+
 #btn-login,
 #btn-signup {
   border: 2px solid rgba(0, 0, 0, 0.563);

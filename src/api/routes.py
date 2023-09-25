@@ -150,7 +150,7 @@ def get_owner(owner_id):
         "description": owner.description,
         "email": owner.email,
         "profile_pic": imgUrl,
-        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
             for pet in owner.pets]
     }
     return jsonify(owner_data), 200
@@ -173,7 +173,9 @@ def updateOwner(owner_id):
         "last_name":owner.last_name,
         "description":owner.description,
         "location": owner.location,
-        "profile_pic": imgUrl
+        "profile_pic": imgUrl,
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
+            for pet in owner.pets]
     }
     return jsonify(owner),200
 
@@ -270,7 +272,14 @@ def createPet():
     db.session.add(new_pet)
     db.session.commit()
     # retornar el objeto creado
-    return jsonify({"msg": "Pet added successfully"}), 201
+    obj={
+        "name": new_pet.name,
+        "size": new_pet.size,
+        "category": new_pet.category,
+        "id": new_pet.id
+    }
+    print(obj)
+    return jsonify(obj), 201
 
 
 @api.route('/pets/<int:pet_id>', methods=['GET', 'DELETE', 'PUT'])
@@ -293,6 +302,7 @@ def getPet(pet_id):
         pet.name = (data["name"].lower()).title()
         pet.size = (data["size"].lower()).title()
         pet.category = (data["category"].lower()).title()
+        #pet.profile_pic = data["profile_pic"]
         db.session.commit()
         return jsonify({"msg": "Pet data updated"}), 200
     if request.method == 'DELETE':
@@ -313,7 +323,7 @@ def getAllPets():
 def getPetsByOwner(owner_id):
     pets = Pet.query.filter_by(owner_id=owner_id)
 
-    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category,"profile_pic": getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
             for pet in pets]
     return jsonify(pets), 200
 
@@ -352,5 +362,46 @@ def getprofilePic(user_id):
         return ""
     bucket = storage.bucket(name="puppy-tail.appspot.com")
     resource = bucket.blob(user.profile_pic)
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return picture_url
+
+@api.route('/pet_avatar/<int:pet_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL PET CON JWT
+#@jwt_required()
+def uploadpetAvatar(pet_id):
+    #user_id = get_jwt_identity()
+    pet = Pet.query.get(pet_id)
+    #Recibir archivo
+    file = request.files["avatar"]
+    #Extraer la extension del archivo
+    extension = file.filename.split(".").pop()
+    #Guardar archivo temporal
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    #Cargar archivo a firebase
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    filename = "pet_avatar/"+str(pet_id)+"."+extension
+    #Guardar en firebase
+    resource = bucket.blob(filename)
+    resource.upload_from_filename(temp.name, content_type="image/"+extension)
+    #Borra imagen actual de firebase si existe
+    # if pet.profile_pic != "":
+    #     previousAvatar = bucket.blob(pet.profile_pic)
+    #     previousAvatar.delete()
+    #     print("Previous avatar deleted from Firebase")
+    #Agrega la nueva imagen a nuestra base de datos
+    pet.profile_pic = filename
+    db.session.add(pet)
+    db.session.commit()
+    #Return URL of new image
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return jsonify({"public_url":picture_url, "storable_url": pet.profile_pic}), 201
+
+@api.route('/pet_avatar/<int:pet_id>', methods=["GET"])
+def getpetAvatar(pet_id):
+    pet = Pet.query.get(pet_id)
+    if pet.profile_pic is None:
+        return ""
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(pet.profile_pic)
     picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
     return picture_url

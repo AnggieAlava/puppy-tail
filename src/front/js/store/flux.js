@@ -16,9 +16,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       profilePic: null
     },
     actions: {
-      setPets: (obj) => {
-        setStore({pets:obj})
-      },
       //Get all pets from the database, including the owners inside the pet object.
       getPets: async () => {
         const { pets } = getStore();
@@ -41,20 +38,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       //Get pets by owner id
       getOwnerPets: async (owner_id) => {
         const { pets } = getStore();
-        console.log(process.env.BACKEND_URL+`/api/pets/owner/${owner_id}`);
         try {
           fetch(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`)
             .then((resp) => {
               if (!resp.ok) {
                 if (resp.status == 404) {
-                  throw Error({ msg: "User does not exist" });
+                  throw Error({ "msg": "User does not exist" });
                 }
                 console.error(resp.status + ": " + resp.statusText);
               }
               return resp.json();
             })
             .then((data) => {
-              console.log(data);
               setStore({ pets: data });
               return "ok";
             });
@@ -78,8 +73,9 @@ const getState = ({ getStore, getActions, setStore }) => {
               return response.json();
             })
             .then((data) => {
-              console.log("Successfully created pet: " + data);
-              getActions().getOwnerPets(obj.owner_id);
+              //getActions().getOwnerPets(obj.owner_id);
+              console.log(data)
+              return data;
             });
         } catch (error) {
           console.error(error);
@@ -333,6 +329,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log("User info updated")
         //return data
       },
+      uploadpetAvatar: async (formData, id) => {
+        const { accessToken } = getStore();
+        if (!accessToken) {
+          return "No token";
+        }
+        const resp = await fetch(process.env.BACKEND_URL+`/api/pet_avatar/${id}`, {
+          method:"POST",
+          body:formData,
+          headers:{
+            "Authorization":"Bearer " + accessToken
+          }
+        });
+        if (!resp.ok) {
+          console.error("Error saving picture, code: "+ resp.code);
+          return resp;
+        }
+        let data = await resp.json()
+        return data
+      },
       getKeepers: async () => {
         try {
           const store = getStore();
@@ -391,6 +406,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }).then(data=>{
             console.log("retrieved owner data successfully => "+data)
             setStore({currentUser:data})
+            setStore({pets:data.pets})
             return data;
           })
         } catch (error) {

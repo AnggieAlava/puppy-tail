@@ -7,8 +7,6 @@ export const OwnerInfo = ({owner}) => {
   
   const params = useParams();
   const { store, actions } = useContext(Context);
-  //useState(JSON.parse(localStorage.getItem(params.type)))
-  //Profile picture
   const [file, setFile] = useState(stock_avatar) //TEMP PROFILE PIC. FOR PREVIEW ONLY
   
   useEffect(()=>{
@@ -18,13 +16,7 @@ export const OwnerInfo = ({owner}) => {
   function imgErrorHandler(e){
     e.target.src = stock_avatar
   }
-  async function uploadAvatar(){
-    //e.preventDefault()
-    const formData = new FormData()
-    formData.append("avatar",document.getElementById("avatarImg").files[0])
-    actions.uploadPicture(formData, store.currentUser.id)
 
-  }
   async function updateUser() {
     let obj = {
         id: store.currentUser.id,
@@ -35,7 +27,6 @@ export const OwnerInfo = ({owner}) => {
     }
     actions.updateOwner(obj);
     if (file != stock_avatar){
-        console.log({file})
         const formData = new FormData()
         formData.append("avatar",document.getElementById("avatarImg").files[0])
         actions.uploadPicture(formData, store.currentUser.id)
@@ -59,7 +50,7 @@ export const OwnerInfo = ({owner}) => {
                             <form id="formID">
                                 <div className="mb-3">
                                     <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
-                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={file} className=""></img>
+                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={file} className="card-img-top"></img>
                                     </div>
                                 </div>
                                 <div className="text-center mb-3">

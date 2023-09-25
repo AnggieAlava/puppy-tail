@@ -2,42 +2,57 @@ import React from "react";
 import { useEffect, useContext , useState} from "react";
 import { Context } from "../store/appContext";
 import "../../styles/profile.css"
+import stock_pet from "../../img/stock_pet_black.png"
 
 
 export const Pets = (props) => {
     const{ store, actions } = useContext(Context);
     const [edit, setEdit] = useState(false);
     const [currentPet, setPet] = useState({})
+    const [preview, setPreview] = useState(stock_pet)
 
     function imgErrorHandler(e){
-        //e.target.src = "https://cdn-icons-png.flaticon.com/512/8211/8211919.png" //Dog Paw stock image
-        e.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Shiba_inu_taiki.jpg/800px-Shiba_inu_taiki.jpg"
+        e.target.src = stock_pet
     }
 
-    function createPet(){
+    async function createPet(){
         let newPet = {
             "name": document.getElementById('newPetNameInput').value, 
             "size":document.getElementById('newPetSizeInput').value, 
             "category": document.getElementById('newPetCategoryInput').value,
-            "owner_id": "1"
+            "owner_id": store.currentUser.id
         }
-        console.log({newPet})
-        actions.createPet(newPet)
+        await actions.createPet(newPet).then(data=>console.log(data.id))
+        // if (preview != stock_pet){
+        //     const formData = new FormData()
+        //     formData.append("avatar",document.getElementById("petImg").files[0])
+        //     let resp = await actions.uploadpetAvatar(formData, data.id)
+        //     resp = Object.assign(resp, {"profile_pic":resp.public_url})
+        //     console.log(resp)
+        //     actions.updatePet(resp)
+        // }
     }
 
-    function updatePet(){
+    async function updatePet(){
+        if (preview != stock_pet){
+            const formData = new FormData()
+            formData.append("avatar",document.getElementById("petImg").files[0])
+            let resp = await actions.uploadpetAvatar(formData, currentPet.id)
+            currentPet["profile_pic"] = resp.public_url
+        }
         let updatedPet = {
             "id":currentPet.id.toString(), 
             "name": document.getElementById('nameInput').value, 
             "size":document.getElementById('sizeInput').value, 
             "category": document.getElementById('categoryInput').value,
-            "owner_id": currentPet.owner_id.toString()
+            "owner_id": currentPet.owner_id.toString(),
+            "profile_pic": currentPet.profile_pic
         }
         actions.updatePet(updatedPet)
     }
 
     useEffect(()=>{
-        actions.getOwnerPets(1);
+        //actions.getOwner(1);
     },[]);
     return(
         <div className="text-left my-2">
@@ -50,7 +65,7 @@ export const Pets = (props) => {
             {(store.pets.length < 1? "":store.pets.map((pet, index)=>{
             return (
                 <div style={{width: "12rem"}} key={index}>
-                    <div style={{borderRadius:"50%", width: "100%", height:"auto", overflow:"hidden", aspectRatio:"1"}}><img onError={imgErrorHandler}  src="..." className="card-img-top" alt="..." /></div>
+                    <div style={{borderRadius:"50%", width: "100%", height:"auto", overflow:"hidden", aspectRatio:"1"}}><img onError={imgErrorHandler}  src={pet.profile_pic} className="card-img-top" alt="..." /></div>
                     <div className="card-body">
                         <h5 className="card-title">{pet.name}</h5>
                         <div className="card-text">
@@ -65,11 +80,20 @@ export const Pets = (props) => {
                                     <div className="modal-content">
                                         <div className="modal-header">
                                             <h1 className="modal-title fs-5" id="editPetLabel">Editar {currentPet.name}</h1>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>setPreview(stock_pet)}></button>
                                         </div>
                                     <div className="modal-body textLeft">
                                         {/* FORM BODY */}
                                         <form>
+                                            <div className="mb-3">
+                                                <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
+                                                    <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={preview}></img>
+                                                </div>
+                                            </div>
+                                            <div className="text-center mb-3">
+                                                <input type="file" name="avatar" id="petImg" onChange={(event)=>setPreview(URL.createObjectURL(event.target.files[0]))} hidden/>
+                                                <label className="btn btn-outline-dark" htmlFor="petImg">Seleccionar foto</label>
+                                            </div>
                                             <div className="mb-3">
                                                 <label htmlFor="nameInput" className="form-label">Nombre</label>
                                                 <input type="text" className="form-control" id="nameInput" aria-describedby="nameHelp" defaultValue={currentPet.name}/>
@@ -77,7 +101,6 @@ export const Pets = (props) => {
                                             <div className="mb-3">
                                                 <label htmlFor="sizeInput" className="form-label">Tamaño</label>
                                                 <select className="form-select" aria-label="Default select example" id="sizeInput" defaultValue={currentPet.size}>
-                                                    {/* <option selected>{currentPet.size}</option> */}
                                                     <option value="Pequeño">Pequeño (1-8kg)</option>
                                                     <option value="Mediano">Mediano (8-20kg)</option>
                                                     <option value="Grande">Grande (20-30kg)</option>
@@ -85,14 +108,14 @@ export const Pets = (props) => {
                                                 </select>
                                             </div>
                                             <div className="mb-3">
-                                                <label htmlFor="categoryInput" className="form-label">Categoria</label>
+                                                <label htmlFor="categoryInput" className="form-label">Raza</label>
                                                 <input type="text" className="form-control" id="categoryInput" defaultValue={currentPet.category}/>
                                             </div>
                                         </form>
                                         {/* END OF FORM BODY */}
                                     </div>
                                         <div className="modal-footer">
-                                            <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={()=>setPreview(stock_pet)}>Cancelar</button>
                                             <button type="submit" onClick={updatePet} className="btn btn-outline-success" data-bs-dismiss="modal">Guardar cambios</button>
                                         </div>
                                     </div>
@@ -139,11 +162,20 @@ export const Pets = (props) => {
                                     <div className="modal-content">
                                         <div className="modal-header">
                                             <h1 className="modal-title fs-5" id="addPetLabel">Agregar mascota</h1>
-                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>setPreview(stock_pet)}></button>
                                         </div>
                                     <div className="modal-body textLeft">
                                         {/* FORM BODY */}
                                         <form>
+                                            <div className="mb-3">
+                                                <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
+                                                    <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={preview}></img>
+                                                </div>
+                                            </div>
+                                            <div className="text-center mb-3">
+                                                <input type="file" name="avatar" id="petImg" onChange={(event)=>setPreview(URL.createObjectURL(event.target.files[0]))} hidden/>
+                                                <label className="btn btn-outline-dark" htmlFor="petImg">Seleccionar foto</label>
+                                            </div>
                                             <div className="mb-3">
                                                 <label htmlFor="newPetNameInput" className="form-label">Nombre</label>
                                                 <input type="text" className="form-control" id="newPetNameInput" aria-describedby="nameHelp"/>
@@ -159,14 +191,14 @@ export const Pets = (props) => {
                                                 </select>
                                             </div>
                                             <div className="mb-3">
-                                                <label htmlFor="newPetCategoryInput" className="form-label">Categoria</label>
+                                                <label htmlFor="newPetCategoryInput" className="form-label">Raza</label>
                                                 <input type="text" className="form-control" id="newPetCategoryInput"/>
                                             </div>
                                         </form>
                                         {/* END OF FORM BODY */}
                                     </div>
                                         <div className="modal-footer">
-                                            <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={()=>setPreview(stock_pet)}>Cancelar</button>
                                             <button type="submit" onClick={createPet} className="btn btn-outline-success" data-bs-dismiss="modal">Agregar mascota</button>
                                         </div>
                                     </div>

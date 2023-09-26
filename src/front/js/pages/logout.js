@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -26,6 +27,9 @@ export const Logout = () => {
     </li>
   );
 };
+Logout.propTypes = {
+  match: PropTypes.object,
+};
 {
-  /* {(token === null ? "":<button>Profile</button>)} */
+  //  {(token === null ? "":<button>Profile</button>)}
 }

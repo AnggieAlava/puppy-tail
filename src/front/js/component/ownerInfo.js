@@ -8,6 +8,7 @@ export const OwnerInfo = ({owner}) => {
   const params = useParams();
   const { store, actions } = useContext(Context);
   const [avatar, setAvatar] = useState(stock_avatar)
+  const [currentUser, setUser] = useState({})
   
   useEffect(()=>{
     loadData()
@@ -15,6 +16,10 @@ export const OwnerInfo = ({owner}) => {
   async function loadData(){
     let resp = actions.getOwner(params.theid)
     setAvatar(resp.profile_pic)
+  }
+  function fillForm(){
+    setAvatar(store.currentUser.profile_pic)
+    setUser(store.currentUser)
   }
   function imgErrorHandler(e){
     e.target.src = stock_avatar
@@ -39,7 +44,7 @@ export const OwnerInfo = ({owner}) => {
   return (
     <div className="container-fluid">
       <div className="d-flex align-items-center justify-content-end">
-                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={()=>setAvatar(store.currentUser.profile_pic)}>Editar</button>
+                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={fillForm}>Editar</button>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
@@ -63,26 +68,26 @@ export const OwnerInfo = ({owner}) => {
                                 <div className="row mb-3">
                                     <div className="col">
                                         <label htmlFor="firstNameInput" className="form-label">Nombre</label>
-                                        <input type="text" className="form-control" id="firstNameInput" aria-describedby="nameHelp" defaultValue={store.currentUser.first_name}/>
+                                        <input type="text" className="form-control" id="firstNameInput" aria-describedby="nameHelp" defaultValue={currentUser.first_name}/>
                                     </div>
                                     <div className="col">
                                         <label htmlFor="lastNameInput" className="form-label">Apellido</label>
-                                        <input type="text" className="form-control" id="lastNameInput" aria-describedby="nameHelp" defaultValue={store.currentUser.last_name}/>
+                                        <input type="text" className="form-control" id="lastNameInput" aria-describedby="nameHelp" defaultValue={currentUser.last_name}/>
                                     </div>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="nameInput" className="form-label">Ubicacion</label>
-                                    <input type="text" className="form-control" id="locationInput" aria-describedby="nameHelp" defaultValue={store.currentUser.location}/>
+                                    <input type="text" className="form-control" id="locationInput" aria-describedby="nameHelp" defaultValue={currentUser.location}/>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="exampleFormControlTextarea1" className="form-label">Descripcion</label>
-                                    <textarea className="form-control" id="descriptionInput" rows="4" defaultValue={store.currentUser.description}></textarea>
+                                    <textarea className="form-control" id="descriptionInput" rows="4" defaultValue={currentUser.description}></textarea>
                                 </div>
                             </form>
                             {/* END OF FORM BODY */}
                         </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={()=>setAvatar(store.currentUser.profile_pic)}>Cancelar</button>
+                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={()=>setAvatar(currentUser.profile_pic)}>Cancelar</button>
                                 <button type="submit" className="btn btn-outline-success" data-bs-dismiss="modal" onClick={updateUser}>Guardar cambios</button>
                             </div>
                         </div>

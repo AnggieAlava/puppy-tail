@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/a37babe573e9_.py
-Revision ID: a37babe573e9
+Revision ID: c904768996e5
 Revises: 
-Create Date: 2023-09-18 21:47:24.775654
-========
-Revision ID: 4302ae36414a
-Revises: 
-Create Date: 2023-09-20 02:43:39.055334
->>>>>>>> 22558bced444cffbd28ae7c86e6071af39e1fd36:migrations/versions/4302ae36414a_.py
+Create Date: 2023-09-25 15:38:52.838778
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/a37babe573e9_.py
-revision = 'a37babe573e9'
-========
-revision = '4302ae36414a'
->>>>>>>> 22558bced444cffbd28ae7c86e6071af39e1fd36:migrations/versions/4302ae36414a_.py
+revision = 'c904768996e5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -40,9 +30,9 @@ def upgrade():
     sa.Column('first_name', sa.String(length=250), nullable=False),
     sa.Column('last_name', sa.String(length=250), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
+    sa.Column('location', sa.String(length=255), nullable=True),
     sa.Column('password', sa.String(length=255), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=True),
-    sa.Column('location', sa.String(length=255), nullable=True),
     sa.Column('profile_pic', sa.String(length=150), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('user_type', sa.String(length=50), nullable=True),
@@ -51,7 +41,7 @@ def upgrade():
     )
     op.create_table('keeper',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('hourly_pay', sa.Float(), nullable=False),
+    sa.Column('hourly_pay', sa.Float(), nullable=True),
     sa.Column('experience', sa.Date(), nullable=True),
     sa.Column('services', sa.ARRAY(sa.String(length=50)), nullable=True),
     sa.ForeignKeyConstraint(['id'], ['user.id'], ),

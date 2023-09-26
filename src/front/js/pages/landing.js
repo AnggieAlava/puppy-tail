@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import "../../styles/landing.css";
-
 import { Context } from "../store/appContext";
 
 let titles = [
@@ -22,7 +21,7 @@ export const Landing = () => {
   const { store, actions } = useContext(Context);
   const [background, setBackground] = useState("background");
   const [title, setTitle] = useState(titles[0]);
-  const [description, setDescription] = useState(descriptions[0]);
+  const [description, LandingsetDescription] = useState(descriptions[0]);
 
   const handleButtonClick = (index) => {
     setBackground(`background${index}`);

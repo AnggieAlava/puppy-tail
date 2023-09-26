@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/login.css";
 import { HidePassword } from "../component/hidePassword";
+import locations from "../../json/location.json";
 
 export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(" ");
 
   useEffect(() => {
     if (shouldNavigate) {
@@ -23,15 +25,15 @@ export const SignupKeeper = (props) => {
     const first_name = data.get("first_name");
     const last_name = data.get("last_name");
     const email = data.get("email");
+    const location = selectedLocation;
     const password = data.get("password");
-    const hourly_pay = data.get("hourly_pay");
     const { signupKeeper } = actions;
     let resp = await signupKeeper(
       first_name,
       last_name,
       email,
-      password,
-      hourly_pay
+      location,
+      password
     );
     setShouldNavigate(true);
     console.log(resp);
@@ -77,18 +79,31 @@ export const SignupKeeper = (props) => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
-          <HidePassword />
           <div className="mb-3">
-            <label htmlFor="inputPayment" className="form-label">
-              Tarifa por hora
+            <label htmlFor="inputLocation" className="form-label">
+              Pais
             </label>
-            <input
-              type="text"
+            <select
               className="form-control"
-              name="hourly_pay"
-              id="inputPayment"
-            />
+              id="inputLocation"
+              defaultValue="0"
+              onChange={(e) => setSelectedLocation(e.target.value)}>
+              <option className="option-country" value="0" disabled>
+                Seleccione un pais
+              </option>
+              {locations.map((location, index) => {
+                return (
+                  <option
+                    className="option-country"
+                    value={location.es_name}
+                    key={index}>
+                    {location.es_name}
+                  </option>
+                );
+              })}
+            </select>
           </div>
+          <HidePassword />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>

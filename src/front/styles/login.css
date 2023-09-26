@@ -18,9 +18,6 @@
   width: 40vw;
   backdrop-filter: grayscale(0.8) blur(2px);
   box-shadow: 0 0 15px rgb(255, 255, 255);
-  /* border-top: 1px solid rgba(225, 225, 225, 0.3);
-  border-left: 1px solid rgba(225, 225, 225, 0.1);
-  border-right: 1px solid rgba(225, 225, 225, 0.2); */
 }
 
 #inputEmail,
@@ -28,9 +25,9 @@
 #inputName,
 #inputLastName,
 #inputEmail1,
-#inputDni,
 #inputPassword1,
-#inputPayment {
+#inputPayment,
+#inputLocation {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -39,6 +36,11 @@
   box-shadow: 0 0 10px rgba(63, 211, 43, 0.3);
   color: white;
   transition: none;
+}
+
+.option-country {
+  background-color: white;
+  color: black;
 }
 
 #btn-login,

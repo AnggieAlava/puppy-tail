@@ -46,12 +46,6 @@ export const KeeperInfo = ({keeper}) => {
         //Return first digit as string
         return (difference / 365).toString().slice(0, 1)+"+ years";
     }
-    async function uploadAvatar(){
-        const formData = new FormData()
-        formData.append("avatar",document.getElementById("avatarImg").files[0])
-        let resp = await actions.uploadPicture(formData, store.currentUser.id)
-        store.currentUser["profile_pic"] = resp.public_url;
-    }
     async function updateUser() {
         //Services
         let arr = [];
@@ -76,9 +70,15 @@ export const KeeperInfo = ({keeper}) => {
             location: document.getElementById("locationInput").value,
         }
         actions.updateKeeper(obj);
-        if(avatar != stock_avatar){
+        if(avatar != store.currentUser.profile_pic){
             uploadAvatar()
         }
+    }
+    async function uploadAvatar(){
+        const formData = new FormData()
+        formData.append("avatar",document.getElementById("avatarImg").files[0])
+        let resp = await actions.uploadPicture(formData, store.currentUser.id)
+        store.currentUser["profile_pic"] = resp.public_url;
     }
 
   return (
@@ -163,8 +163,10 @@ export const KeeperInfo = ({keeper}) => {
                 </div>
                 {/* Fin de modal */}
             </div>
-			<div className="align-items-center justify-content-center row mb-2">
-                <img onError={imgErrorHandler} src={store.currentUser.profile_pic} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
+			<div className="mb-3 d-flex justify-content-center">
+                <div className="ratio ratio-1x1" style={{maxWidth: "350px"}}>
+                    <img onError={imgErrorHandler} src={store.currentUser.profile_pic} className="card-img-top rounded-circle object-fit-cover" alt="..." />
+                </div>
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
                 <h2>{store.currentUser.first_name}</h2>

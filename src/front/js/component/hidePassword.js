@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/login.css";
+import "../../styles/signup.css";
 
 export const HidePassword = () => {
   const [hidePassword, setHidePassword] = useState(true);

@@ -22,9 +22,9 @@ export const Login = () => {
   }
 
   return (
-    <div id="login-page" className="text-center">
-      <div className="container wrap-loginSignup">
-        <i id="cat-suit" className="fa-solid fa-cat"></i>
+    <div className="text-center container">
+      <div className="wrap-login">
+        <i id="cat-suit-login" className="fa-solid fa-dog"></i>
         <h2></h2>
         <form className="pe-3" onSubmit={login}>
           <div className="mb-3">

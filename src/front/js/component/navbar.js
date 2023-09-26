@@ -31,11 +31,11 @@ export const Navbar = () => {
                 Home
               </a>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link className="nav-link" to="/login">
                 Iniciar sesión
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to="/signup">
                 Registrarse

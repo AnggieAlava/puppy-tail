@@ -1,33 +1,13 @@
-#login-page,
-#signup-page {
-  font-size: 1.2rem;
-  font-weight: 600;
-  height: 100vh;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(https://images.unsplash.com/photo-1514064019862-23e2a332a6a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2028&q=80);
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: azure;
-}
-
-.wrap-loginSignup {
+.wrap-login {
   border-radius: 15px;
-  width: 40vw;
+  width: 40%;
   backdrop-filter: grayscale(0.8) blur(2px);
   box-shadow: 0 0 15px rgb(255, 255, 255);
+  margin: 250px 50px;
 }
 
 #inputEmail,
-#inputPassword,
-#inputName,
-#inputLastName,
-#inputEmail1,
-#inputPassword1,
-#inputPayment,
-#inputLocation {
+#inputPassword {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -38,27 +18,7 @@
   transition: none;
 }
 
-.option-country {
-  background-color: white;
-  color: black;
-}
-
-#btn-login,
-#btn-signup {
-  border: 2px solid rgba(0, 0, 0, 0.563);
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-  color: white;
-}
-
-#btn-login:hover {
-  background-color: rgba(7, 7, 7, 0.2);
-}
-#btn-signup:hover {
-  background-color: rgba(7, 7, 7, 0.2);
-}
-
-#cat-suit {
+#cat-suit-login {
   font-size: 5rem;
-  color: black;
+  color: rgb(233, 223, 223);
 }

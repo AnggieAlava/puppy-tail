@@ -14,10 +14,11 @@ function getDate(){
   return today
 }
 
-export const KeeperForm = ({keeper}) => {
+export const KeeperForm = ({}) => {
   //Calendar use
   const [value, onChange] = useState([]);
   const params = useParams();
+  const keeper = useState(JSON.parse(localStorage.getItem('keeper')))
   const [range, setRange] = useState({
     startDate: new Date(),
     endDate: new Date(),

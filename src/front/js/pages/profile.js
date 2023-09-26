@@ -7,14 +7,13 @@ import { Pets } from "../component/pets";
 
 export const Profile = ({keeper}) => {
 	const params = useParams();
-    //const [currentUser, setcurrentUser] = useState(JSON.parse(localStorage.getItem(params.type)))
 
 	return (
 		<div className="text-center container w-75 my-2">
             {(params.type == 'owner'? <OwnerInfo />:<KeeperInfo />)}
             <hr className="mt-4 mb-2" />
             {/* Componente condicional aqui, pasar user type por props */}
-            {(params.type == 'owner'? < Pets owner_id={params.theid} />:<KeeperForm />)}
+            {(params.type == 'owner'? < Pets owner_id={params.theid} />:<KeeperForm keeper={keeper}/>)}
 		</div>
 	);
 };

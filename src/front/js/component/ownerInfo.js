@@ -87,8 +87,8 @@ export const OwnerInfo = ({owner}) => {
                 </div>
                 {/* Fin de modal */}
             </div>
-			<div className="align-items-center justify-content-center row mb-2">
-                <img onError={imgErrorHandler} src={store.currentUser.profile_pic} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
+			<div style={{width: "100%", maxHeight:"18rem", overflow:"hidden", aspectRatio:"1"}}>
+                <img onError={imgErrorHandler} src={store.currentUser.profile_pic} style={{borderRadius:"50%",maxWidth:"18rem"}}className="card-img-top" alt="..." />
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
                 <h2>{store.currentUser.first_name}</h2>

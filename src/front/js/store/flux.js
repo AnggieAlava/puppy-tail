@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       accessToken: null,
-      userInfo: null,
+      userInfo: {},
       message: null,
       pets: [],
       singlePet: [],
@@ -16,7 +16,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       profilePic: null
     },
     actions: {
-      //Get all pets from the database, including the owners inside the pet object.
       getPets: async () => {
         const { pets } = getStore();
         try {
@@ -59,31 +58,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       createPet: async (obj) => {
         try {
-          fetch(process.env.BACKEND_URL + `/api/pets`, {
+          const response = await fetch(process.env.BACKEND_URL + `/api/pets`, {
             method: "POST",
             body: JSON.stringify(obj),
             headers: {
               "Content-Type": "application/json"
             }
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw Error(response.status + ": " + response.statusText);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              //getActions().getOwnerPets(obj.owner_id);
-              console.log(data)
-              return data;
-            });
+          if(!response.ok){
+            console.error(response.status+": "+response.statusText)
+          }
+          let data = await response.json()
+          getActions().getOwnerPets(obj.owner_id);
+          return data  
         } catch (error) {
           console.error(error);
         }
       },
       updatePet: async (obj) => {
         try {
-          //Use email as contact id
           fetch(process.env.BACKEND_URL + `/api/pets/${obj.id}`, {
             method: "PUT",
             body: JSON.stringify(obj),
@@ -99,8 +92,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               console.log("Successfully updated pet: " + data);
-
-              getActions().getOwnerPets(obj.owner_id);
+              //getActions().getOwnerPets(obj.owner_id);
+              const {pets} = getStore()
+              let arr = pets
+              for(let pet in arr){
+                if (arr[pet].id == obj.id){
+                  arr[pet]=obj
+                  console.log({obj})
+                  console.log(arr[pet])
+                } 
+              }
+              setStore({pets:arr})
             });
         } catch (error) {
           console.error(error);
@@ -172,6 +174,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiFetchProtected: async (endpoint, method = "GET", body = null) => {
         const { accessToken } = getStore();
         if (!accessToken || accessToken === "null") {
+          localStorage.setItem("userInfo", {});
           return "No token"; //error 422
         }
         const params = {
@@ -195,8 +198,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
+        let userData = JSON.parse(localStorage.getItem("userInfo"))
         if (token) {
           setStore({ accessToken: token });
+          setStore({userInfo:userData})
         }
       },
 
@@ -220,14 +225,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
         }
         console.log({ resp });
-        const { message, token } = resp.data;
+        const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
         setStore({ accessToken: token });
+        setStore({userInfo:{"userId":user_id, "user_type":user_type}})
+        localStorage.setItem("userInfo",JSON.stringify({"userId":user_id, "user_type":user_type}))
         return resp.code;
       },
 
       logout: () => {
         setStore({ accessToken: null });
+        setStore({userInfo:{}})
+        localStorage.setItem("userInfo", {});
         localStorage.setItem("accessToken", null);
       },
 
@@ -288,6 +297,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         navigate("/login");
         console.log(resp);
       },
+      getKeeper: async (id) => {
+        const {apiFetch} = getActions()
+        const response = await apiFetch(`/keeper/${id}`, "GET");
+        if(!response.ok){
+          console.error(response.status+": "+response.statusText)
+          }
+        setStore({currentUser: response.data})
+        return response.data
+      },
       updateKeeper: async (obj) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch(`/keeper/${obj.id}`, "PUT", {
@@ -303,7 +321,8 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving profile, code: "+ resp.code);
           return resp;
         }
-        localStorage.setItem("keeper",JSON.stringify(resp.data))
+        setStore({currentUser: resp.data})
+        //localStorage.setItem("keeper",JSON.stringify(resp.data))
       },
       uploadPicture: async (formData, id) => {
         const { accessToken } = getStore();
@@ -327,7 +346,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         user["profile_pic"] = data.public_url
         setStore({currentUser: user})
         console.log("User info updated")
-        //return data
+        return user
       },
       uploadpetAvatar: async (formData, id) => {
         const { accessToken } = getStore();
@@ -388,7 +407,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               }
             }
             setStore({ keepersToShow: randomKeepers });
-            console.log(randomKeepers)
           } else {
             console.error("Error al obtener los keepers:", resp);
           }

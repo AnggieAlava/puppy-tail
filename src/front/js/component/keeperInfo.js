@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import stock_avatar from "../../img/avatar.jpg";
@@ -7,15 +7,26 @@ export const KeeperInfo = ({keeper}) => {
   
   const params = useParams();
   const { store, actions } = useContext(Context);
-    const [currentUser, setcurrentUser] = useState(JSON.parse(localStorage.getItem(params.type)))
-    //USED TO CHECK SERVICES IN EDIT MENU. REMOVE
-    const petW = currentUser.services.includes("Pet Walker")
-    const petS = currentUser.services.includes("Pet Sitter")
-    const partyP = currentUser.services.includes("Party Planner")
+    const [currentUser, setcurrentUser] = useState({})
     //Profile picture
+    const petW = false;
+    const petS = false;
+    const partyP = false;
     const [file, setFile] = useState(stock_avatar) //TEMP PROFILE PIC. FOR PREVIEW ONLY
-    const [avatar, setAvatar] = useState(currentUser.profile_pic)
-  
+    const [avatar, setAvatar] = useState("")
+    
+    useEffect(()=>{
+        loadUser()
+    },[])
+    async function loadUser(){
+        let response = await actions.getKeeper(params.theid)
+        console.log(response)
+        setcurrentUser(response)
+        //USED TO CHECK SERVICES IN EDIT MENU. REMOVE
+        petW = currentUser.services.includes("Pet Walker")
+        petS = currentUser.services.includes("Pet Sitter")
+        partyP = currentUser.services.includes("Party Planner")
+    }
   function imgErrorHandler(e){
     e.target.src = stock_avatar
   }
@@ -137,15 +148,15 @@ export const KeeperInfo = ({keeper}) => {
                                 <div className="mb-3">
                                     <label htmlFor="flexSwitchCheckDefault" className="form-label">Servicios</label>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" defaultChecked={petW} role="switch" id="petWalker" />
+                                        <input className="form-check-input" type="checkbox" defaultValue={petW} role="switch" id="petWalker" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Paseador(a) de mascotas</label>
                                     </div>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" defaultChecked={petS} role="switch" id="petSitter" />
+                                        <input className="form-check-input" type="checkbox" defaultValue={petS} role="switch" id="petSitter" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Cuidador de mascotas</label>
                                     </div>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" defaultChecked={partyP} role="switch" id="partyPlanner" />
+                                        <input className="form-check-input" type="checkbox" defaultValue={partyP} role="switch" id="partyPlanner" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Organizador de fiestas</label>
                                     </div>
                                 </div>
@@ -166,7 +177,7 @@ export const KeeperInfo = ({keeper}) => {
                 {/* Fin de modal */}
             </div>
 			<div className="align-items-center justify-content-center row mb-2">
-                <img onError={imgErrorHandler} src={avatar} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
+                <img onError={imgErrorHandler} src={currentUser.profile_pic} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
                 <h2>{currentUser.first_name}</h2>

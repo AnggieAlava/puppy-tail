@@ -70,7 +70,7 @@ def login_user():
     
     refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
    
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
@@ -87,10 +87,11 @@ def user_refresh():
     
     #Generar nuevos tokens
     user_id=get_jwt_identity()
+    user = User.query.get(user_id)
     acces_token = create_access_token(identity = user_id)
     acces_jti=get_jti(acces_token)
     refresh_token=create_refresh_token(identity=user_id, additional_claims={"accesToken": acces_jti})
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -120,6 +121,7 @@ def hello_protected():
     user=User.query.get(user_id)
     response={
         "userId":user_id,
+        "user_type":user.user_type,
         "claims":claims,
         "isActive":user.is_active
     }
@@ -213,8 +215,11 @@ def get_keeper(keeper_id):
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,
         "email": keeper.email,
+        "location": keeper.location,
+        "experience": keeper.experience,
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
+        "bookings": [booking for booking in keeper.booking],
         "services": [service for service in keeper.services],
         "profile_pic": imgUrl
     }
@@ -278,7 +283,6 @@ def createPet():
         "category": new_pet.category,
         "id": new_pet.id
     }
-    print(obj)
     return jsonify(obj), 201
 
 
@@ -302,7 +306,6 @@ def getPet(pet_id):
         pet.name = (data["name"].lower()).title()
         pet.size = (data["size"].lower()).title()
         pet.category = (data["category"].lower()).title()
-        #pet.profile_pic = data["profile_pic"]
         db.session.commit()
         return jsonify({"msg": "Pet data updated"}), 200
     if request.method == 'DELETE':
@@ -330,8 +333,8 @@ def getPetsByOwner(owner_id):
 #Endpoint para subir imagenes con firebase
 @api.route('/avatar/<int:user_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL USUARIO CON JWT
 #@jwt_required()
-def profilePicture(user_id):
-    #user_id = get_jwt_identity()
+def uploadPicture():
+    user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
     print(request.files)

@@ -1,100 +1,90 @@
 import React, {useContext, useEffect, useState} from "react";
+import {Context} from "../store/appContext"
 import { useParams } from "react-router-dom";
-import { Context } from "../store/appContext";
 import stock_avatar from "../../img/avatar.jpg";
 
 export const KeeperInfo = ({keeper}) => {
   
-  const params = useParams();
-  const { store, actions } = useContext(Context);
+    const params = useParams();
+    const { store, actions } = useContext(Context);
     const [currentUser, setcurrentUser] = useState({})
-    //Profile picture
-    const petW = false;
-    const petS = false;
-    const partyP = false;
-    const [file, setFile] = useState(stock_avatar) //TEMP PROFILE PIC. FOR PREVIEW ONLY
-    const [avatar, setAvatar] = useState("")
+    const [avatar, setAvatar] = useState(stock_avatar)
     
     useEffect(()=>{
         loadUser()
     },[])
     async function loadUser(){
         let response = await actions.getKeeper(params.theid)
-        console.log(response)
         setcurrentUser(response)
-        //USED TO CHECK SERVICES IN EDIT MENU. REMOVE
-        petW = currentUser.services.includes("Pet Walker")
-        petS = currentUser.services.includes("Pet Sitter")
-        partyP = currentUser.services.includes("Party Planner")
+        setAvatar(response.profile_pic)
     }
-  function imgErrorHandler(e){
-    e.target.src = stock_avatar
-  }
-  function yearsExperience(b) {
-    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
-    // Discard the time and time-zone information.
-    let today = new Date();
-    let startDate = new Date(b);
-    const utc1 = Date.UTC(
-      today.getFullYear(),
-      today.getMonth(),
-      today.getDate()
-    );
-    const utc2 = Date.UTC(
-      startDate.getFullYear(),
-      startDate.getMonth(),
-      startDate.getDate()
-    );
-    //difference in days (eg. 360 days)
-    let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
-    //Return first digit as string
-    return (difference / 365).toString().slice(0, 1)+"+ years";
-  }
-  async function uploadAvatar(){
-    //Picture
-    //e.preventDefault()
-    const formData = new FormData()
-    formData.append("avatar",document.getElementById("avatarImg").files[0])
-    let resp = await actions.uploadPicture(formData, currentUser.id)
-    console.log(resp)
-    //Set picture as avatar in preview
-    setAvatar(resp.public_url)
-    currentUser["profile_pic"] = resp.public_url;
-    localStorage.setItem("keeper",JSON.stringify(currentUser))
-    //Set avatar = file
-    //Call updateUser()
-  }
-  async function updateUser() {
-    //Services
-    let arr = [];
-    if (document.getElementById("petWalker").checked) arr.push("Pet Walker");
-    if (document.getElementById("petSitter").checked) arr.push("Pet Sitter");
-    if (document.getElementById("partyPlanner").checked)
-      arr.push("Party Planner");
-    if (arr.length === 0) arr.push("No services yet");
-    //Experience
-    let xp = document.getElementById("experienceInput").value
-    if(xp ==""){
-        xp = currentUser.experience
+    function loadServices(){
+        document.getElementById("petSitter").checked = currentUser.services.includes("Cuidador(a) de mascotas")
+        document.getElementById("petWalker").checked = currentUser.services.includes("Paseador(a) de mascotas")
+        document.getElementById("partyPlanner").checked = currentUser.services.includes("Organizador(a) de fiestas")
     }
-    let obj = {
-        id: currentUser.id,
-        first_name: document.getElementById("firstNameInput").value,
-        last_name: document.getElementById("lastNameInput").value,
-        hourly_pay: document.getElementById("feeInput").value,
-        description: document.getElementById("descriptionInput").value,
-        experience: xp,
-        services: arr,
-        location: document.getElementById("locationInput").value,
-      }
-    setcurrentUser(obj);
-    actions.updateKeeper(obj);
-  }
+    function imgErrorHandler(e){
+        e.target.src = stock_avatar
+    }
+    function yearsExperience(b) {
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+        // Discard the time and time-zone information.
+        let today = new Date();
+        let startDate = new Date(b);
+        const utc1 = Date.UTC(
+        today.getFullYear(),
+        today.getMonth(),
+        today.getDate()
+        );
+        const utc2 = Date.UTC(
+        startDate.getFullYear(),
+        startDate.getMonth(),
+        startDate.getDate()
+        );
+        //difference in days (eg. 360 days)
+        let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
+        //Return first digit as string
+        return (difference / 365).toString().slice(0, 1)+"+ years";
+    }
+    async function uploadAvatar(){
+        const formData = new FormData()
+        formData.append("avatar",document.getElementById("avatarImg").files[0])
+        let resp = await actions.uploadPicture(formData, store.currentUser.id)
+        store.currentUser["profile_pic"] = resp.public_url;
+    }
+    async function updateUser() {
+        //Services
+        let arr = [];
+        if (document.getElementById("petWalker").checked) arr.push("Paseador(a) de mascotas");
+        if (document.getElementById("petSitter").checked) arr.push("Cuidador(a) de mascotas");
+        if (document.getElementById("partyPlanner").checked)
+        arr.push("Organizador(a) de fiestas");
+        if (arr.length === 0) arr.push("No services yet");
+        //Experience
+        let xp = document.getElementById("experienceInput").value
+        if(xp ==""){
+            xp = currentUser.experience
+        }
+        let obj = {
+            id: currentUser.id,
+            first_name: document.getElementById("firstNameInput").value,
+            last_name: document.getElementById("lastNameInput").value,
+            hourly_pay: document.getElementById("feeInput").value,
+            description: document.getElementById("descriptionInput").value,
+            experience: xp,
+            services: arr,
+            location: document.getElementById("locationInput").value,
+        }
+        actions.updateKeeper(obj);
+        if(avatar != stock_avatar){
+            uploadAvatar()
+        }
+    }
 
   return (
     <div className="container-fluid">
       <div className="d-flex align-items-center justify-content-end">
-                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" >Editar</button>
+                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={loadServices} >Editar</button>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
@@ -106,17 +96,14 @@ export const KeeperInfo = ({keeper}) => {
                         <div className="modal-body textLeft">
                             {/* FORM BODY */}
                             <form id="formID">
-                                <div className="mb-3">
-                                    <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
-                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={file} className=""></img>
+                                <div className="mb-3 d-flex justify-content-center">
+                                    <div className="ratio ratio-1x1" style={{maxWidth: "350px"}}>
+                                        <img onError={imgErrorHandler} src={avatar} className="card-img-top rounded-circle object-fit-cover" alt="..." />
                                     </div>
                                 </div>
                                 <div className="text-center mb-3">
-                                    <input type="file" name="avatar" id="avatarImg" onChange={(event)=>setFile(URL.createObjectURL(event.target.files[0]))} hidden/>
-                                    <div className="d-flex justify-content-center">
-                                        {(file != stock_avatar? <div className="input-group d-flex justify-content-center"><button className="btn btn-outline-dark" type="button" onClick={()=>uploadAvatar(document.getElementById("avatarImg").event)}>Cargar foto</button>
-                                        <button type="button" className="btn btn-outline-danger" onClick={()=>setFile(stock_avatar)}><i className="fa-solid fa-trash"></i></button></div>:<label className="btn btn-outline-dark" htmlFor="avatarImg">Seleccionar foto</label>)}
-                                    </div>
+                                    <input type="file" name="avatar" id="avatarImg" onChange={(event) => setAvatar(URL.createObjectURL(event.target.files[0]))} hidden />
+                                    <label className="btn btn-outline-dark" htmlFor="avatarImg">Seleccionar foto</label>
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col">
@@ -148,16 +135,16 @@ export const KeeperInfo = ({keeper}) => {
                                 <div className="mb-3">
                                     <label htmlFor="flexSwitchCheckDefault" className="form-label">Servicios</label>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" defaultValue={petW} role="switch" id="petWalker" />
+                                        <input className="form-check-input" type="checkbox" role="switch" id="petWalker" />
                                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Paseador(a) de mascotas</label>
                                     </div>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" defaultValue={petS} role="switch" id="petSitter" />
-                                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Cuidador de mascotas</label>
+                                        <input className="form-check-input" type="checkbox" role="switch" id="petSitter" />
+                                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Cuidador(a) de mascotas</label>
                                     </div>
                                     <div className="form-check form-switch">
-                                        <input className="form-check-input" type="checkbox" defaultValue={partyP} role="switch" id="partyPlanner" />
-                                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Organizador de fiestas</label>
+                                        <input className="form-check-input" type="checkbox" role="switch" id="partyPlanner" />
+                                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Organizador(a) de fiestas</label>
                                     </div>
                                 </div>
                                 <div className="mb-3">
@@ -177,24 +164,24 @@ export const KeeperInfo = ({keeper}) => {
                 {/* Fin de modal */}
             </div>
 			<div className="align-items-center justify-content-center row mb-2">
-                <img onError={imgErrorHandler} src={currentUser.profile_pic} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
+                <img onError={imgErrorHandler} src={store.currentUser.profile_pic} style={{borderRadius:"50%", width:"auto", height:"35vh", objectFit:"contain"}}/>
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
-                <h2>{currentUser.first_name}</h2>
+                <h2>{store.currentUser.first_name}</h2>
             </div>
             <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
                 <div className="d-block">
                     <p><strong>Experiencia</strong></p>
-                    <p>{yearsExperience(currentUser.experience)}</p>
+                    <p>{yearsExperience(store.currentUser.experience)}</p>
                 </div>
                 <div className="d-block">
                     <p><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></p>
-                    <p>{currentUser.location}</p>
+                    <p>{store.currentUser.location}</p>
                 </div>
                 <div className="d-block">
                     <p><strong>Servicios</strong></p>
                     <ul style={{textAlign:"left"}}>
-                        {(!Array.isArray(currentUser.services) ? "Sin servicios": currentUser.services.map((service, index)=> {return (
+                        {(!Array.isArray(store.currentUser.services) ? "Sin servicios": store.currentUser.services.map((service, index)=> {return (
                             <li key={index}>{service}</li>
                         )}))}
                     </ul>
@@ -202,7 +189,7 @@ export const KeeperInfo = ({keeper}) => {
             </div>
             <div className="d-block mb-2"  style={{textAlign:"left"}}>
                 <h3><strong>Sobre mi</strong></h3>
-                <p>{currentUser.description}</p>
+                <p>{store.currentUser.description}</p>
             </div>
     </div>
   );

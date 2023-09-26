@@ -7,12 +7,15 @@ export const OwnerInfo = ({owner}) => {
   
   const params = useParams();
   const { store, actions } = useContext(Context);
-  const [file, setFile] = useState(stock_avatar) //TEMP PROFILE PIC. FOR PREVIEW ONLY
+  const [avatar, setAvatar] = useState(stock_avatar)
   
   useEffect(()=>{
-    actions.getOwner(params.theid)
+    loadData()
   },[])
-
+  async function loadData(){
+    let resp = actions.getOwner(params.theid)
+    setAvatar(resp.profile_pic)
+  }
   function imgErrorHandler(e){
     e.target.src = stock_avatar
   }
@@ -26,7 +29,7 @@ export const OwnerInfo = ({owner}) => {
         location: document.getElementById("locationInput").value,
     }
     actions.updateOwner(obj);
-    if (file != stock_avatar){
+    if (avatar != store.currentUser.profile_pic){
         const formData = new FormData()
         formData.append("avatar",document.getElementById("avatarImg").files[0])
         actions.uploadPicture(formData, store.currentUser.id)
@@ -36,7 +39,7 @@ export const OwnerInfo = ({owner}) => {
   return (
     <div className="container-fluid">
       <div className="d-flex align-items-center justify-content-end">
-                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" >Editar</button>
+                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={()=>setAvatar(store.currentUser.profile_pic)}>Editar</button>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
@@ -48,13 +51,13 @@ export const OwnerInfo = ({owner}) => {
                         <div className="modal-body textLeft">
                             {/* FORM BODY */}
                             <form id="formID">
-                                <div className="mb-3">
-                                    <div className="d-flex align-items-center justify-content-center"  style={{width: "100%", height:"12rem",overflow:"hidden", aspectRatio:"1"}}>
-                                        <img onError={imgErrorHandler} style={{borderRadius:"50%", width:"12rem", height:"auto"}} src={file} className="card-img-top"></img>
+                                <div className="mb-3 d-flex justify-content-center">
+                                    <div className="ratio ratio-1x1 w-75">
+                                        <img onError={imgErrorHandler} src={avatar} className="card-img-top rounded-circle object-fit-cover" alt="..." />
                                     </div>
                                 </div>
                                 <div className="text-center mb-3">
-                                    <input type="file" name="avatar" id="avatarImg" onChange={(event)=>setFile(URL.createObjectURL(event.target.files[0]))} hidden/>
+                                    <input type="file" name="avatar" id="avatarImg" onChange={(event) => setAvatar(URL.createObjectURL(event.target.files[0]))} hidden />
                                     <label className="btn btn-outline-dark" htmlFor="avatarImg">Seleccionar foto</label>
                                 </div>
                                 <div className="row mb-3">
@@ -79,7 +82,7 @@ export const OwnerInfo = ({owner}) => {
                             {/* END OF FORM BODY */}
                         </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={()=>setFile(stock_avatar)}>Cancelar</button>
+                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={()=>setAvatar(store.currentUser.profile_pic)}>Cancelar</button>
                                 <button type="submit" className="btn btn-outline-success" data-bs-dismiss="modal" onClick={updateUser}>Guardar cambios</button>
                             </div>
                         </div>
@@ -87,8 +90,10 @@ export const OwnerInfo = ({owner}) => {
                 </div>
                 {/* Fin de modal */}
             </div>
-			<div style={{width: "100%", maxHeight:"18rem", overflow:"hidden", aspectRatio:"1"}}>
-                <img onError={imgErrorHandler} src={store.currentUser.profile_pic} style={{borderRadius:"50%",maxWidth:"18rem"}}className="card-img-top" alt="..." />
+			<div className="mb-3 d-flex justify-content-center" >
+                <div className="ratio ratio-1x1" style={{maxWidth:"350px"}}>
+                    <img onError={imgErrorHandler} src={store.currentUser.profile_pic} className="card-img-top rounded-circle object-fit-cover" alt="..." />
+                </div>
             </div>
 			<div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
                 <h2>{store.currentUser.first_name}</h2>

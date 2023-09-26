@@ -332,9 +332,9 @@ def getPetsByOwner(owner_id):
 
 #Endpoint para subir imagenes con firebase
 @api.route('/avatar/<int:user_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL USUARIO CON JWT
-#@jwt_required()
-def uploadPicture():
-    user_id = get_jwt_identity()
+@jwt_required()
+def uploadPicture(user_id):
+    #user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
     print(request.files)

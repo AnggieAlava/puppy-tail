@@ -300,9 +300,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeeper: async (id) => {
         const {apiFetch} = getActions()
         const response = await apiFetch(`/keeper/${id}`, "GET");
-        if(!response.ok){
-          console.error(response.status+": "+response.statusText)
-          }
         setStore({currentUser: response.data})
         return response.data
       },

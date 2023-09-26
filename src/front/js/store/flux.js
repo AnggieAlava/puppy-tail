@@ -241,24 +241,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         return "Ok";
       },
 
-      getMessage: async () => {
-        try {
-          const { apiFetch } = getActions();
-          const data = await apiFetch("/hello");
-          setStore({ message: data.data.message });
+      // getMessage: async () => {
+      //   try {
+      //     const { apiFetch } = getActions();
+      //     const data = await apiFetch("/hello");
+      //     setStore({ message: data.data.message });
 
-          return data;
-        } catch (error) {
-          console.log("Error loading message from backend", error);
-        }
-      },
+      //     return data;
+      //   } catch (error) {
+      //     console.log("Error loading message from backend", error);
+      //   }
+      // },
 
-      signup: async (first_name, last_name, email, password) => {
+      signup: async (first_name, last_name, email, location, password) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/signup", "POST", {
-          last_name,
           first_name,
+          last_name,
           email,
+          location,
           password,
         });
         if (resp.code === 201) {
@@ -273,16 +274,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         first_name,
         last_name,
         email,
-        password,
-        hourly_pay
+        location,
+        password
       ) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/signup/keeper", "POST", {
-          last_name,
           first_name,
+          last_name,
           email,
+          location,
           password,
-          hourly_pay,
         });
         if (resp.code === 201) {
           console.log("Signup Succesfully");

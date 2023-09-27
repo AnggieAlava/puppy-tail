@@ -9,6 +9,6 @@
   },
   "python.formatting.provider": "none",
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   }
 }

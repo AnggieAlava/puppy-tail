@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 
@@ -14,10 +15,12 @@ function getDate(){
   return today
 }
 
-export const KeeperForm = ({keeper}) => {
+export const KeeperForm = ({}) => {
+  const {store, actions} = useContext(Context)
   //Calendar use
   const [value, onChange] = useState([]);
   const params = useParams();
+  const keeper = useState(JSON.parse(localStorage.getItem('keeper')))
   const [range, setRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
@@ -31,7 +34,7 @@ export const KeeperForm = ({keeper}) => {
           <div style={{textAlign:"left"}}>
             <div className="d-block">
               <small>Service fee</small>
-              <p>{(keeper.hourly_pay? "$"+keeper.hourly_pay+"/hour":"No service fee established yet for "+keeper.first_name)}</p>
+              <p>{(store.currentUser.hourly_pay? "$"+store.currentUser.hourly_pay+"/hour":"No service fee established yet for "+store.currentUser.first_name)}</p>
             </div>
             <div>
               <form>

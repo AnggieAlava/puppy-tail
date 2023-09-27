@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       accessToken: null,
-      userInfo: null,
+      userInfo: {},
       message: null,
       pets: [],
       singlePet: [],
@@ -15,10 +15,6 @@ const getState = ({ getStore, getActions, setStore }) => {
       profilePic: null,
     },
     actions: {
-      setPets: (obj) => {
-        setStore({ pets: obj });
-      },
-      //Get all pets from the database, including the owners inside the pet object.
       getPets: async () => {
         const { pets } = getStore();
         try {
@@ -40,20 +36,18 @@ const getState = ({ getStore, getActions, setStore }) => {
       //Get pets by owner id
       getOwnerPets: async (owner_id) => {
         const { pets } = getStore();
-        console.log(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`);
         try {
           fetch(process.env.BACKEND_URL + `/api/pets/owner/${owner_id}`)
             .then((resp) => {
               if (!resp.ok) {
                 if (resp.status == 404) {
-                  throw Error({ msg: "User does not exist" });
+                  throw Error({ "msg": "User does not exist" });
                 }
                 console.error(resp.status + ": " + resp.statusText);
               }
               return resp.json();
             })
             .then((data) => {
-              console.log(data);
               setStore({ pets: data });
               return "ok";
             });
@@ -63,30 +57,25 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       createPet: async (obj) => {
         try {
-          fetch(process.env.BACKEND_URL + `/api/pets`, {
+          const response = await fetch(process.env.BACKEND_URL + `/api/pets`, {
             method: "POST",
             body: JSON.stringify(obj),
             headers: {
               "Content-Type": "application/json",
             },
           })
-            .then((response) => {
-              if (!response.ok) {
-                throw Error(response.status + ": " + response.statusText);
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Successfully created pet: " + data);
-              getActions().getOwnerPets(obj.owner_id);
-            });
+          if(!response.ok){
+            console.error(response.status+": "+response.statusText)
+          }
+          let data = await response.json()
+          getActions().getOwnerPets(obj.owner_id);
+          return data  
         } catch (error) {
           console.error(error);
         }
       },
       updatePet: async (obj) => {
         try {
-          //Use email as contact id
           fetch(process.env.BACKEND_URL + `/api/pets/${obj.id}`, {
             method: "PUT",
             body: JSON.stringify(obj),
@@ -102,8 +91,17 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               console.log("Successfully updated pet: " + data);
-
-              getActions().getOwnerPets(obj.owner_id);
+              //getActions().getOwnerPets(obj.owner_id);
+              const {pets} = getStore()
+              let arr = pets
+              for(let pet in arr){
+                if (arr[pet].id == obj.id){
+                  arr[pet]=obj
+                  console.log({obj})
+                  console.log(arr[pet])
+                } 
+              }
+              setStore({pets:arr})
             });
         } catch (error) {
           console.error(error);
@@ -175,6 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiFetchProtected: async (endpoint, method = "GET", body = null) => {
         const { accessToken } = getStore();
         if (!accessToken || accessToken === "null") {
+          localStorage.setItem("userInfo", {});
           return "No token"; //error 422
         }
         const params = {
@@ -198,8 +197,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
+        let userData = JSON.parse(localStorage.getItem("userInfo"))
         if (token) {
           setStore({ accessToken: token });
+          setStore({userInfo:userData})
         }
       },
 
@@ -223,14 +224,18 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
         }
         console.log({ resp });
-        const { message, token } = resp.data;
+        const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
         setStore({ accessToken: token });
+        setStore({userInfo:{"userId":user_id, "user_type":user_type}})
+        localStorage.setItem("userInfo",JSON.stringify({"userId":user_id, "user_type":user_type}))
         return resp.code;
       },
 
       logout: () => {
         setStore({ accessToken: null });
+        setStore({userInfo:{}})
+        localStorage.setItem("userInfo", {});
         localStorage.setItem("accessToken", null);
       },
 
@@ -240,19 +245,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         setStore({ userInfo: resp.data });
         return "Ok";
       },
-
-      // getMessage: async () => {
-      //   try {
-      //     const { apiFetch } = getActions();
-      //     const data = await apiFetch("/hello");
-      //     setStore({ message: data.data.message });
-
-      //     return data;
-      //   } catch (error) {
-      //     console.log("Error loading message from backend", error);
-      //   }
-      // },
-
       signup: async (first_name, last_name, email, location, password) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/signup", "POST", {
@@ -292,6 +284,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         navigate("/login");
         console.log(resp);
       },
+      getKeeper: async (id) => {
+        const {apiFetch} = getActions()
+        const response = await apiFetch(`/keeper/${id}`, "GET");
+        setStore({currentUser: response.data})
+        return response.data
+      },
       updateKeeper: async (obj) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch(`/keeper/${obj.id}`, "PUT", {
@@ -307,31 +305,53 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        localStorage.setItem("keeper", JSON.stringify(resp.data));
+        const {currentUser} = getStore()
+        let user = resp.data
+        Object.assign(resp.data, {"profile_pic":currentUser.profile_pic})
+        setStore({currentUser: user})
       },
       uploadPicture: async (formData, id) => {
         const { accessToken } = getStore();
         if (!accessToken) {
           return "No token";
         }
-        const { userInfo } = getStore();
-        const resp = await fetch(
-          process.env.BACKEND_URL + `/api/avatar/${id}`,
-          {
-            method: "POST",
-            body: formData,
-            headers: {
-              Authorization: "Bearer " + accessToken,
-            },
+        const resp = await fetch(process.env.BACKEND_URL+`/api/avatar/${id}`, {
+          method:"POST",
+          body:formData,
+          headers:{
+            "Authorization":"Bearer " + accessToken
           }
-        );
+        });
+        if (!resp.ok) {
+          console.error("Error saving picture, code: "+ resp.code);
+          return resp;
+        }
+        const {currentUser} = getStore()
+        let data = await resp.json()
+        let user = currentUser
+        user["profile_pic"] = data.public_url
+        setStore({currentUser: user})
+        console.log("User info updated")
+        return user
+      },
+      uploadpetAvatar: async (formData, id) => {
+        const { accessToken } = getStore();
+        if (!accessToken) {
+          return "No token";
+        }
+        const resp = await fetch(process.env.BACKEND_URL+`/api/pet_avatar/${id}`, {
+          method:"POST",
+          body:formData,
+          headers:{
+            "Authorization":"Bearer " + accessToken
+          }
+        });
         if (!resp.ok) {
           console.error("Error saving picture, code: " + resp.code);
           return resp;
         }
-        let data = await resp.json();
-        setStore({ profilePic: data.public_url });
-        return data;
+        let data = await resp.json()
+        return data
       },
 
       getKeepers: async () => {
@@ -353,23 +373,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getOwner: async (id) => {
         try {
-          fetch(process.env.BACKEND_URL + `/api/owner/${id}`)
-            .then((resp) => {
-              if (!resp.ok) {
-                console.error(resp.status + ": " + resp.statusText);
-              }
-              return resp.json();
-            })
-            .then((data) => {
-              console.log("retrieved owner data successfully => " + data);
-              setStore({ currentUser: data });
-              //return data;
-            });
+          fetch(process.env.BACKEND_URL+`/api/owner/${id}`).then(resp=>{
+            if(!resp.ok){
+              console.error(resp.status+": "+resp.statusText)
+            }
+            return resp.json();
+          }).then(data=>{
+            console.log("retrieved owner data successfully => "+data)
+            setStore({currentUser:data})
+            setStore({pets:data.pets})
+            return data;
+          })
         } catch (error) {
           console.error(error);
         }
       },
-    },
+      updateOwner: async (obj) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/owner/${obj.id}`, "PUT", {
+          "first_name":obj.first_name,
+          "last_name": obj.last_name,
+          "description":obj.description,
+          "location": obj.location
+        });
+        if (resp.code != 200) {
+          console.error("Error saving profile, code: "+ resp.code);
+          return resp;
+        }
+        setStore({currentUser: resp.data})
+      }
+    }
   };
 };
 

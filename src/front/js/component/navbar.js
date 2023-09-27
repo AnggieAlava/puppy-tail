@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "../store/appContext";
 import "../../styles/navbar.css";
 import { Link } from "react-router-dom";
 import { Logout } from "../pages/logout";
 
 export const Navbar = () => {
+  const {store, actions} = useContext(Context)
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container-fluid">
-        <div className="navbar-logo">
+        <div className="navbar-logo" href="/home">
           <a className="navbar-brand">
             <i className="fa-solid fa-paw "> Puppy Tail</i>
           </a>
@@ -31,22 +33,27 @@ export const Navbar = () => {
                 Home
               </a>
             </li>
-            {/* <li className="nav-item">
+            {((Object.keys(store.userInfo).length > 1)?"":<li className="nav-item">
               <Link className="nav-link" to="/login">
                 Iniciar sesión
               </Link>
-            </li> */}
-            <li className="nav-item">
+            </li>)}
+            {((Object.keys(store.userInfo).length > 1)?"":<li className="nav-item">
               <Link className="nav-link" to="/signup">
                 Registrarse
               </Link>
-            </li>
-            <Logout />
+            </li>)}
+            {((Object.keys(store.userInfo).length > 1)?<Logout />:"")}
+            {((Object.keys(store.userInfo).length > 1)?
             <li className="nav-item">
+              <Link className="nav-link" to={"/profile/"+store.userInfo.user_type+"/"+store.userInfo.userId}>
+                Perfil <i className="fa-regular fa-user"></i>
+              </Link>
+            </li>:<li className="nav-item">
               <Link className="nav-link" to="/signup/keeper">
                 Quieres ser cuidador?
               </Link>
-            </li>
+            </li>)}            
           </ul>
         </div>
       </div>

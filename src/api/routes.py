@@ -70,7 +70,7 @@ def login_user():
     
     refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
    
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
@@ -87,10 +87,11 @@ def user_refresh():
     
     #Generar nuevos tokens
     user_id=get_jwt_identity()
+    user = User.query.get(user_id)
     acces_token = create_access_token(identity = user_id)
     acces_jti=get_jti(acces_token)
     refresh_token=create_refresh_token(identity=user_id, additional_claims={"accesToken": acces_jti})
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token}), 201
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -119,6 +120,7 @@ def hello_protected():
     user=User.query.get(user_id)
     response={
         "userId":user_id,
+        "user_type":user.user_type,
         "claims":claims,
         "isActive":user.is_active
     }
@@ -127,7 +129,7 @@ def hello_protected():
 @api.route('/owner', methods=["GET"])
 def owners_list():
     owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "location": owner.location, "description": owner.description, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
                    for pet in Pet.query.filter_by(owner_id=owner.id)]}
                    for owner in owners]
     return jsonify(owners_data), 200
@@ -145,12 +147,38 @@ def get_owner(owner_id):
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
+        "location": owner.location,
+        "description": owner.description,
         "email": owner.email,
         "profile_pic": imgUrl,
-        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
             for pet in owner.pets]
     }
     return jsonify(owner_data), 200
+
+@api.route('/owner/<int:owner_id>', methods=["PUT"])
+def updateOwner(owner_id):
+    owner = Owner.query.get(owner_id)
+    data = request.get_json(force=True)
+    owner.first_name = (data["first_name"].lower()).title()
+    owner.last_name = (data["last_name"].lower()).title()
+    owner.description = data["description"]
+    owner.location = data["location"]
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(owner.profile_pic)
+    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")    
+    db.session.commit()
+    owner = {
+        "id": owner.id,
+        "first_name":owner.first_name,
+        "last_name":owner.last_name,
+        "description":owner.description,
+        "location": owner.location,
+        "profile_pic": imgUrl,
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
+            for pet in owner.pets]
+    }
+    return jsonify(owner),200
 
 @api.route('/owner/<int:owner_id>', methods=['DELETE'])
 def delete_owner(owner_id):
@@ -208,8 +236,11 @@ def get_keeper(keeper_id):
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,
         "email": keeper.email,
+        "location": keeper.location,
+        "experience": keeper.experience,
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
+        "bookings": [booking for booking in keeper.booking],
         "services": [service for service in keeper.services],
         "profile_pic": imgUrl
     }
@@ -266,7 +297,13 @@ def createPet():
     db.session.add(new_pet)
     db.session.commit()
     # retornar el objeto creado
-    return jsonify({"msg": "Pet added successfully"}), 201
+    obj={
+        "name": new_pet.name,
+        "size": new_pet.size,
+        "category": new_pet.category,
+        "id": new_pet.id
+    }
+    return jsonify(obj), 201
 
 
 @api.route('/pets/<int:pet_id>', methods=['GET', 'DELETE', 'PUT'])
@@ -309,16 +346,14 @@ def getAllPets():
 def getPetsByOwner(owner_id):
     pets = Pet.query.filter_by(owner_id=owner_id)
 
-    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category,"profile_pic": getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
             for pet in pets]
     return jsonify(pets), 200
 
-
-
 #Endpoint para subir imagenes con firebase
 @api.route('/avatar/<int:user_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL USUARIO CON JWT
-#@jwt_required()
-def profilePicture(user_id):
+@jwt_required()
+def uploadPicture(user_id):
     #user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
@@ -350,5 +385,46 @@ def getprofilePic(user_id):
         return ""
     bucket = storage.bucket(name="puppy-tail.appspot.com")
     resource = bucket.blob(user.profile_pic)
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return picture_url
+
+@api.route('/pet_avatar/<int:pet_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL PET CON JWT
+#@jwt_required()
+def uploadpetAvatar(pet_id):
+    #user_id = get_jwt_identity()
+    pet = Pet.query.get(pet_id)
+    #Recibir archivo
+    file = request.files["avatar"]
+    #Extraer la extension del archivo
+    extension = file.filename.split(".").pop()
+    #Guardar archivo temporal
+    temp = tempfile.NamedTemporaryFile(delete=False)
+    file.save(temp.name)
+    #Cargar archivo a firebase
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    filename = "pet_avatar/"+str(pet_id)+"."+extension
+    #Guardar en firebase
+    resource = bucket.blob(filename)
+    resource.upload_from_filename(temp.name, content_type="image/"+extension)
+    #Borra imagen actual de firebase si existe
+    # if pet.profile_pic != "":
+    #     previousAvatar = bucket.blob(pet.profile_pic)
+    #     previousAvatar.delete()
+    #     print("Previous avatar deleted from Firebase")
+    #Agrega la nueva imagen a nuestra base de datos
+    pet.profile_pic = filename
+    db.session.add(pet)
+    db.session.commit()
+    #Return URL of new image
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    return jsonify({"public_url":picture_url, "storable_url": pet.profile_pic}), 201
+
+@api.route('/pet_avatar/<int:pet_id>', methods=["GET"])
+def getpetAvatar(pet_id):
+    pet = Pet.query.get(pet_id)
+    if pet.profile_pic is None:
+        return ""
+    bucket = storage.bucket(name="puppy-tail.appspot.com")
+    resource = bucket.blob(pet.profile_pic)
     picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
     return picture_url

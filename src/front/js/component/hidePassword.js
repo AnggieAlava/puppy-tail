@@ -27,6 +27,7 @@ export const HidePassword = () => {
         id="togglePassword"
         onClick={passwordVisibility}
         style={{
+          fontSize:15,
           cursor: "pointer",
           position: "absolute",
           top: "75%",

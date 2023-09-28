@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/login.css";
 import { HidePassword } from "../component/hidePassword";
 
@@ -22,10 +23,8 @@ export const Login = () => {
   }
 
   return (
-    <div className="text-center container">
-      <div className="wrap-login">
-        <i id="cat-suit-login" className="fa-solid fa-dog"></i>
-        <h2></h2>
+    <div className="text-center wrap-login">
+        <h2>Iniciar sesión</h2>
         <form className="pe-3" onSubmit={login}>
           <div className="mb-3">
             <label htmlFor="inputEmail" className="form-label">
@@ -44,8 +43,10 @@ export const Login = () => {
           <button id="btn-login" type="submit" className="btn">
             Iniciar sesión
           </button>
+            <h5>No tienes una cuenta?<Link className="nav-link link-signup" to="/signup">
+                  Registrate
+              </Link></h5> 
         </form>
-      </div>
     </div>
   );
 };

@@ -53,7 +53,7 @@ export const KeeperInfo = ({keeper}) => {
         if (document.getElementById("petSitter").checked) arr.push("Cuidador(a) de mascotas");
         if (document.getElementById("partyPlanner").checked)
         arr.push("Organizador(a) de fiestas");
-        if (arr.length === 0) arr.push("No services yet");
+        if (arr.length === 0) arr.push("Sin servicios");
         //Experience
         let xp = document.getElementById("experienceInput").value
         if(xp ==""){
@@ -183,7 +183,9 @@ export const KeeperInfo = ({keeper}) => {
                 <div className="d-block">
                     <p><strong>Servicios</strong></p>
                     <ul style={{textAlign:"left"}}>
-                        {(!Array.isArray(store.currentUser.services) ? "Sin servicios": store.currentUser.services.map((service, index)=> {return (
+                        {(!Array.isArray(store.currentUser.services)? "": store.currentUser.services < 1?
+                        "Sin servicios":store.currentUser.services.map((service, index)=> {
+                            return (
                             <li key={index}>{service}</li>
                         )}))}
                     </ul>
@@ -191,7 +193,7 @@ export const KeeperInfo = ({keeper}) => {
             </div>
             <div className="d-block mb-2"  style={{textAlign:"left"}}>
                 <h3><strong>Sobre mi</strong></h3>
-                <p>{store.currentUser.description}</p>
+                <p>{(store.currentUser.description==""?"Sin descripción":store.currentUser.description)}</p>
             </div>
     </div>
   );

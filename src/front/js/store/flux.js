@@ -197,17 +197,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
-<<<<<<< HEAD
-        // let userData = JSON.parse(localStorage.getItem("userInfo"))
-=======
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null){
+        if (localStorage.hasOwnProperty("userInfo") != null) {
           userData = JSON.parse(localStorage.getItem("userInfo"))
         }
->>>>>>> 3ef8837a1c34ba44140f7f8ca7d6c6b7f1fe3946
         if (token) {
           setStore({ accessToken: token });
-          // setStore({userInfo:userData})
+          setStore({ userInfo: userData })
         }
       },
 

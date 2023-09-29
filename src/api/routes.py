@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti, verify_jwt_in_request
 from flask import Flask
 from flask_cors import CORS
 from datetime import timezone
@@ -51,6 +51,12 @@ def create_keeper():
         return jsonify({"msg": "Email already registered"}), 400
     new_keeper = Keeper()
     signup_by_type(new_keeper, data)
+    if hasattr(data, "services") is False:
+        new_keeper.services = []
+    if hasattr(data, "description") is False:
+        new_keeper.description = ""
+    if hasattr(data, "experience") is False:
+        new_keeper.experience = datetime.date.today()
     db.session.add(new_keeper)
     db.session.commit()
     return jsonify({"msg": "Keeper created successfully"}), 201
@@ -66,8 +72,6 @@ def login_user():
         return jsonify({"message":"Wrong password"}), 400
     acces_token = create_access_token(identity = user.id)
     acces_jti=get_jti(acces_token)
-    
-    
     refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
    
     return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
@@ -143,7 +147,7 @@ def get_owner(owner_id):
         bucket = storage.bucket(name="puppy-tail.appspot.com")
         resource = bucket.blob(owner.profile_pic)
         imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
-        owner_data = {
+    owner_data = {
         "id": owner.id,
         "first_name": owner.first_name,
         "last_name": owner.last_name,
@@ -164,9 +168,11 @@ def updateOwner(owner_id):
     owner.last_name = (data["last_name"].lower()).title()
     owner.description = data["description"]
     owner.location = data["location"]
-    bucket = storage.bucket(name="puppy-tail.appspot.com")
-    resource = bucket.blob(owner.profile_pic)
-    imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")    
+    imgUrl = ""
+    if owner.profile_pic:
+        bucket = storage.bucket(name="puppy-tail.appspot.com")
+        resource = bucket.blob(owner.profile_pic)
+        imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")    
     db.session.commit()
     owner = {
         "id": owner.id,
@@ -231,7 +237,7 @@ def get_keeper(keeper_id):
         bucket = storage.bucket(name="puppy-tail.appspot.com")
         resource = bucket.blob(keeper.profile_pic)
         imgUrl = resource.generate_signed_url(version="v4", expiration = datetime.timedelta(minutes=15), method="GET")
-        keeper_data = {
+    keeper_data = {
         "id": keeper.id,
         "first_name": keeper.first_name,
         "last_name": keeper.last_name,

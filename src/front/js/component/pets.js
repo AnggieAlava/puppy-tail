@@ -10,11 +10,15 @@ export const Pets = (props) => {
     const [edit, setEdit] = useState(false);
     const [currentPet, setPet] = useState({})
     const [preview, setPreview] = useState(stock_pet)
+    const [size, setSize] = useState(currentPet.size)
 
     function imgErrorHandler(e) {
         e.target.src = stock_pet
     }
-
+    function fillForm(pet){
+        setPet(pet)
+        setSize(pet.size)
+    }
     async function createPet() {
         let newPet = {
             "name": document.getElementById('newPetNameInput').value,
@@ -79,7 +83,7 @@ export const Pets = (props) => {
                                 </div>
                                 {/* Operacion ternaria para mostrar botones de editar */}
                                 {(edit == false ? "" : <div className="d-flex flex-row justify-content-center gap-3">
-                                    <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => setPet(pet)}>Editar</button>
+                                    <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => fillForm(pet)}>Editar</button>
                                     {/* <!-- Modal --> */}
                                     <div className="modal fade" id="editPet" tabIndex="-1" aria-labelledby="editPetLabel" aria-hidden="true">
                                         <div className="modal-dialog modal-dialog-centered">
@@ -106,7 +110,8 @@ export const Pets = (props) => {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label htmlFor="sizeInput" className="form-label">Tamaño</label>
-                                                            <select className="form-select" aria-label="Default select example" id="sizeInput" defaultValue={currentPet.size}>
+                                                            <select className="form-select" aria-label="Default select example" id="sizeInput" 
+                                                            value={size} onChange={e => setSize(e.target.value)}>
                                                                 <option value="Pequeño">Pequeño (1-8kg)</option>
                                                                 <option value="Mediano">Mediano (8-20kg)</option>
                                                                 <option value="Grande">Grande (20-30kg)</option>
@@ -184,11 +189,11 @@ export const Pets = (props) => {
                                             </div>
                                             <div className="mb-3">
                                                 <label htmlFor="newPetNameInput" className="form-label">Nombre</label>
-                                                <input type="text" className="form-control" id="newPetNameInput" aria-describedby="nameHelp" />
+                                                <input type="text" className="form-control" id="newPetNameInput" defaultValue={""} aria-describedby="nameHelp" />
                                             </div>
                                             <div className="mb-3">
-                                                <label htmlFor="newPetSizeInput" className="form-label">Tamaño</label>
-                                                <select className="form-select" aria-label="Size by kilograms" id="newPetSizeInput">
+                                                <label htmlFor="newPetSizeInput"  className="form-label">Tamaño</label>
+                                                <select className="form-select"  defaultValue={""} aria-label="Size by kilograms" id="newPetSizeInput">
                                                     {/* <option selected>{currentPet.size}</option> */}
                                                     <option value="Pequeño">Pequeño (1-8kg)</option>
                                                     <option value="Mediano">Mediano (8-20kg)</option>
@@ -198,7 +203,7 @@ export const Pets = (props) => {
                                             </div>
                                             <div className="mb-3">
                                                 <label htmlFor="newPetCategoryInput" className="form-label">Raza</label>
-                                                <input type="text" className="form-control" id="newPetCategoryInput" />
+                                                <input type="text" className="form-control" defaultValue={""} id="newPetCategoryInput" />
                                             </div>
                                         </form>
                                         {/* END OF FORM BODY */}

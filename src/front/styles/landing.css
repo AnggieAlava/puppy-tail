@@ -1,5 +1,5 @@
 .background {
-  font-family: serif;
+  font-family: 'Roboto', sans-serif;
   color: white;
   background-size: cover;
   height: 100vh;
@@ -8,7 +8,10 @@
   background-image: url(https://images.unsplash.com/flagged/photo-1551301622-6fa51afe75a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80); 
 }
 
+/* background-color: #9EB384; */
+
 .home {
+  font-family: 'Roboto', sans-serif;
   display: grid;
   grid-template-columns: 2fr 1fr; 
   background-color: rgba(0, 0, 0, 0.5); 
@@ -24,14 +27,51 @@
 }
 
 .content {
+  font-family: 'Roboto', sans-serif;
   display: grid;
   grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+
+.arc {
+  font-size: 5em; 
+  text-transform: uppercase; 
+  display: inline-block;
+  position: relative;
+  margin-top: 20px;
+  font-weight: bold; 
+  color: transparent; 
+}
+
+.arc::before {
+  content: 'Bienvenidos'; 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  white-space: nowrap;
+  animation: rainbow 10s linear infinite; 
+}
+
+@keyframes rainbow {
+  0% { color: red; }
+  20% { color: orange; }
+  40% { color: yellow; }
+  60% { color: green; }
+  80% { color: blue; }
+  100% { color: violet; }
 }
 
 i{
+  font-size: 2em;
   color: white;
-  font-size: 30px;
   padding: 20px;
 
 }
 
+@media (max-width: 768px) {
+  i {
+    font-size: 1.5em;
+  }
+}

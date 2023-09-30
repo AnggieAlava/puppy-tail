@@ -43,9 +43,9 @@ export const Login = () => {
           <button id="btn-login" type="submit" className="btn">
             Iniciar sesión
           </button>
-            <h5>No tienes una cuenta?<Link className="nav-link link-signup" to="/signup">
-                  Registrate
-              </Link></h5> 
+            <h6>Te olvidaste tu contraseña? Haz click <Link to="#">
+                  Aqui
+              </Link></h6> 
         </form>
     </div>
   );

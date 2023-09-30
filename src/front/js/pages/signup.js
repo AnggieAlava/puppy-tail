@@ -15,7 +15,7 @@ export const Signup = (props) => {
 
   useEffect(() => {
     if (shouldNavigate) {
-      navigate("/login");
+      navigate("/");
     }
   }, [shouldNavigate]);
 

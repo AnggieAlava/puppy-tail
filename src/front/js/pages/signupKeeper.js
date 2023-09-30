@@ -15,7 +15,7 @@ export const SignupKeeper = (props) => {
 
   useEffect(() => {
     if (shouldNavigate) {
-      navigate("/login");
+      navigate("/");
     }
   }, [shouldNavigate]);
 

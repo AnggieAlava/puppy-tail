@@ -44,7 +44,7 @@ export const KeeperInfo = ({keeper}) => {
         //difference in days (eg. 360 days)
         let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
         //Return first digit as string
-        return (difference / 365).toString().slice(0, 1)+"+ years";
+        return (difference / 365).toString().slice(0, 1)+"+ años";
     }
     async function updateUser() {
         //Services

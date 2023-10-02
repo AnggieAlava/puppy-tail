@@ -15,7 +15,7 @@ export const Landing = () => {
           <h1 className='logo'></h1>
           <h2 className="arc">Bienvenidos</h2>
           <h3>Puppy Tail</h3>
-          <h4>No tienes una cuenta?<Link to="/signup">Registrate</Link></h4> 
+          <h4>No tienes una cuenta?<Link to="/signup">Registrate</Link></h4>
           <div>
             <a className="icon" href="https://www.instagram.com/thepuppytail"
               target="_blank"><i className='fab fa-instagram' ></i></a>

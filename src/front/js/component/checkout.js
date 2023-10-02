@@ -1,5 +1,6 @@
 import { CLIENT_ID } from '../config/config'
-import React, { useState, useEffect } from "react" ;
+import React, { useState, useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const Checkout = () => {
@@ -7,23 +8,25 @@ const Checkout = () => {
     const [success, setSuccess] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
     const [orderID, setOrderID] = useState(false);
+    const { store, actions } = useContext(Context);
+
 
     // creates a paypal order
     const createOrder = (data, actions) => {
         return actions.order.create({
             purchase_units: [
                 {
-                    description: "Sunflower",
+                    description: `${store.currentUser.first_name}`,
                     amount: {
                         currency_code: "USD",
-                        value: 20,
+                        value: store.currentUser.hourly_pay,
                     },
                 },
             ],
         }).then((orderID) => {
-                setOrderID(orderID);
-                return orderID;
-            });
+            setOrderID(orderID);
+            return orderID;
+        });
     };
 
     // check Approval
@@ -44,7 +47,7 @@ const Checkout = () => {
             alert("Payment successful!!");
             console.log('Order successful . Your order id is--', orderID);
         }
-    },[success]);
+    }, [success]);
 
     return (
         <PayPalScriptProvider options={{ "client-id": CLIENT_ID }}>
@@ -52,17 +55,17 @@ const Checkout = () => {
                 <div className="wrapper">
                     <div className="product-img">
                         <img
-                            src="https://cdn.pixabay.com/photo/2021/08/15/06/54/sunflower-6546993_1280.jpg"
-                            alt="SunFlower"
-                            height="320"
+                            src={store.currentUser.profile_pic}
+                            alt="Keeper"
+                            height="520"
                             width="300" />
                     </div>
                     <div className="product-info">
                         <div className="product-text">
-                            <h1>Sunflower</h1>
+                            <h1>{store.currentUser.first_name}</h1>
                         </div>
                         <div className="product-price-btn">
-                            <p>$20</p>
+                            <p>{store.currentUser.hourly_pay}</p>
                             <br></br>
                             <button className='buy-btn' type="submit" onClick={() => setShow(true)}>
                                 Buy now

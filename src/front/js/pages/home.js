@@ -17,10 +17,10 @@ export const Home = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center mt-2">
         {selectedLocation !== null && (
           <button className="btn btn-link" onClick={handleResetFilter}>
-            <i className="fas fa-undo"></i>
+            <i className="fas fa-undo" style={{ color: "black" }}></i>
           </button>
         )}
         <FilterLocation onLocationChange={handleLocationChange} />

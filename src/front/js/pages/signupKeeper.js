@@ -103,7 +103,7 @@ export const SignupKeeper = (props) => {
               })}
             </select>
           </div>
-          <HidePassword />
+          <HidePassword styleType="signup" />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>

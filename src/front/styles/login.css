@@ -1,16 +1,15 @@
 .wrap-login {
+  font-family: 'ROBOTO';
   border-radius: 15px;
-  /* backdrop-filter: blur(5px);
-  background-color: rgba(0, 0, 0, 0.5);  */
   height: 45vh;
   width: 90%; 
 }
 
 #inputEmail,
-#inputPassword {
+#inputPasswordLogin {
   background-color: rgba(0, 0, 0, 1);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  border-radius: 20px;
   padding: 12px;
   color:white;
   margin: 10px;
@@ -19,17 +18,16 @@
 }
 
 #btn-login {
-  width: 90%; 
+  font-size: 1em ;
+  font-weight: 400;
+  color:black;
+  width: 100%; 
   max-width: 200px;
   height: 50px;
   margin-top: 20px; 
-  background-color: #CEDEBD;
+  background-color: #6cb81b;
   border: none;
-  border-radius: 8px;
+  border-radius: 20px;
   cursor: pointer;
-  margin-bottom: 35px;
-}
-
-.link-signup {
-  color: black;
+  margin-bottom: 30px;
 }

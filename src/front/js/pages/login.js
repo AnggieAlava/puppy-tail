@@ -23,31 +23,37 @@ export const Login = () => {
   }
 
   return (
-    <div className="text-center wrap-login sm-2 text-sm">
-      <h2 className="text-sm">Iniciar sesión</h2>
-      <form className="" onSubmit={login}>
-        <div className="mb-3 form-group">
-          <label htmlFor="inputEmail " className="form-label">
-            Correo electrónico
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            id="inputEmail"
-            aria-describedby="emailHelp"
-          />
-          <div id="emailHelp" className="form-text"></div>
-        </div>
-        <HidePassword styleType="login" />
-
-        <button id="btn-login" type="submit" className="btn text-sm">
-          Iniciar sesión
-        </button>
-        <h6 className="text-sm">Te olvidaste tu contraseña? Haz click <Link to="#">
-          Aqui
-        </Link></h6>
-      </form>
+    <div className="col-md-6">
+      <div className="text-center wrap-login sm-2 text-sm">
+        <h2 className="title-login">Iniciar sesión</h2>
+        <form className="" onSubmit={login}>
+          <div className="mb-3 form-group">
+            <label htmlFor="inputEmail " className="form-label">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              id="inputEmail"
+              aria-describedby="emailHelp"
+            />
+            <div id="emailHelp" className="form-text"></div>
+            <HidePassword styleType="login" />
+            <input
+              type="submit"
+              className="form-control"
+              name="submit"
+              id="btn-login"
+              value="Iniciar sesión"
+            />
+          </div>
+          <p className="text-sm">Recupera tu contraseña<Link to="#">
+            Aqui
+          </Link></p>
+          <h6 className="text-sm">No tienes una cuenta?<Link to="/signup" className="text-sm">Regístrate</Link></h6>
+        </form>
+      </div>
     </div>
   );
 };

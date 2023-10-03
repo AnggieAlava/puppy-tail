@@ -1,7 +1,11 @@
-/* .footer {
-  background-color: black;
+i {
+  font-size: clamp(1rem, 2.5vw, 3rem); /* Ajusta los valores según tus preferencias */
   color: white;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-} */
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  i {
+    font-size: 1.5em; /* Tamaño de fuente para pantallas más pequeñas */
+  }
+}

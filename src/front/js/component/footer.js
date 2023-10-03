@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/footer.css";
+import "../../styles/footer.css"
 
 const redesSociales = [
   {
@@ -20,21 +20,19 @@ const redesSociales = [
 ];
 
 export const Footer = () => (
-  <footer className="text-center">
-    <div className="container-fluid">
-      <section className="mb-1 py-2">
-        {redesSociales.map((red, index) => (
-          <a
-            key={index}
-            className="btn btn-outline-light btn-floating m-1"
-            href={red.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            role="button">
-            <i className={red.icono}></i>
-          </a>
-        ))}
-      </section>
+  <div className="content text-center d-none d-md-block">
+    <div className="">
+      {redesSociales.map((red, index) => (
+        <a
+          key={index}
+          className="icon"
+          href={red.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          role="button">
+          <i className={red.icono}></i>
+        </a>
+      ))}
     </div>
-  </footer>
+  </div>
 );

@@ -62,7 +62,7 @@ const Checkout = () => {
                     </div>
                     <div className="product-info">
                         <div className="product-text">
-                            <h1>{store.currentUser.first_name}</h1>
+                            <h1>{store.currentUser.first_name} {store.currentUser.last_name}</h1>
                         </div>
                         <div className="product-price-btn">
                             <p>{store.currentUser.hourly_pay}</p>

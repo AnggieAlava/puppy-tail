@@ -9,7 +9,6 @@ import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
 import { Landing } from "./pages/landing";
 import { SignupKeeper } from "./pages/signupKeeper";
-import { Footer } from "./component/footer";
 import { Navbar } from "./component/navbar";
 import Checkout from "./component/checkout"
 //create your first component
@@ -34,7 +33,6 @@ const Layout = () => {
             <Route element={<Checkout />} path="/checkout/keeper/:theid" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
-          {/* <Footer /> */}
         </ScrollToTop>
       </BrowserRouter>
     </div>

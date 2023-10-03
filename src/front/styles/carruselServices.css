@@ -1,0 +1,9 @@
+.img-carrusel {
+    width: 250px; 
+    height: 360px;
+    max-width: 60%; /* Limita el ancho máximo al tamaño del contenedor */
+    max-height: 100%; /* Limita la altura máxima al tamaño del contenedor */
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 15px 0;
+}

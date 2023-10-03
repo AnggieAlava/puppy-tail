@@ -83,6 +83,7 @@
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",
 		"sweetalert": "^2.1.2",
-		"sweetalert2": "^11.7.28"
+		"sweetalert2": "^11.7.28",
+		"swiper": "^10.3.1"
 	}
 }

@@ -12,7 +12,6 @@ export const Landing = () => {
     <div className="background">
       <section className="home">
         <h2 className="arc d-none d-md-block">Bienvenidos</h2>
-        <h5 className="text-sm text-center pb-3 d-none d-md-block">Puppy Tail</h5>
         <div className="container">
           <div className="row">
             <CarruselServices />

@@ -21,16 +21,16 @@ const redesSociales = [
 
 export const Footer = () => (
   <div className="content text-center d-none d-md-block">
-    <div className="">
+    <div className="icon">
       {redesSociales.map((red, index) => (
         <a
           key={index}
-          className="icon"
           href={red.url}
+          className=""
           target="_blank"
           rel="noopener noreferrer"
           role="button">
-          <i className={red.icono}></i>
+          <i id="red-icon" className={red.icono}></i>
         </a>
       ))}
     </div>

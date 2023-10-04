@@ -40,13 +40,12 @@ export const Login = () => {
             />
             <div id="emailHelp" className="form-text"></div>
             <HidePassword styleType="login" />
-            <input
-              type="submit"
+            <button type="submit"
               className="form-control"
               name="submit"
-              id="btn-login"
-              value="Iniciar sesión"
-            />
+              id="btn-login">
+                Iniciar sesión
+              </button>
           </div>
           <p className="text-sm">Recupera tu contraseña<Link to="#">
             Aqui

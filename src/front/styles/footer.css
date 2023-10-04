@@ -1,11 +1,8 @@
-i {
-  font-size: clamp(1rem, 2.5vw, 3rem); /* Ajusta los valores según tus preferencias */
-  color: white;
+#red-icon {
+  border: solid 2px #285430;
+  border-radius: 8px;
+  font-size: 1rem; 
+  color: #285430;
   padding: 10px;
-}
-
-@media (max-width: 768px) {
-  i {
-    font-size: 1.5em; /* Tamaño de fuente para pantallas más pequeñas */
-  }
+  margin: 0 8px; 
 }

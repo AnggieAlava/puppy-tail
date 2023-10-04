@@ -12,6 +12,7 @@ from datetime import timezone
 from firebase_admin import storage
 import tempfile
 import datetime
+import numpy as np
 
 api = Blueprint('api', __name__)
 # Agregado al boilerplate
@@ -220,7 +221,8 @@ def keepers_list():
             "description": keeper.description,
             "profile_pic": getprofilePic(keeper.id),
             "experience": experience_date,
-            "services": services 
+            "services": services,
+            "working_hours": [str(time) for time in keeper.working_hours]
         }
 
         keepers_data.append(keeper_data)
@@ -248,7 +250,8 @@ def get_keeper(keeper_id):
         "description": keeper.description,
         "bookings": [booking for booking in keeper.booking],
         "services": [service for service in keeper.services],
-        "profile_pic": imgUrl
+        "profile_pic": imgUrl,
+        "working_hours": [str(time) for time in keeper.working_hours]
     }
     return jsonify(keeper_data), 200
 
@@ -434,3 +437,51 @@ def getpetAvatar(pet_id):
     resource = bucket.blob(pet.profile_pic)
     picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
     return picture_url
+
+@api.route('/booking', methods=["POST"])
+def createBooking():
+    data = request.get_json(force=True)
+    booking = Booking()
+    booking.start_date = data["start_date"]
+    booking.end_date = data["end_date"]
+    booking.keeper_id = data["keeper_id"]
+    #booking.pets = data["pets"]
+    booking.status = 'pending'
+    db.session.add(booking)
+    db.session.commit()
+    return jsonify({"msg":"Booking created successfully"}), 201
+
+@api.route('/bookings', methods=["GET"])
+def getBookings():
+    bookings = Booking.query.all()
+    bookings = [{"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in bookings]
+    return jsonify(bookings), 200
+
+@api.route('/bookings/<int:keeper_id>/', methods=["GET"])
+def getavailableSlots(keeper_id):
+    if request.args.get('start_date') is None:
+        return jsonify({"msg": "No start date added to request"}), 400
+    start_date = request.args.get('start_date')+" 00:00:00"
+    end_date = request.args.get('start_date') +" 23:59:59"
+    #Getting working hours and making a list of all available working slots for the day
+    working_hours = Keeper.query.get(keeper_id).working_hours
+    slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
+    slots = slots.tolist()
+    slots.pop() #Removes last 30min slot we won't offer due to 1-hour minimum service
+    #Getting reservations for the day
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.start_date<=end_date).all()
+    if len(bookings) < 1:
+        return jsonify([str(slot) for slot in slots]), 200
+    #Remove any conflicting slots based on booking times
+    timetoRemove = []
+    #Making start_date a datetime object from str
+    start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d %H:%M:%S').date()
+    for booking in bookings:
+        for time in slots:
+            full_datetime = datetime.datetime.combine(start_date, time)
+            if full_datetime >= (booking.start_date-datetime.timedelta(minutes=30)) and full_datetime < booking.end_date:
+                timetoRemove.append(time)
+    for time in timetoRemove:
+        slots.remove(time)
+    slots = [slot.strftime('%-H:%M') for slot in slots]
+    return jsonify(slots), 200

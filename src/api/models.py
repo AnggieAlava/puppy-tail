@@ -75,6 +75,7 @@ class Keeper(User, SerializerMixin):
     hourly_pay = db.Column(db.Float, nullable=True)
     experience = db.Column(db.Date, nullable=True)
     services = db.Column(db.ARRAY(db.String(50)), nullable=True)
+    working_hours = db.Column(db.ARRAY(db.Time), nullable = True, default=('07:00:00','22:00:00'))
     #One keeper to many bookings
     booking = relationship("Booking", back_populates='keeper')
 

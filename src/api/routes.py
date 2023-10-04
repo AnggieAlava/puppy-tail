@@ -445,7 +445,10 @@ def createBooking():
     booking.start_date = data["start_date"]
     booking.end_date = data["end_date"]
     booking.keeper_id = data["keeper_id"]
-    #booking.pets = data["pets"]
+    if hasattr(data, "pets_id"):
+        booking.pets_id = data["pets_id"]
+    if hasattr(data, "owner_id"):
+        booking.owner_id = data["owner_id"]
     booking.status = 'pending'
     db.session.add(booking)
     db.session.commit()
@@ -454,7 +457,7 @@ def createBooking():
 @api.route('/bookings', methods=["GET"])
 def getBookings():
     bookings = Booking.query.all()
-    bookings = [{"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in bookings]
+    bookings = [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in bookings]
     return jsonify(bookings), 200
 
 @api.route('/bookings/<int:keeper_id>/', methods=["GET"])
@@ -471,7 +474,7 @@ def getavailableSlots(keeper_id):
     #Getting reservations for the day
     bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.start_date<=end_date).all()
     if len(bookings) < 1:
-        return jsonify([str(slot) for slot in slots]), 200
+        return jsonify([slot.strftime('%-H:%M') for slot in slots]), 200
     #Remove any conflicting slots based on booking times
     timetoRemove = []
     #Making start_date a datetime object from str
@@ -485,3 +488,19 @@ def getavailableSlots(keeper_id):
         slots.remove(time)
     slots = [slot.strftime('%-H:%M') for slot in slots]
     return jsonify(slots), 200
+
+@api.route("/booking/<int:booking_id>", methods=["PUT", "DELETE"])
+def modifyBooking(booking_id):
+    booking = Booking.query.get(booking_id)
+    if request.method == "DELETE":
+        db.session.delete(booking)
+        db.session.commit()
+        return jsonify({"msg":"Booking successfully deleted"}), 200
+    if request.method == "PUT":
+        data = request.get_json(force=True)
+        booking.start_date = data["start_date"]
+        booking.end_date = data["end_date"]
+        booking.status = data["status"]
+        booking.pets_id = data["pets_id"]
+        db.session.commit()
+        return jsonify({"msg":"Booking successfully updated"}), 200

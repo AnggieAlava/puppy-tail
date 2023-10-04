@@ -404,6 +404,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           return resp;
         }
         setStore({currentUser: resp.data})
+      },
+      getdailySlots: async (id, date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`,"GET")
+        if (!resp.ok){
+          console.error(resp.status+": "+ resp.statusText)
+        }
+        return resp.data
       }
     }
   };

@@ -28,6 +28,8 @@ class Booking(db.Model, SerializerMixin):
     #Many to one relationship booking to keeper
     keeper = relationship("Keeper", back_populates="booking")
     keeper_id = db.Column(db.Integer, db.ForeignKey('keeper.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=True)
+    pets_id = db.Column(db.ARRAY(db.Integer), nullable=True)
     #Many to many bookings/pets
     pets = relationship("Pet", secondary="booking_pet",
                         back_populates="bookings")

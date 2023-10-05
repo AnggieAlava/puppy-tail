@@ -60,7 +60,7 @@ def create_keeper():
         new_keeper.description = ""
     if hasattr(data, "experience") is False:
         new_keeper.experience = datetime.date.today()
-    if hasattr(data, "hourly_pay") and data["hourly_pay"] != "" and locale.atof((data["hourly_pay"]).replace(',','.')) > 0:git 
+    if hasattr(data, "hourly_pay") and data["hourly_pay"] != "" and locale.atof((data["hourly_pay"]).replace(',','.')) > 0: 
         new_keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',',"."))
     db.session.add(new_keeper)
     db.session.commit()

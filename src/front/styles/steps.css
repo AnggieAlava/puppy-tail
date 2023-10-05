@@ -1,34 +1,41 @@
 body, html {
     font-family: 'Roboto';
 }
-.card-description{
+
+.wrap-steps {
+    background-color: #b0c989;
+}
+
+.card-container {
+    background-color: transparent;
     border: none;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
+    margin-bottom: 20px;
 }
-.img-description{
-    width: 150px;
-    height: 150px;
+
+.img-steps {
+    width: 250px;
+    height: 250px;
     border-radius: 50%;
-    object-fit: cover; 
-    object-position: center center; 
+    object-fit: cover;
+    object-position: center center;
 }
 
-.wrap-description{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-.title-steps{
-    font-size:2rem;
-    font-weight:800;
-    color:#285430;
+.main-title-steps {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #539165;
 }
 
-.card-steps-title{
-    font-weight: bold;
-    color: inherit; 
-    color:#285430
+.card-steps-title {
+    font-weight: 800;
+    color: inherit;
+    color: #539165;
 }
 
+.card-steps-content h4{
+    font-weight:bolder;
+    font-size:1rem;
+}

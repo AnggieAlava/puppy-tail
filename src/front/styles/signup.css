@@ -1,18 +1,19 @@
 #signup-owner {
- border: solid 1px black;
  font-family: 'Roboto';
  border-radious: 15px;
 }
 
 .form-control {
-    width: 100%; /* Default width */
-    max-width: 400px; /* Maximum width for larger screens */
-    margin: 0 auto; /* Center align on larger screens */
+  font-family: 'Roboto';
+  font-weight:800;
+    width: 100%; 
+    max-width: 400px; 
+    margin: 0 auto; 
   }
   
-  /* Media query for screens smaller than 576px (e.g., mobile devices) */
+  
   @media (max-width: 576px) {
     .form-control {
-      max-width: 100%; /* Full width on smaller screens */
+      max-width: 100%; 
     }
   }

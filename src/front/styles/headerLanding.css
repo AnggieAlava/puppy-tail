@@ -2,14 +2,15 @@ body, html {
     font-family: 'Roboto';
 }
 .landing-title {
-  color: #227C70;
-  font-size: 4vw; 
+  font-family: 'Poppins';
+  color: #3F497F;
+  font-size: 3.5vw; 
   font-weight: 900;
 }
 
 @media screen and (max-width: 1024px) {
   .landing-title {
-    font-size: 2rem; 
+    font-size: 1.5rem; 
   }
 }
 

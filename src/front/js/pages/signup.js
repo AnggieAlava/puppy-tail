@@ -98,7 +98,7 @@ export const Signup = (props) => {
             </select>
           </div>
           <HidePassword />
-          <button id="btn-signup" type="submit" className="btn btn-danger">
+          <button id="btn-signup" type="submit" className="btn btn-danger mt-3">
             Registrarse
           </button>
         </form>

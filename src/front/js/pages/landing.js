@@ -14,8 +14,8 @@ export const Landing = () => {
     <>
       <HeaderLanding />
       <Steps />
-      <Signup />
       <CarouselTestimonial />
+      <Signup />
     </>
   )
 };

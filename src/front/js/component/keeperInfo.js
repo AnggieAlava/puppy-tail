@@ -45,7 +45,7 @@ export const KeeperInfo = ({ keeper }) => {
         //difference in days (eg. 360 days)
         let difference = Math.floor((utc1 - utc2) / _MS_PER_DAY);
         //Return first digit as string
-        return (difference / 365).toString().slice(0, 1) + "+ years";
+        return (difference / 365).toString().slice(0, 1)+"+ años";
     }
     async function updateUser() {
         //Services
@@ -53,8 +53,8 @@ export const KeeperInfo = ({ keeper }) => {
         if (document.getElementById("petWalker").checked) arr.push("Paseador(a) de mascotas");
         if (document.getElementById("petSitter").checked) arr.push("Cuidador(a) de mascotas");
         if (document.getElementById("partyPlanner").checked)
-            arr.push("Organizador(a) de fiestas");
-        if (arr.length === 0) arr.push("Sin servicios");
+        arr.push("Organizador(a) de fiestas");
+        //if (arr.length === 0) arr.push("Sin servicios");
         //Experience
         let xp = document.getElementById("experienceInput").value
         if (xp == "") {

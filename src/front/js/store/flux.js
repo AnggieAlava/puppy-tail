@@ -402,7 +402,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        setStore({ currentUser: resp.data })
+        setStore({currentUser: resp.data})
+      },
+      getdailySlots: async (id, date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`,"GET")
+        if (resp.code != 200){
+          console.error(resp.status+": "+ resp.statusText)
+        }
+        return resp.data
       }
     }
   };

@@ -1,42 +1,33 @@
 import React, { useState } from "react";
 import "../../styles/signup.css";
 
-export const HidePassword = ({ styleType }) => {
-  const [hidePassword, setHidePassword] = useState(true);
-  const [eyeIcon, setEyeIcon] = useState("far fa-eye-slash");
+export const HidePassword = () => {
+  const [showPassword, setShowPassword] = useState(false);
 
-  const passwordVisibility = () => {
-    setHidePassword(!hidePassword);
-    setEyeIcon(hidePassword ? "far fa-eye" : "far fa-eye-slash");
-  };
-
-  const inputId = styleType === "login" ? "inputPasswordLogin" : "inputPasswordSignup";
 
   return (
-    <div className="mb-3" style={{ position: "relative" }}>
-      <label htmlFor={inputId} className="form-label">
+    <div className="mb-6">
+      <label htmlFor="inputPassword" className="form-label">
         Contraseña
       </label>
-      <div style={{ position: "relative" }}>
-        <input
-          type={hidePassword ? "password" : "text"}
-          className="form-control"
-          name="password"
-          id={inputId}
-        />
-        <i
-          className={eyeIcon}
-          id="togglePassword"
-          onClick={passwordVisibility}
-          style={{
-            fontSize: 15,
-            cursor: "pointer",
-            position: "absolute",
-            top: "50%",
-            right: "10px",
-            transform: "translateY(-50%)",
-          }}
-        ></i>
+      <div>
+        <div className="input-group mb-6 form-control p-0">
+          <div className="input-group-text">
+            <input
+              className="form-check-input mt-0"
+              type="checkbox"
+              value={showPassword}
+              aria-label="Checkbox for showing password"
+              onChange={() => setShowPassword(!showPassword)}
+            />
+          </div>
+          <input
+            type={showPassword ? "text" : "password"}
+            className="form-control"
+            name="password"
+            id="inputPassword"
+          />
+        </div>
       </div>
     </div>
   );

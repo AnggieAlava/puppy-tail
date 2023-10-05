@@ -17,26 +17,27 @@ export const HidePassword = ({ styleType }) => {
       <label htmlFor={inputId} className="form-label">
         Contraseña
       </label>
-      <input
-        type={hidePassword ? "password" : "text"}
-        className="form-control"
-        name="password"
-        id={inputId}
-      />
-
-      <i
-        className={eyeIcon}
-        id="togglePassword"
-        onClick={passwordVisibility}
-        style={{
-          fontSize: 15,
-          cursor: "pointer",
-          position: "absolute",
-          top: "75%",
-          right: "10px",
-          transform: "translateY(-50%)",
-        }}
-      ></i>
+      <div style={{ position: "relative" }}>
+        <input
+          type={hidePassword ? "password" : "text"}
+          className="form-control"
+          name="password"
+          id={inputId}
+        />
+        <i
+          className={eyeIcon}
+          id="togglePassword"
+          onClick={passwordVisibility}
+          style={{
+            fontSize: 15,
+            cursor: "pointer",
+            position: "absolute",
+            top: "50%",
+            right: "10px",
+            transform: "translateY(-50%)",
+          }}
+        ></i>
+      </div>
     </div>
   );
 };

@@ -15,7 +15,7 @@ export const Signup = (props) => {
 
   useEffect(() => {
     if (shouldNavigate) {
-      navigate("/");
+      navigate("/login");
     }
   }, [shouldNavigate]);
 
@@ -34,7 +34,7 @@ export const Signup = (props) => {
   }
 
   return (
-    <div id="signup-page" className="text-center">
+    <div id="signup-owner" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
         <h1>BIENVENIDOS</h1>

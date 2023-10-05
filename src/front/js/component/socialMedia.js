@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/footer.css"
 
-const redesSociales = [
+const socialMedia = [
   {
     nombre: "Twitter",
     url: "https://twitter.com/thepuppytaill",
@@ -19,10 +19,10 @@ const redesSociales = [
   },
 ];
 
-export const Footer = () => (
+export const SocialMedia = () => (
   <div className="content text-center d-none d-md-block">
     <div className="icon">
-      {redesSociales.map((red, index) => (
+      {socialMedia.map((red, index) => (
         <a
           key={index}
           href={red.url}

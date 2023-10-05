@@ -7,7 +7,7 @@ import { Logout } from "../pages/logout";
 export const Navbar = () => {
   const { store, actions } = useContext(Context)
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <div className="navbar-logo">
           <Link to="/">
@@ -33,11 +33,11 @@ export const Navbar = () => {
                 Home
               </a>
             </li>
-            {/* {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
+            {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
               <Link className="nav-link" to="/login">
                 Iniciar sesión
               </Link>
-            </li>)} */}
+            </li>)}
             {/* {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
               <Link className="nav-link" to="/signup">
                 Registrarse
@@ -50,7 +50,7 @@ export const Navbar = () => {
                   Perfil <i className="fa-regular fa-user"></i>
                 </Link>
               </li> : <li className="nav-item">
-                <Link className="nav-link" to="/signup/keeper">
+                <Link className="nav-link" to="/signuppage">
                   Quieres ser cuidador?
                 </Link>
               </li>)}

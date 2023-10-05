@@ -11,6 +11,7 @@ import { Landing } from "./pages/landing";
 import { SignupKeeper } from "./pages/signupKeeper";
 import { Navbar } from "./component/navbar";
 import Checkout from "./component/checkout"
+import SignupPage from "./pages/signupPage";
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -30,6 +31,7 @@ const Layout = () => {
             <Route element={<SignupKeeper />} path="/signup/keeper" />
             <Route element={<Login />} path="/login" />
             <Route element={<Home />} path="/home" />
+            <Route element={<SignupPage />} path="/signuppage" />
             <Route element={<Checkout />} path="/checkout/keeper/:theid" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>

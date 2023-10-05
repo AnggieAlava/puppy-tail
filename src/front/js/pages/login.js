@@ -44,8 +44,8 @@ export const Login = () => {
               className="form-control"
               name="submit"
               id="btn-login">
-                Iniciar sesión
-              </button>
+              Iniciar sesión
+            </button>
           </div>
           <p className="text-sm">Recupera tu contraseña<Link to="#">
             Aqui

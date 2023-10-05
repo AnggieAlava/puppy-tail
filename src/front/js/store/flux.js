@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {

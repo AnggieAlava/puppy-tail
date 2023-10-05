@@ -248,7 +248,7 @@ def get_keeper(keeper_id):
         "experience": keeper.experience,
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
-        "bookings": [booking for booking in keeper.booking],
+        "bookings": [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in keeper.booking],
         "services": [service for service in keeper.services],
         "profile_pic": imgUrl,
         "working_hours": [str(time) for time in keeper.working_hours]
@@ -485,7 +485,8 @@ def getavailableSlots(keeper_id):
             if full_datetime >= (booking.start_date-datetime.timedelta(minutes=30)) and full_datetime < booking.end_date:
                 timetoRemove.append(time)
     for time in timetoRemove:
-        slots.remove(time)
+        if time in slots:    
+            slots.remove(time)
     slots = [slot.strftime('%-H:%M') for slot in slots]
     return jsonify(slots), 200
 

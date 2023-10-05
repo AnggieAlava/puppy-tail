@@ -408,7 +408,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getdailySlots: async (id, date) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`,"GET")
-        if (!resp.ok){
+        if (resp.code != 200){
           console.error(resp.status+": "+ resp.statusText)
         }
         return resp.data

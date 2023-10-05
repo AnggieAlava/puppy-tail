@@ -15,7 +15,7 @@ export const Pets = (props) => {
     function imgErrorHandler(e) {
         e.target.src = stock_pet
     }
-    function fillForm(pet){
+    function fillForm(pet) {
         setPet(pet)
         setSize(pet.size)
     }
@@ -110,8 +110,8 @@ export const Pets = (props) => {
                                                         </div>
                                                         <div className="mb-3">
                                                             <label htmlFor="sizeInput" className="form-label">Tamaño</label>
-                                                            <select className="form-select" aria-label="Default select example" id="sizeInput" 
-                                                            value={size} onChange={e => setSize(e.target.value)}>
+                                                            <select className="form-select" aria-label="Default select example" id="sizeInput"
+                                                                value={size} onChange={e => setSize(e.target.value)}>
                                                                 <option value="Pequeño">Pequeño (1-8kg)</option>
                                                                 <option value="Mediano">Mediano (8-20kg)</option>
                                                                 <option value="Grande">Grande (20-30kg)</option>
@@ -192,8 +192,8 @@ export const Pets = (props) => {
                                                 <input type="text" className="form-control" id="newPetNameInput" defaultValue={""} aria-describedby="nameHelp" />
                                             </div>
                                             <div className="mb-3">
-                                                <label htmlFor="newPetSizeInput"  className="form-label">Tamaño</label>
-                                                <select className="form-select"  defaultValue={""} aria-label="Size by kilograms" id="newPetSizeInput">
+                                                <label htmlFor="newPetSizeInput" className="form-label">Tamaño</label>
+                                                <select className="form-select" defaultValue={""} aria-label="Size by kilograms" id="newPetSizeInput">
                                                     {/* <option selected>{currentPet.size}</option> */}
                                                     <option value="Pequeño">Pequeño (1-8kg)</option>
                                                     <option value="Mediano">Mediano (8-20kg)</option>

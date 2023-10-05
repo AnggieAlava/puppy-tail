@@ -121,7 +121,7 @@ export const KeeperForm = ({}) => {
             })}
           </div>
           {(value.length > 1?
-          <Link to="/">
+          <Link to={`/checkout/keeper/${store.currentUser.id}`}>
             <button className="btn btn-outline-dark btn-lg" role="button">Reservar</button>
           </Link>:"")}
         </div>

@@ -261,7 +261,7 @@ def updateKeeper(keeper_id):
     data = request.get_json(force=True)
     keeper.first_name = (data["first_name"].lower()).title()
     keeper.last_name = (data["last_name"].lower()).title()
-    keeper.hourly_pay = data["hourly_pay"]
+    keeper.hourly_pay = data["hourly_pay"] #corregir no dejar data null
     keeper.description = data["description"]
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]

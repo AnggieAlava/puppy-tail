@@ -1,15 +1,48 @@
 body, html {
     font-family: 'Roboto';
 }
-.bg-header-landing{
-    background-size:cover;
-    bckground-repeat: no-repeat;
-    border-radius: 25px;
-    background-image:url("https://images.unsplash.com/photo-1521247560470-d2cbfe2f7b47?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80");
+.landing-title {
+  color: #227C70;
+  font-size: 4vw; 
+  font-weight: 900;
 }
-.header-box{
-  background-color:white;
+
+@media screen and (max-width: 1024px) {
+  .landing-title {
+    font-size: 2rem; 
+  }
 }
+
+.landing-p {
+  color: #072c27;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 1024px){
+  .landing-p {
+    font-size: 1rem;
+    margin-top: 16px;
+  }
+}
+
+.landing-img {
+  border-radius: 35px;
+  max-width: 100%;
+  height: auto; 
+}
+
+@media screen and (min-width: 1024px) {
+  .landing-img {
+    width: 45vw; 
+    max-width: none; 
+  }
+}
+.main-card, .box-card{
+  border: none;
+}
+
 
 .btn-header-landing {
     background-color: #3DD1E7;

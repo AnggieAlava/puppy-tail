@@ -10,13 +10,13 @@ import 'react-calendar/dist/Calendar.css';
 const ValuePiece = Date | null;
 const Value = ValuePiece | [ValuePiece, ValuePiece];
 
-function getDate(){
+function getDate() {
   let today = new Date()
   return today
 }
 
-export const KeeperForm = ({}) => {
-  const {store, actions} = useContext(Context)
+export const KeeperForm = ({ }) => {
+  const { store, actions } = useContext(Context)
   //Calendar use
   const [value, onChange] = useState([]);
   const params = useParams();
@@ -31,10 +31,10 @@ export const KeeperForm = ({}) => {
       <div className="row">
         <div className="col-auto">
           {/* Dos columnas principales */}
-          <div style={{textAlign:"left"}}>
+          <div style={{ textAlign: "left" }}>
             <div className="d-block">
               <small>Service fee</small>
-              <p>{(store.currentUser.hourly_pay? "$"+store.currentUser.hourly_pay+"/hour":"No service fee established yet for "+store.currentUser.first_name)}</p>
+              <p>{(store.currentUser.hourly_pay ? "$" + store.currentUser.hourly_pay + "/hour" : "No service fee established yet for " + store.currentUser.first_name)}</p>
             </div>
             <div>
               <form>
@@ -49,15 +49,15 @@ export const KeeperForm = ({}) => {
                       <div className="accordion-body sample_container_content">
                         <div className="row">
                           <div className="col">
-                            <Calendar onChange={onChange} minDate={getDate()} selectRange={true} returnValue="range" value={value}/>
+                            <Calendar onChange={onChange} minDate={getDate()} selectRange={true} returnValue="range" value={value} />
                           </div>
                           <div className="col">
                             {value.map((date, index) => {
-                            return(
-                              <div index={index}>
-                                {((index==0)?(`Start date: ${date.getDate().toString()+"/"+(date.getMonth()+1).toString()+"/"+date.getFullYear().toString()}`):(`End date: ${date.getDate().toString()+"/"+(date.getMonth()+1).toString()+"/"+date.getFullYear().toString()}`))}
-                              </div>
-                            )
+                              return (
+                                <div index={index}>
+                                  {((index == 0) ? (`Start date: ${date.getDate().toString() + "/" + (date.getMonth() + 1).toString() + "/" + date.getFullYear().toString()}`) : (`End date: ${date.getDate().toString() + "/" + (date.getMonth() + 1).toString() + "/" + date.getFullYear().toString()}`))}
+                                </div>
+                              )
                             })}
                           </div>
                         </div>
@@ -74,7 +74,8 @@ export const KeeperForm = ({}) => {
         </div>
       </div>
       <div className="ml-auto mt-4">
-        <Link to="/">
+
+        <Link to={`/checkout/keeper/${store.currentUser.id}`}>
           <button className="btn btn-dark btn-lg" role="button">Book this keeper</button>
         </Link>
       </div>

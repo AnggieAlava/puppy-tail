@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/login.css";
+import "../../styles/signup.css";
 import locations from "../../json/location.json";
 import { HidePassword } from "../component/hidePassword";
 
@@ -34,7 +34,7 @@ export const Signup = (props) => {
   }
 
   return (
-    <div id="signup-page" className="text-center">
+    <div id="signup-owner" className="text-center">
       <div className="container wrap-loginSignup">
         <i id="cat-suit" className="fa-solid fa-cat"></i>
         <h1>BIENVENIDOS</h1>
@@ -98,7 +98,7 @@ export const Signup = (props) => {
               })}
             </select>
           </div>
-          <HidePassword />
+          <HidePassword styleType="signup" />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>

@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../styles/login.css";
 import { HidePassword } from "../component/hidePassword";
 
@@ -22,13 +23,12 @@ export const Login = () => {
   }
 
   return (
-    <div id="login-page" className="text-center">
-      <div className="container wrap-loginSignup">
-        <i id="cat-suit" className="fa-solid fa-cat"></i>
-        <h2></h2>
-        <form className="pe-3" onSubmit={login}>
-          <div className="mb-3">
-            <label htmlFor="inputEmail" className="form-label">
+    <div className="col-md-6">
+      <div className="text-center wrap-login sm-2 text-sm">
+        <h2 className="title-login">Iniciar sesión</h2>
+        <form className="" onSubmit={login}>
+          <div className="mb-3 form-group">
+            <label htmlFor="inputEmail " className="form-label">
               Correo electrónico
             </label>
             <input
@@ -39,11 +39,18 @@ export const Login = () => {
               aria-describedby="emailHelp"
             />
             <div id="emailHelp" className="form-text"></div>
+            <HidePassword styleType="login" />
+            <button type="submit"
+              className="form-control"
+              name="submit"
+              id="btn-login">
+              Iniciar sesión
+            </button>
           </div>
-          <HidePassword />
-          <button id="btn-login" type="submit" className="btn">
-            Iniciar sesión
-          </button>
+          <p className="text-sm">Recupera tu contraseña<Link to="#">
+            Aqui
+          </Link></p>
+          <h6 className="text-sm">No tienes una cuenta?<Link to="/signup" className="text-sm">Regístrate</Link></h6>
         </form>
       </div>
     </div>

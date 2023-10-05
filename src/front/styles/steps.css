@@ -1,10 +1,8 @@
 body, html {
     font-family: 'Roboto';
 }
-.description-bg {
-    background-color: #E5D9B6;
-}
 .card-description{
+    border: none;
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -22,3 +20,15 @@ body, html {
     flex-direction: column;
     gap: 5px;
 }
+.title-steps{
+    font-size:2rem;
+    font-weight:800;
+    color:#285430;
+}
+
+.card-steps-title{
+    font-weight: bold;
+    color: inherit; 
+    color:#285430
+}
+

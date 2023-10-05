@@ -30,7 +30,7 @@ export const Navbar = () => {
           <ul className="navbar-nav ml-auto mb-2 mb-lg-0 text-navbar">
             <li className="nav-item">
               <a className="nav-link" aria-current="page" href="/home">
-                Home
+                Inicio
               </a>
             </li>
             {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
@@ -38,11 +38,11 @@ export const Navbar = () => {
                 Iniciar sesión
               </Link>
             </li>)}
-            {/* {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
+            {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
               <Link className="nav-link" to="/signup">
                 Registrarse
               </Link>
-            </li>)} */}
+            </li>)}
             {((Object.keys(store.userInfo).length > 1) ? <Logout /> : "")}
             {((Object.keys(store.userInfo).length > 1) ?
               <li className="nav-item">

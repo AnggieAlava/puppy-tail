@@ -266,7 +266,7 @@ def updateKeeper(keeper_id):
     keeper.first_name = (data["first_name"].lower()).title()
     keeper.last_name = (data["last_name"].lower()).title()
     if data["hourly_pay"] != "" and locale.atof((data["hourly_pay"]).replace(',','.')) > 0:
-        keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) #corregir no dejar data null
+        keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) 
     keeper.description = data["description"]
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]

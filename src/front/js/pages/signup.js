@@ -34,12 +34,11 @@ export const Signup = (props) => {
   }
 
   return (
-    <div id="signup-owner" className="text-center">
-      <div className="container wrap-loginSignup">
-        <i id="cat-suit" className="fa-solid fa-cat"></i>
+    <div id="signup-owner" className="text-center m-5">
+      <div className="container wrap-signup">
         <h1>BIENVENIDOS</h1>
-        <form className="pe-3" onSubmit={signup} id="puppySignup">
-          <div className="mb-3">
+        <form className="pe-3" onSubmit={signup} id="form-signup">
+          <div className="mb-6">
             <label htmlFor="inputName" className="form-label">
               Nombre
             </label>
@@ -50,7 +49,7 @@ export const Signup = (props) => {
               id="inputName"
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-6">
             <label htmlFor="inputLastName" className="form-label">
               Apellido
             </label>
@@ -61,7 +60,7 @@ export const Signup = (props) => {
               id="inputLastName"
             />
           </div>
-          <div className="mb-3">
+          <div className="mb-6">
             <label htmlFor="inputEmail1" className="form-label">
               Correo electrónico
             </label>
@@ -74,7 +73,7 @@ export const Signup = (props) => {
             />
             <div id="emailHelp" className="form-text"></div>
           </div>
-          <div className="mb-3">
+          <div className="mb-6">
             <label htmlFor="inputLocation" className="form-label">
               Pais
             </label>
@@ -98,8 +97,8 @@ export const Signup = (props) => {
               })}
             </select>
           </div>
-          <HidePassword styleType="signup" />
-          <button id="btn-signup" type="submit" className="btn">
+          <HidePassword />
+          <button id="btn-signup" type="submit" className="btn btn-danger">
             Registrarse
           </button>
         </form>

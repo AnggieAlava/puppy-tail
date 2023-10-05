@@ -26,7 +26,7 @@ export const HidePassword = () => {
             className="form-control"
             name="password"
             id="inputPassword"
-          />
+          /><a className="btn btn-primary" role="button" data-bs-toggle="button"><i className="fa-solid fa-eye"></i></a>
         </div>
       </div>
     </div>

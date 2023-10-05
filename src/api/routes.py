@@ -13,6 +13,8 @@ from firebase_admin import storage
 import tempfile
 import datetime
 import numpy as np
+import locale
+locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 
 api = Blueprint('api', __name__)
 # Agregado al boilerplate
@@ -58,6 +60,8 @@ def create_keeper():
         new_keeper.description = ""
     if hasattr(data, "experience") is False:
         new_keeper.experience = datetime.date.today()
+    if hasattr(data, "hourly_pay") and data["hourly_pay"] != "" and locale.atof((data["hourly_pay"]).replace(',','.')) > 0: 
+        new_keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',',"."))
     db.session.add(new_keeper)
     db.session.commit()
     return jsonify({"msg": "Keeper created successfully"}), 201
@@ -261,7 +265,8 @@ def updateKeeper(keeper_id):
     data = request.get_json(force=True)
     keeper.first_name = (data["first_name"].lower()).title()
     keeper.last_name = (data["last_name"].lower()).title()
-    keeper.hourly_pay = data["hourly_pay"] #corregir no dejar data null
+    if data["hourly_pay"] != "" and locale.atof((data["hourly_pay"]).replace(',','.')) > 0:
+        keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) 
     keeper.description = data["description"]
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]

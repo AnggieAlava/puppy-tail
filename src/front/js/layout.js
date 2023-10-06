@@ -9,7 +9,11 @@ import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
 import { Landing } from "./pages/landing";
 import { SignupKeeper } from "./pages/signupKeeper";
+import { RecoveryPassword } from "./pages/recovery"
+
 import { Navbar } from "./component/navbar";
+import NotFound from "./pages/notFound";
+import { ChangePassword } from "./pages/changePassword"
 import Checkout from "./component/checkout"
 import SignupPage from "./pages/signupPage";
 //create your first component
@@ -31,6 +35,9 @@ const Layout = () => {
             <Route element={<SignupKeeper />} path="/signup/keeper" />
             <Route element={<Login />} path="/login" />
             <Route element={<Home />} path="/home" />
+            <Route element={<RecoveryPassword />} path="/recovery" />
+            <Route element={<NotFound />} path="/notFound" />
+            <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<SignupPage />} path="/signuppage" />
             <Route element={<Checkout />} path="/checkout/keeper/:theid" />
             <Route element={<h1>Not found!</h1>} />

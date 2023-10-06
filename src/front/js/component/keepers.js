@@ -3,21 +3,17 @@ import avatar from "../../img/avatar.jpg";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import "../../styles/keepers.css";
-
 const Keepers = ({ selectedLocation }) => {
   const { store, actions } = useContext(Context);
   useEffect(() => {
     actions.getKeepers();
   }, []);
-
   const filteredKeepers = selectedLocation
     ? store.getKeepers.filter((keeper) => keeper.location === selectedLocation)
     : store.getKeepers;
-
   function imgErrorHandler(e) {
     e.target.src = avatar;
   }
-
   return (
     <div>
       <div className="row row-cols-1 row-cols-sm-3 g-4 card-wrap">
@@ -51,5 +47,4 @@ const Keepers = ({ selectedLocation }) => {
     </div>
   );
 };
-
 export default Keepers;

@@ -9,6 +9,7 @@ import { HidePassword } from "../component/hidePassword";
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   async function login(e) {
     e.preventDefault();
@@ -17,6 +18,12 @@ export const Login = () => {
     const password = data.get("password");
     const { login } = actions;
     let resp = await login(email, password);
+    if (resp !== 201) {
+      setError("Usuario o contraseña incorrecto");
+      return;
+    } else {
+      setError(""); // Limpia el mensaje de error si las contraseñas coinciden.
+    }
     if (resp === 201) {
       navigate("/home");
     }
@@ -47,9 +54,10 @@ export const Login = () => {
               Iniciar sesión
             </button>
           </div>
-          <p className="text-sm">Recupera tu contraseña<Link to="#">
+          <p className="text-sm">Recupera tu contraseña<Link to="/recovery">
             Aqui
           </Link></p>
+          {error && <p className="text-danger">{error}</p>} {/* Muestra el mensaje de error si existe */}
           <h6 className="text-sm">No tienes una cuenta?<Link to="/signup" className="text-sm">Regístrate</Link></h6>
         </form>
       </div>

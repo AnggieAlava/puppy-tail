@@ -5,20 +5,17 @@ import { Context } from "../store/appContext";
 import "../../styles/signup.css";
 import { HidePassword } from "../component/hidePassword";
 import locations from "../../json/location.json";
-
 export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(" ");
-
   useEffect(() => {
     if (shouldNavigate) {
       navigate("/login");
     }
   }, [shouldNavigate]);
-
   async function signupKeeper(e) {
     e.preventDefault();
     const data = new FormData(e.target);

@@ -1,0 +1,32 @@
+.social-media {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .social-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition-duration: 0.3s;
+  }
+  
+  .twitter:hover {
+    background-color: #00acee;
+  }
+  
+  .instagram:hover {
+    background-color: #d62976;
+  }
+  
+  .tiktok:hover {
+    background-color: #060707;
+  }
+  
+  .social-icon i {
+    font-size: 24px;
+    color: white;
+  }
+  

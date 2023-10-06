@@ -5,7 +5,7 @@ import { RxDoubleArrowDown } from "react-icons/rx"
 const ActionButtons = () => {
     return (
         <div className="container-fluid mt-5 d-flex justify-content-center">
-            <a href="#signup-owner" className='button btn-content'>
+            <a href="#footer" className='button btn-content'>
                 <span className="button-text">Comenzar</span>
                 <RxDoubleArrowDown className="iconer" />
             </a>

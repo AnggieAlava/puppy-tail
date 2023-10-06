@@ -12,17 +12,11 @@ const HeaderLanding = () => {
                         <div className="card-body ">
                             <h1 className="card-title landing-title text-center">Cuidamos tus mascotas mientras estás de vacaciones</h1>
                             <p className="card-text text-center landing-p ">Encuentra personas cariñosas, verificadas y con reseñas para cuidar a tus miembros peludos de la familia mientras estás fuera de casa.</p>
-                            <a href="#signup-owner" className="btn-header-landing ">Registrate gratis</a>
+                            <a href="#footer" className="btn-header-landing ">Registrate gratis</a>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <div className="card text-center box-card">
-                <div className="card-body landing-box">
-                    <h5 className="card-title">¿Busca un cuidador de mascotas?</h5>
-                    <p className="card-text"> Si tiene la suerte de tener una mascota en su vida, sabrá lo mucho que adoran su hogar. Por eso, cuando te vayas de vacaciones, búscales un cuidador de mascotas que les dedique tiempo, cuidados y atención durante tu ausencia, todo ello en su propia casa.</p>
-                </div>
-            </div> */}
         </div>
     );
 };

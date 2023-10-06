@@ -8,8 +8,8 @@ const Steps = () => {
     return (
         <div className="container-fluid wrap-steps mt-5">
             <h2 className='text-center p-3 main-title-steps'>Encuentra el compañero perfecto para tu mascota en 3 simples pasos</h2>
-            <div className="row justify-content-center"> {/* Utilizamos justify-content-center para centrar las columnas */}
-                <div className="col-md-3 col-sm-6"> {/* Ajustamos las columnas para que se vean más cerca */}
+            <div className="row justify-content-center">
+                <div className="col-md-3 col-sm-6">
                     <div className="card text-center mb-3 card-container">
                         <img
                             src={PasoUno}
@@ -25,7 +25,7 @@ const Steps = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-3 col-sm-6"> {/* Ajustamos las columnas para que se vean más cerca */}
+                <div className="col-md-3 col-sm-6">
                     <div className=" card text-center mb-3 card-container">
                         <img
                             src={PasoDos}
@@ -41,7 +41,7 @@ const Steps = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-3 col-sm-6"> {/* Ajustamos las columnas para que se vean más cerca */}
+                <div className="col-md-3 col-sm-6">
                     <div className="card text-center mb-3 card-container">
                         <img
                             src={PasoTres}

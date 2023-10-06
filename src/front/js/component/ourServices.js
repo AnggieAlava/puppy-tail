@@ -7,11 +7,11 @@ import "../../styles/ourServices.css"
 const OurServices = () => {
     return (
         <div className="container">
-            <h2 className="text-center">Algunos de nuestros servicios</h2>
-            <div className="row">
-                <div className="col">
+            <h2 className="text-center">Nuestros servicios</h2>
+            <div className="row ">
+                <div className="col d-flex justify-content-center">
                     <div className="card services-uno" style={{ width: '18rem' }}>
-                        <div className="text-center"> {/* Agrega la clase text-center aquí */}
+                        <div className="text-center">
                             <img src={dogWalk} className="card-img-top img-services-land" alt="..." />
                         </div>
                         <div className="card-body">
@@ -20,9 +20,9 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col">
+                <div className="col d-flex justify-content-center">
                     <div className="card services-dos" style={{ width: '18rem' }}>
-                        <div className="text-center"> {/* Agrega la clase text-center aquí */}
+                        <div className="text-center">
                             <img src={dogShower} className="card-img-top img-services-land" alt="..." />
                         </div>
                         <div className="card-body">
@@ -31,9 +31,9 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col">
+                <div className="col d-flex justify-content-center">
                     <div className="card services-tres" style={{ width: '18rem' }}>
-                        <div className="text-center"> {/* Agrega la clase text-center aquí */}
+                        <div className="text-center">
                             <img src={dogParty} className="card-img-top img-services-land" alt="..." />
                         </div>
                         <div className="card-body">
@@ -42,9 +42,9 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col">
-                    <div className="card services-tres" style={{ width: '18rem' }}>
-                        <div className="text-center"> {/* Agrega la clase text-center aquí */}
+                <div className="col d-flex justify-content-center">
+                    <div className="card services-cuatro" style={{ width: '18rem' }}>
+                        <div className="text-center">
                             <img src={dogParty} className="card-img-top img-services-land" alt="..." />
                         </div>
                         <div className="card-body">

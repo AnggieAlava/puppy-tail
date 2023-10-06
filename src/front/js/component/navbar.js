@@ -50,7 +50,7 @@ export const Navbar = () => {
                   Perfil <i className="fa-regular fa-user"></i>
                 </Link>
               </li> : <li className="nav-item">
-                <Link className="nav-link" to="/signup/keeper">
+                <Link className="nav-link" to="/signuppage">
                   Quieres ser cuidador?
                 </Link>
               </li>)}

@@ -13,12 +13,18 @@
 }
 
 .col-title {
+    border-radius: 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 200px;
     height: 80px;
-    border: 10px solid transparent; /* Borde transparente */
-    border-image: linear-gradient(45deg, #F7C04A, #FFBFBF, #A8DF8E); /* Colores degradados */
-    border-image-slice: 1; /* Para aplicar el degradado a todo el borde */
+    /* border: 10px solid transparent;
+    border-image: linear-gradient(45deg, #7bf085, #4a964f, rgb(51, 94, 51));  */
+    border-image-slice: 1; 
+}
+
+.icons-reasons{
+    font-size: 30px;
+    color:#879687;
 }

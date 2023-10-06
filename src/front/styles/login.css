@@ -1,4 +1,4 @@
-.wrap-login {
+/* .wrap-login {
   font-family: 'ROBOTO';
   font-weight:bold;
   border-radius: 15px;
@@ -29,7 +29,7 @@
   height: 50px;
 } */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .text-sm {
     font-size: 14px;
     margin: 5px 0; 
@@ -85,4 +85,4 @@
 #btn-login:hover:after {
   bottom: 2px;
   left: 2px;
-}
+} */ 

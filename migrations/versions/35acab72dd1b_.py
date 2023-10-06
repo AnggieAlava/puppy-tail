@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c904768996e5
+Revision ID: 35acab72dd1b
 Revises: 
-Create Date: 2023-09-25 15:38:52.838778
+Create Date: 2023-10-06 03:11:00.623967
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c904768996e5'
+revision = '35acab72dd1b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,7 +32,7 @@ def upgrade():
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('location', sa.String(length=255), nullable=True),
     sa.Column('password', sa.String(length=255), nullable=False),
-    sa.Column('description', sa.String(length=1000), nullable=True),
+    sa.Column('description', sa.String(length=2000), nullable=True),
     sa.Column('profile_pic', sa.String(length=150), nullable=True),
     sa.Column('is_active', sa.Boolean(), nullable=False),
     sa.Column('user_type', sa.String(length=50), nullable=True),
@@ -44,6 +44,7 @@ def upgrade():
     sa.Column('hourly_pay', sa.Float(), nullable=True),
     sa.Column('experience', sa.Date(), nullable=True),
     sa.Column('services', sa.ARRAY(sa.String(length=50)), nullable=True),
+    sa.Column('working_hours', sa.ARRAY(sa.Time()), nullable=True),
     sa.ForeignKeyConstraint(['id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -58,7 +59,10 @@ def upgrade():
     sa.Column('end_date', sa.DateTime(), nullable=False),
     sa.Column('status', sa.Enum('pending', 'approved', 'archived', 'canceled', 'done', 'pto', name='status'), nullable=True),
     sa.Column('keeper_id', sa.Integer(), nullable=False),
+    sa.Column('owner_id', sa.Integer(), nullable=True),
+    sa.Column('pets_id', sa.ARRAY(sa.Integer()), nullable=True),
     sa.ForeignKeyConstraint(['keeper_id'], ['keeper.id'], ),
+    sa.ForeignKeyConstraint(['owner_id'], ['owner.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('pet',

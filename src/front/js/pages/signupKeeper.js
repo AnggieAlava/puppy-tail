@@ -2,23 +2,20 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/login.css";
+import "../../styles/signup.css";
 import { HidePassword } from "../component/hidePassword";
 import locations from "../../json/location.json";
-
 export const SignupKeeper = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(" ");
-
   useEffect(() => {
     if (shouldNavigate) {
       navigate("/login");
     }
   }, [shouldNavigate]);
-
   async function signupKeeper(e) {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -103,7 +100,7 @@ export const SignupKeeper = (props) => {
               })}
             </select>
           </div>
-          <HidePassword />
+          <HidePassword styleType="signup" />
           <button id="btn-signup" type="submit" className="btn">
             Registrarse
           </button>

@@ -1,0 +1,34 @@
+body, html {
+    font-family: 'Roboto';
+}
+.card-description{
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+.img-description{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover; 
+    object-position: center center; 
+}
+
+.wrap-description{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.title-steps{
+    font-size:2rem;
+    font-weight:800;
+    color:#285430;
+}
+
+.card-steps-title{
+    font-weight: bold;
+    color: inherit; 
+    color:#285430
+}
+

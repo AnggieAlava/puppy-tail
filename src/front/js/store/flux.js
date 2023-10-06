@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router-dom";
 import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
@@ -170,7 +169,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
-
       apiFetchProtected: async (endpoint, method = "GET", body = null) => {
         const { accessToken } = getStore();
         if (!accessToken || accessToken === "null") {
@@ -196,7 +194,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
-
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         // let userData = {}
@@ -214,8 +211,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const resp = await apiFetch("/login", "POST", {
           email,
           password,
-        })
-
+        });
         if (resp.code == 401) {
           swal({
             icon: "error",
@@ -237,49 +233,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
         return resp.code;
       },
-      requestPasswordRecovery: async (email) => {
 
-        console.log(email);
-
-        const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
-        if (response.status === 200) {
-          swal({
-            icon: "warning",
-            title: "Mail enviado",
-            text: "Revise su correo y cambie la contraseña",
-          });
-        }
-
-        return response
-
-
-      },
-      changePasswordWithToken: async (tokenPassword, password) => {
-
-
-        let resp = await fetch(process.env.BACKEND_URL + `/api/changepassword`, {
-          method: "POST",
-          body: JSON.stringify({ password }),
-
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer  ${tokenPassword}`
-          },
-
-        }
-
-        )
-        if (response.status === 200) {
-          swal({
-            icon: "success",
-            title: "Contraseña cambiada",
-            text: "La contraseña se ha cambiado correctamente",
-          });
-        }
-
-
-        return resp
-      },
       logout: () => {
         setStore({ accessToken: null });
         setStore({ userInfo: {} })
@@ -449,7 +403,46 @@ const getState = ({ getStore, getActions, setStore }) => {
           return resp;
         }
         setStore({ currentUser: resp.data })
-      }
+      },
+      getdailySlots: async (id, date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`, "GET")
+        if (resp.code != 200) {
+          console.error(resp.status + ": " + resp.statusText)
+        }
+        return resp.data
+      },
+      requestPasswordRecovery: async (email) => {
+        console.log(email);
+        const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
+        if (response.status === 200) {
+          swal({
+            icon: "warning",
+            title: "Mail enviado",
+            text: "Revise su correo y cambie la contraseña",
+          });
+        }
+        return response
+      },
+      changePasswordWithToken: async (tokenPassword, password) => {
+        let resp = await fetch(process.env.BACKEND_URL + `/api/changepassword`, {
+          method: "POST",
+          body: JSON.stringify({ password }),
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer  ${tokenPassword}`
+          },
+        }
+        )
+        if (response.status === 200) {
+          swal({
+            icon: "success",
+            title: "Contraseña cambiada",
+            text: "La contraseña se ha cambiado correctamente",
+          });
+        }
+        return resp
+      },
     }
   };
 };

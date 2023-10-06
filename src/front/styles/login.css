@@ -1,64 +1,88 @@
-#login-page,
-#signup-page {
-  font-size: 1.2rem;
-  font-weight: 600;
-  height: 100vh;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url(https://images.unsplash.com/photo-1514064019862-23e2a332a6a6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2028&q=80);
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: azure;
-}
-
-.wrap-loginSignup {
+.wrap-login {
+  font-family: 'ROBOTO';
+  font-weight:bold;
   border-radius: 15px;
-  width: 40vw;
-  backdrop-filter: grayscale(0.8) blur(2px);
-  box-shadow: 0 0 15px rgb(255, 255, 255);
+  height: 45vh;
+  width: 90%; 
 }
 
 #inputEmail,
-#inputPassword,
-#inputName,
-#inputLastName,
-#inputEmail1,
-#inputPassword1,
-#inputPayment,
-#inputLocation {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+#inputPasswordLogin {
+  background-color: #A4BE7B;
+  border-radius: 20px;
   padding: 12px;
+  color:black;
   margin: 10px;
-  box-shadow: 0 0 10px rgba(63, 211, 43, 0.3);
-  color: white;
+  box-shadow: 0 0 5px rgba(63, 211, 43, 0.3);
   transition: none;
 }
 
-.option-country {
-  background-color: white;
-  color: black;
+/* #btn-login {
+  font-size: clamp(1rem, 0.375rem + 2vw, 1.2rem);
+  font-weight: 400;
+  color:black;
+  margin: 30px 0 0 10px;
+  background-color:#285430;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  height: 50px;
+} */
+
+@media (max-width: 768px) {
+  .text-sm {
+    font-size: 14px;
+    margin: 5px 0; 
+  }
+}
+ @media (max-width :768px) {
+  .title-login {
+    font-size: 24px;
+  }
+ }
+
+#btn-login {
+  background-color: #3DD1E7;
+  margin: 50px auto;
+  border: 0 solid #E5E7EB;
+  box-sizing: border-box;
+  color: #000000;
+  display: flex;
+  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 1.75rem;
+  padding: .75rem 1.65rem;
+  position: relative;
+  text-align: center;
+  text-decoration: none #000000 solid;
+  text-decoration-thickness: auto;
+  width: 50%;
+  max-width: 460px;
+  position: relative;
+  cursor: pointer;
+  transform: rotate(-2deg);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
-#btn-login,
-#btn-signup {
-  border: 2px solid rgba(0, 0, 0, 0.563);
-  margin-bottom: 10px;
-  transition: background-color 0.3s ease;
-  color: white;
+#btn-login:focus {
+  outline: 0;
 }
 
-#btn-login:hover {
-  background-color: rgba(7, 7, 7, 0.2);
-}
-#btn-signup:hover {
-  background-color: rgba(7, 7, 7, 0.2);
+#btn-login:after {
+  content: '';
+  position: absolute;
+  border: 1px solid #000000;
+  bottom: 4px;
+  left: 4px;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
 }
 
-#cat-suit {
-  font-size: 5rem;
-  color: black;
+#btn-login:hover:after {
+  bottom: 2px;
+  left: 2px;
 }

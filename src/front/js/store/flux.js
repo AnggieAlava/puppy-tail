@@ -212,19 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-        if (resp.code == 401) {
-          swal({
-            icon: "error",
-            title: "Usuario inexistente",
-            text: "El usuario no existe en el sistema.",
-          });
-        } else if (resp.code == 400) {
-          swal({
-            icon: "error",
-            title: "Contraseña incorrecta",
-            text: "La contraseña ingresada es incorrecta.",
-          });
-        }
+
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
@@ -402,16 +390,36 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        setStore({currentUser: resp.data})
+        setStore({ currentUser: resp.data })
       },
       getdailySlots: async (id, date) => {
         const { apiFetch } = getActions();
-        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`,"GET")
-        if (resp.code != 200){
-          console.error(resp.status+": "+ resp.statusText)
+        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`, "GET")
+        if (resp.code != 200) {
+          console.error(resp.status + ": " + resp.statusText)
         }
         return resp.data
-      }
+      },
+      requestPasswordRecovery: async (email) => {
+        console.log(email);
+        const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
+
+
+        return response
+      },
+      changePasswordWithToken: async (tokenPassword, password) => {
+        let resp = await fetch(process.env.BACKEND_URL + `/api/changepassword`, {
+          method: "POST",
+          body: JSON.stringify({ password }),
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer  ${tokenPassword}`
+          },
+        }
+        )
+
+        return resp
+      },
     }
   };
 };

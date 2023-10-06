@@ -1,11 +1,14 @@
 import React from 'react';
-import "../../styles/actionButtons.css"
+import '../../styles/actionButtons.css';
+import { RxDoubleArrowDown } from "react-icons/rx"
 
 const ActionButtons = () => {
     return (
-        <div className="container-fluid mt-5">
-            <button className='btn-action'>Registrate</button>
-            <button className='btn-action'>Quieres trabajar con nosotros?</button>
+        <div className="container-fluid mt-5 d-flex justify-content-center">
+            <a href="#signup-owner" className='button btn-content'>
+                <span className="button-text">Comenzar</span>
+                <RxDoubleArrowDown className="iconer" />
+            </a>
         </div>
     );
 };

@@ -1,17 +1,36 @@
-/* En actionButtons.css */
-.btn-action {
-    background-color: #FF5733; /* Color de fondo */
-    color: #FFFFFF; /* Color del texto */
-    font-weight: bold; /* Texto en negrita */
-    padding: 10px 20px; /* Relleno alrededor del texto */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambio de cursor al pasar el ratón */
-    margin: 5px; /* Margen entre los botones */
-    transition: background-color 0.3s ease; /* Transición suave del color de fondo */
-  }
-  
-  .btn-action:hover {
-    background-color: #FF8C66; /* Color de fondo al pasar el ratón */
-  }
-  
+.button {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: none;
+  overflow: hidden;
+  background: #C70039;
+  color: #fff;
+}
+
+.button-text {
+  transform: translateX(15px);
+  font-size: 1.5em;
+  font-weight: 700;
+  transition-duration: 0.3s;
+}
+
+.iconer {
+  font-size: 30px;
+  font-weight: 400;
+  transform: translateY(45px);
+  transition-duration: 0.3s;
+}
+
+.button:hover .button-text {
+  transform: translateX(0px);
+}
+
+.button:hover .iconer {
+  transform: translateY(0px);
+}
+
+

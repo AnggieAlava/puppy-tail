@@ -79,6 +79,7 @@
 		"react": "^16.8.4",
 		"react-calendar": "^4.6.0",
 		"react-dom": "^16.8.4",
+		"react-icons": "^4.11.0",
 		"react-paypal-button-v2": "^2.6.3",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",

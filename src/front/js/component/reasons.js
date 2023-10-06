@@ -5,62 +5,26 @@ const Reasons = () => {
     return (
         <div className="container my-5">
             <h2 className="text-center">¿Por qué elegir Puppy Tail?</h2>
-            <div className="row mt-4">
-                <div className="col-sm-6 col-md-3 mb-4 col-container ">
-                    <h4 className="mt-3 text-center col-title">Bienestar de tu mascota</h4>
-                    <ul className='list-group'>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-heart"></i> Tu mascota recibirá atención y cuidado personalizado.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa-solid fa-clock"></i> Los cuidadores pueden ajustar su horario según las necesidades de tu mascota.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-home"></i> Tu mascota se sentirá más cómoda y segura en su propio entorno.
-                        </li>
-                    </ul>
+            <div className="row mt-5">
+                <div className="col col-container ">
+                    <h4 className="mt-3 text-center col-title"><i className="fa-solid fa-check"></i>Bienestar de tu mascota</h4>
+
                 </div>
-                <div className="col-sm-6 col-md-3 mb-4 col-container">
-                    <h4 className="mt-3 text-center col-title">Horario flexible</h4>
-                    <ul className='list-group'>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa-solid fa-clock"></i> Los cuidadores pueden ajustar su horario según tus necesidades.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-map-marker"></i> No es necesario desplazarte; los cuidadores vienen a tu hogar.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-comments"></i> Comunicación constante para mantenerte informado sobre tu mascota.
-                        </li>
-                    </ul>
+                <div className="col col-container">
+                    <h4 className="mt-3 text-center col-title"><i className="fa-solid fa-check"></i>Horario flexible</h4>
+
                 </div>
-                <div className="col-sm-6 col-md-3 mb-4 col-container">
-                    <h4 className="mt-3 text-center col-title">Conveniencia</h4>
-                    <ul className='list-group'>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-map-marker"></i> No es necesario desplazarte; los cuidadores vienen a tu hogar.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-user"></i> Servicio personalizado según las necesidades de tu mascota.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-trophy"></i> Experiencia y capacitación para el cuidado adecuado de mascotas.
-                        </li>
-                    </ul>
+                <div className="col col-container">
+                    <h4 className="mt-3 text-center col-title"><i className="fa-solid fa-check"></i>Conveniencia</h4>
+
                 </div>
-                <div className="col-sm-6 col-md-3 mb-4 col-container">
-                    <h4 className="mt-3 text-center col-title ">Confianza</h4>
-                    <ul className='list-group'>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-comments"></i> Comunicación constante para mantenerte informado sobre tu mascota.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-user"></i> Servicio personalizado según las necesidades de tu mascota.
-                        </li>
-                        <li className='list-group-item list-reasons'>
-                            <i className="suit-list fa fa-check-circle"></i> Cuidadores de mascotas calificados para garantizar la seguridad.
-                        </li>
-                    </ul>
+                <div className="col col-container align-self-center">
+                    <h4 className="mt-3 text-center col-title"><i className="fa-solid fa-check"></i>Confianza</h4>
+
+                </div>
+                <div className="col col-container">
+                    <h4 className="mt-3 text-center col-title"><i className="fa-solid fa-check"></i>Experiencia</h4>
+
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ import "../../styles/carouselTestimonial.css";
 const CarouselTestimonial = () => {
     return (
 
-        <div className="container">
+        <div className="container-fluid mt-5 w-50">
             <div id="carouselExampleSlidesOnly" className="carousel slide" data-bs-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">

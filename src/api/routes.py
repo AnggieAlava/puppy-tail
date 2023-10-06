@@ -471,13 +471,18 @@ def getavailableSlots(keeper_id):
         return jsonify({"msg": "No start date added to request"}), 400
     start_date = request.args.get('start_date')+" 00:00:00"
     end_date = request.args.get('start_date') +" 23:59:59"
+    if request.args.get('end_date') != None:
+        print("Getting end_date: ")
+        print(request.args.get('end_date'))
+        end_date = request.args.get('end_date') +" 23:59:59"
     #Getting working hours and making a list of all available working slots for the day
     working_hours = Keeper.query.get(keeper_id).working_hours
     slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
     slots = slots.tolist()
     slots.pop() #Removes last 30min slot we won't offer due to 1-hour minimum service
     #Getting reservations for the day
-    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.start_date<=end_date).all()
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.end_date<=end_date).all()
+    print(bookings)
     if len(bookings) < 1:
         return jsonify([slot.strftime('%-H:%M') for slot in slots]), 200
     #Remove any conflicting slots based on booking times

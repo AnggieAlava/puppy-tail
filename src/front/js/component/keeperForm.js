@@ -15,6 +15,7 @@ export const KeeperForm = ({}) => {
   const days = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
   const [disabledCalendar, setdisabledCalendar] = useState([0, 1, 2, 3, 4, 5, 6])
   const [hour, setHour] = useState("")
+  const [maxDate, setmaxDate] = useState('')
   const [finalHour, setfinalHour] = useState("")
   const params = useParams();
 
@@ -24,7 +25,7 @@ export const KeeperForm = ({}) => {
   }
   function setTime(time){
     setHour(time)
-    let date = new Date(`20 December 2019 ${time}`)
+    let date = new Date(`20 December 2019 ${time}`) //Dummy date info to strip time from it
     date.setHours(date.getHours()+1)
     date = date.getHours().toString()+":"+(date.getMinutes() < 10? '0':'')+date.getMinutes().toString()
     setfinalHour(date)
@@ -55,8 +56,10 @@ export const KeeperForm = ({}) => {
     setTimes(slots)
   }
   async function pickMultipleHours(date){
-    if(date[1]==null) return;
-    console.log(date)
+    if(date[0]!=null && date[1]==null){
+      //This is the state when the user has clicked the first date and we have to set the calendar to only be able to be clicked at the following days without conflicts
+      
+    }
     let first_date = date[0].getFullYear().toString()+"-"+(date[0].getMonth()+1).toString()+"-"+date[0].getDate().toString()
     let slots = await actions.getdailySlots(store.currentUser.id, first_date)
     setTimes(slots)
@@ -65,7 +68,6 @@ export const KeeperForm = ({}) => {
     setsecondTimes(second_slots)
     console.log(second_slots)
   }
-
   return (
     <div className="container pb-4 text-start" id="calendar">
       <h2><strong>Reservar</strong></h2>
@@ -81,7 +83,7 @@ export const KeeperForm = ({}) => {
           </div>
           )}):""}
           <h2 className="input-group-text mt-2">Disponibilidad</h2>
-          <Calendar onChange={(date)=>getSlots(date)} minDate={getDate()} allowPartialRange={true} 
+          <Calendar onChange={(date)=>getSlots(date)} minDate={getDate()} maxDate={''} allowPartialRange={true} 
           tileDisabled={({date}) => disabledCalendar.includes(date.getDay())} selectRange={isRange} 
           returnValue="range" value={value} locale="es"/> 
           {/* Aqui irian las horas del calendario si fueran en la columna 1*/}

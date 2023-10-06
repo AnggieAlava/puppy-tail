@@ -54,7 +54,6 @@ export const KeeperInfo = ({ keeper }) => {
         if (document.getElementById("petSitter").checked) arr.push("Cuidador(a) de mascotas");
         if (document.getElementById("partyPlanner").checked)
         arr.push("Organizador(a) de fiestas");
-        //if (arr.length === 0) arr.push("Sin servicios");
         //Experience
         let xp = document.getElementById("experienceInput").value
         if (xp == "") {
@@ -189,7 +188,7 @@ export const KeeperInfo = ({ keeper }) => {
                                 return (
                                     <li key={index}>{service}</li>
                                 )
-                            }))}
+                        }))}
                     </ul>
                 </div>
             </div>

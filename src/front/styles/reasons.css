@@ -1,0 +1,30 @@
+.list-reasons{
+    border: none;
+}
+
+.suit-list{
+    color: #A8DF8E;
+}
+
+.col-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.col-title {
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    height: 80px;
+    /* border: 10px solid transparent;
+    border-image: linear-gradient(45deg, #7bf085, #4a964f, rgb(51, 94, 51));  */
+    border-image-slice: 1; 
+}
+
+.icons-reasons{
+    font-size: 30px;
+    color:#879687;
+}

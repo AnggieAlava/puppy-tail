@@ -212,19 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-        if (resp.code == 401) {
-          swal({
-            icon: "error",
-            title: "Usuario inexistente",
-            text: "El usuario no existe en el sistema.",
-          });
-        } else if (resp.code == 400) {
-          swal({
-            icon: "error",
-            title: "Contraseña incorrecta",
-            text: "La contraseña ingresada es incorrecta.",
-          });
-        }
+
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
@@ -415,13 +403,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       requestPasswordRecovery: async (email) => {
         console.log(email);
         const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
-        if (response.status === 200) {
-          swal({
-            icon: "warning",
-            title: "Mail enviado",
-            text: "Revise su correo y cambie la contraseña",
-          });
-        }
+
+
         return response
       },
       changePasswordWithToken: async (tokenPassword, password) => {
@@ -434,13 +417,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         }
         )
-        if (response.status === 200) {
-          swal({
-            icon: "success",
-            title: "Contraseña cambiada",
-            text: "La contraseña se ha cambiado correctamente",
-          });
-        }
+
         return resp
       },
     }

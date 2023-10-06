@@ -3,7 +3,7 @@ body, html {
 }
 
 .wrap-steps {
-    background-color: #FFE5E5;
+    background-color: #FFFBEB;
 }
 
 .card-container {
@@ -26,13 +26,13 @@ body, html {
 .main-title-steps {
     font-size: 2rem;
     font-weight: 800;
-    color: #539165;
+    color: black;
 }
 
 .card-steps-title {
     font-weight: 800;
     color: inherit;
-    color: #539165;
+    color: black;
 }
 
 .card-steps-content h4{

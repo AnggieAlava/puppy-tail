@@ -5,6 +5,8 @@ import Steps from "../component/steps";
 import { Signup } from "./signup";
 import CarouselTestimonial from "../component/carouselTestimonial";
 import HeaderLanding from "../component/headerLanding";
+import Reasons from "../component/reasons";
+import ActionButtons from "../component/actionButtons";
 
 
 export const Landing = () => {
@@ -13,6 +15,8 @@ export const Landing = () => {
   return (
     <>
       <HeaderLanding />
+      <Reasons />
+      <ActionButtons />
       <Steps />
       <CarouselTestimonial />
       <Signup />

@@ -1,9 +1,10 @@
 body, html {
     font-family: 'Roboto';
 }
+
 .landing-title {
   font-family: 'Poppins';
-  color: #3F497F;
+  color:black;
   font-size: 3.5vw; 
   font-weight: 900;
 }
@@ -15,7 +16,7 @@ body, html {
 }
 
 .landing-p {
-  color: #072c27;
+  color: black;
   font-size: 1.5rem;
   font-weight: 600;
   margin-top: 20px;
@@ -29,6 +30,7 @@ body, html {
 }
 
 .landing-img {
+  margin: 50px;
   border-radius: 35px;
   max-width: 100%;
   height: auto; 
@@ -42,6 +44,7 @@ body, html {
 }
 .main-card, .box-card{
   border: none;
+  background-color: #ECF9FF;
 }
 
 

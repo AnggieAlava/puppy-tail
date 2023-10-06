@@ -1,0 +1,24 @@
+.list-reasons{
+    border: none;
+}
+
+.suit-list{
+    color: #A8DF8E;
+}
+
+.col-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.col-title {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 200px;
+    height: 80px;
+    border: 10px solid transparent; /* Borde transparente */
+    border-image: linear-gradient(45deg, #F7C04A, #FFBFBF, #A8DF8E); /* Colores degradados */
+    border-image-slice: 1; /* Para aplicar el degradado a todo el borde */
+}

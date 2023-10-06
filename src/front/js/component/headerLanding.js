@@ -2,7 +2,7 @@ import React from 'react';
 import "../../styles/headerLanding.css"
 const HeaderLanding = () => {
     return (
-        <div className="container-fluid mt-5 p-1">
+        <div className="container-fluid p-1 header-background">
             <div className="card mb-3 main-card" >
                 <div className="row g-0">
                     <div className="col-md-7 d-flex align-items-center justify-content-center">

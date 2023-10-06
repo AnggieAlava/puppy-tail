@@ -5,13 +5,15 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import *
 from api.utils import generate_sitemap, APIException
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti, verify_jwt_in_request
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity,  get_jwt, create_refresh_token, get_jti, verify_jwt_in_request, decode_token
 from flask import Flask
 from flask_cors import CORS
-from datetime import timezone
+from datetime import timezone, timedelta
 from firebase_admin import storage
 import tempfile
-import datetime
+import smtplib
+import ssl
+from email.message import EmailMessage
 
 api = Blueprint('api', __name__)
 # Agregado al boilerplate
@@ -76,6 +78,76 @@ def login_user():
    
     return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
 
+
+@api.route('/recoverypassword', methods=['POST'])
+def recovery_password():
+   email= request.json.get("email")
+  
+   user=User.query.filter_by(email=email).first() 
+   if  user is None:
+        return jsonify({"msg": "Se requiere un correo electrónico"}), 400
+   token = create_access_token(
+       identity=user.id, additional_claims={"type": "password"})
+   send_simple_message(email, token)
+
+   return jsonify({"recoveryToken": token}),200
+
+def send_simple_message(user_email, token):
+    email_sender = "puppy.tail.verificacion@gmail.com"
+    password = "okscwjyfwjlvmakx"
+    email_receiver = user_email
+    subject = "Recuperar contraseña"
+    
+    body = f"""Estimado Usuario,
+
+Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Puppy Tail.
+
+Para recuperar la contraseña, haz clic aquí: 
+https://refactored-journey-xg7pwwg665pcgw-3000.app.github.dev/changePassword?token={token}
+
+Si no solicitaste este cambio de contraseña, por favor ignora este mensaje o contáctanos inmediatamente si crees que tu cuenta está en peligro. 
+El enlace expirará en 5 minutos por motivos de seguridad. Si el enlace ha caducado, puedes solicitar un nuevo enlace de recuperación de contraseña en la página de inicio de sesión de Puppy Tail.
+
+Gracias,
+Puppy Tail team
+"""
+    
+    em = EmailMessage()
+    em["From"] = email_sender
+    em["To"] = email_receiver
+    em["Subject"] = subject
+    em.set_content(body, subtype="plain")  # Utiliza subtype="plain" para texto sin formato
+    
+    context = ssl.create_default_context()
+    
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+        smtp.login(email_sender, password)
+        smtp.send_message(em)
+    print("enviado")
+
+
+
+@api.route('/changepassword', methods=['POST'])
+@jwt_required()
+def change_password():
+    new_password = request.json.get("password")
+    user_id = get_jwt_identity()
+    
+    if new_password is None:
+        return jsonify({"msg": "Se requiere una nueva contraseña"}), 400
+    
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+
+    secure_password = bcrypt.generate_password_hash(new_password, rounds=None).decode("utf-8")
+    user.password = secure_password
+    db.session.commit()
+
+    return jsonify({"msg": "Contraseña actualizada exitosamente"}), 200
+
+    
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
 def user_refresh():

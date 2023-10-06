@@ -64,12 +64,12 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json",
             },
           })
-          if(!response.ok){
-            console.error(response.status+": "+response.statusText)
+          if (!response.ok) {
+            console.error(response.status + ": " + response.statusText)
           }
           let data = await response.json()
           getActions().getOwnerPets(obj.owner_id);
-          return data  
+          return data
         } catch (error) {
           console.error(error);
         }
@@ -92,16 +92,16 @@ const getState = ({ getStore, getActions, setStore }) => {
             .then((data) => {
               console.log("Successfully updated pet: " + data);
               //getActions().getOwnerPets(obj.owner_id);
-              const {pets} = getStore()
+              const { pets } = getStore()
               let arr = pets
-              for(let pet in arr){
-                if (arr[pet].id == obj.id){
-                  arr[pet]=obj
-                  console.log({obj})
+              for (let pet in arr) {
+                if (arr[pet].id == obj.id) {
+                  arr[pet] = obj
+                  console.log({ obj })
                   console.log(arr[pet])
-                } 
+                }
               }
-              setStore({pets:arr})
+              setStore({ pets: arr })
             });
         } catch (error) {
           console.error(error);
@@ -170,6 +170,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
+
       apiFetchProtected: async (endpoint, method = "GET", body = null) => {
         const { accessToken } = getStore();
         if (!accessToken || accessToken === "null") {
@@ -195,15 +196,16 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
+
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
-        let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null){
-          userData = JSON.parse(localStorage.getItem("userInfo"))
-        }
+        // let userData = {}
+        // if (localStorage.hasOwnProperty("userInfo") != null) {
+        //   userData = JSON.parse(localStorage.getItem("userInfo"))
+        // }
         if (token) {
           setStore({ accessToken: token });
-          setStore({userInfo:userData})
+          // setStore({ userInfo: userData })
         }
       },
 
@@ -212,7 +214,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         const resp = await apiFetch("/login", "POST", {
           email,
           password,
-        });
+        })
+
         if (resp.code == 401) {
           swal({
             icon: "error",
@@ -230,14 +233,56 @@ const getState = ({ getStore, getActions, setStore }) => {
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
         setStore({ accessToken: token });
-        setStore({userInfo:{"userId":user_id, "user_type":user_type}})
-        localStorage.setItem("userInfo",JSON.stringify({"userId":user_id, "user_type":user_type}))
+        setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
+        localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
         return resp.code;
       },
+      requestPasswordRecovery: async (email) => {
 
+        console.log(email);
+
+        const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
+        if (response.status === 200) {
+          swal({
+            icon: "warning",
+            title: "Mail enviado",
+            text: "Revise su correo y cambie la contraseña",
+          });
+        }
+
+        return response
+
+
+      },
+      changePasswordWithToken: async (tokenPassword, password) => {
+
+
+        let resp = await fetch(process.env.BACKEND_URL + `/api/changepassword`, {
+          method: "POST",
+          body: JSON.stringify({ password }),
+
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer  ${tokenPassword}`
+          },
+
+        }
+
+        )
+        if (response.status === 200) {
+          swal({
+            icon: "success",
+            title: "Contraseña cambiada",
+            text: "La contraseña se ha cambiado correctamente",
+          });
+        }
+
+
+        return resp
+      },
       logout: () => {
         setStore({ accessToken: null });
-        setStore({userInfo:{}})
+        setStore({ userInfo: {} })
         localStorage.setItem("userInfo", {});
         localStorage.setItem("accessToken", null);
       },
@@ -288,9 +333,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log(resp);
       },
       getKeeper: async (id) => {
-        const {apiFetch} = getActions()
+        const { apiFetch } = getActions()
         const response = await apiFetch(`/keeper/${id}`, "GET");
-        setStore({currentUser: response.data})
+        setStore({ currentUser: response.data })
         return response.data
       },
       updateKeeper: async (obj) => {
@@ -308,32 +353,32 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        const {currentUser} = getStore()
+        const { currentUser } = getStore()
         let user = resp.data
-        Object.assign(resp.data, {"profile_pic":currentUser.profile_pic})
-        setStore({currentUser: user})
+        Object.assign(resp.data, { "profile_pic": currentUser.profile_pic })
+        setStore({ currentUser: user })
       },
       uploadPicture: async (formData, id) => {
         const { accessToken } = getStore();
         if (!accessToken) {
           return "No token";
         }
-        const resp = await fetch(process.env.BACKEND_URL+`/api/avatar/${id}`, {
-          method:"POST",
-          body:formData,
-          headers:{
-            "Authorization":"Bearer " + accessToken
+        const resp = await fetch(process.env.BACKEND_URL + `/api/avatar/${id}`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + accessToken
           }
         });
         if (!resp.ok) {
-          console.error("Error saving picture, code: "+ resp.code);
+          console.error("Error saving picture, code: " + resp.code);
           return resp;
         }
-        const {currentUser} = getStore()
+        const { currentUser } = getStore()
         let data = await resp.json()
         let user = currentUser
         user["profile_pic"] = data.public_url
-        setStore({currentUser: user})
+        setStore({ currentUser: user })
         console.log("User info updated")
         return user
       },
@@ -342,11 +387,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (!accessToken) {
           return "No token";
         }
-        const resp = await fetch(process.env.BACKEND_URL+`/api/pet_avatar/${id}`, {
-          method:"POST",
-          body:formData,
-          headers:{
-            "Authorization":"Bearer " + accessToken
+        const resp = await fetch(process.env.BACKEND_URL + `/api/pet_avatar/${id}`, {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization": "Bearer " + accessToken
           }
         });
         if (!resp.ok) {
@@ -376,15 +421,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getOwner: async (id) => {
         try {
-          fetch(process.env.BACKEND_URL+`/api/owner/${id}`).then(resp=>{
-            if(!resp.ok){
-              console.error(resp.status+": "+resp.statusText)
+          fetch(process.env.BACKEND_URL + `/api/owner/${id}`).then(resp => {
+            if (!resp.ok) {
+              console.error(resp.status + ": " + resp.statusText)
             }
             return resp.json();
-          }).then(data=>{
-            console.log("retrieved owner data successfully => "+data)
-            setStore({currentUser:data})
-            setStore({pets:data.pets})
+          }).then(data => {
+            console.log("retrieved owner data successfully => " + data)
+            setStore({ currentUser: data })
+            setStore({ pets: data.pets })
             return data;
           })
         } catch (error) {
@@ -394,16 +439,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       updateOwner: async (obj) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch(`/owner/${obj.id}`, "PUT", {
-          "first_name":obj.first_name,
+          "first_name": obj.first_name,
           "last_name": obj.last_name,
-          "description":obj.description,
+          "description": obj.description,
           "location": obj.location
         });
         if (resp.code != 200) {
-          console.error("Error saving profile, code: "+ resp.code);
+          console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        setStore({currentUser: resp.data})
+        setStore({ currentUser: resp.data })
       }
     }
   };

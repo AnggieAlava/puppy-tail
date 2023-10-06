@@ -33,10 +33,13 @@ jwt = JWTManager(app)
 app.config["JWT_SECRET_KEY"] =  'your-secret-key'
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 5000
 def check_token_blocklist(jwt_header, jwt_payload) -> bool:
-    jti = jwt_payload["jti"]
-    tokenBlocked = TokenBlockedList.query.filter_by(jti=jti).first()
-    return tokenBlocked is not None
-    
+   
+     tokenBlocked = TokenBlockedList.query.filter_by(
+          jti=jwt_payload["jti"]).first()
+     if not isinstance(tokenBlocked, TokenBlockedList):
+           if jwt_payload["password"] == None and request.path!="/api/changepassword": return True
+     else:
+          return True
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:

@@ -219,7 +219,7 @@ def keepers_list():
         else:
             services = [] 
 
-        keeper_data = {
+            keeper_data = {
             "id": keeper.id,
             "first_name": keeper.first_name,
             "last_name": keeper.last_name,
@@ -230,13 +230,12 @@ def keepers_list():
             "profile_pic": getprofilePic(keeper.id),
             "experience": experience_date,
             "services": services,
-            "working_hours": [str(time) for time in keeper.working_hours]
+            "working_hours": [str(time) for time in keeper.working_hours] if keeper.working_hours else []
         }
 
         keepers_data.append(keeper_data)
 
     return jsonify(keepers_data), 200
-
 
 @api.route('/keeper/<int:keeper_id>', methods=['GET'])
 def get_keeper(keeper_id):

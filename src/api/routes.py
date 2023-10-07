@@ -214,12 +214,12 @@ def keepers_list():
         else:
             experience_date = None
 
-        if keeper.services is not None:  # Check if keeper.services is not None
+        if keeper.services is not None:
             services = [service for service in keeper.services]
         else:
-            services = [] 
+            services = []
 
-            keeper_data = {
+        keeper_data = {
             "id": keeper.id,
             "first_name": keeper.first_name,
             "last_name": keeper.last_name,
@@ -256,7 +256,7 @@ def get_keeper(keeper_id):
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
         "bookings": [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in keeper.booking],
-        "services": [service for service in keeper.services],
+        "services": [service for service in keeper.services] if keeper.services else [],
         "profile_pic": imgUrl,
         "working_hours": [str(time) for time in keeper.working_hours]
     }

@@ -8,7 +8,7 @@ const OurServices = () => {
     return (
         <div className="container">
             <h2 className="text-center">Nuestros servicios</h2>
-            <div className="row ">
+            <div className="row gx-3">
                 <div className="col d-flex justify-content-center">
                     <div className="card services-uno" style={{ width: '18rem' }}>
                         <div className="text-center">

@@ -417,9 +417,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         }
         )
-
         return resp
       },
+
+        makePayment: async (orderID) => {
+          try {
+            const { apiFetch } = getActions();
+            const resp = await apiFetch("/order", "POST", {
+              order_id: orderID,
+            });
+            if (resp.code === 200) {
+              console.log("Pago exitoso:", resp.data);
+            } else {
+              console.error("Error en el pago:", resp);
+            }
+          } catch (error) {
+            console.error("Error en makePayment:", error);
+          }
+        },
     }
   };
 };

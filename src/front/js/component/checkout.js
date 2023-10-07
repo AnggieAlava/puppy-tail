@@ -32,10 +32,11 @@ const Checkout = () => {
     // check Approval
     const onApprove = (data, actions) => {
         return actions.order.capture().then(function (details) {
-            const { payer } = details;
-            setSuccess(true);
+          const { payer } = details;
+          setSuccess(true);
+          PaymentActions.makePayment(orderID); // Llama a la acción de pago
         });
-    };
+      };
 
     //capture likely error
     const onError = (data, actions) => {

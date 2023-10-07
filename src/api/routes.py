@@ -562,3 +562,16 @@ def change_password():
     user.password = secure_password
     db.session.commit()
     return jsonify({"msg": "Contraseña actualizada exitosamente"}), 200
+
+@api.route('/order', methods=['POST'])
+def order_success():
+    data = request.get_json(force=True)
+    order_id = data.get("order_id")
+    order = Order.query.filter_by(order_id=order_id).first()
+    if order:
+        order.status = 'completed'
+        db.session.commit()
+
+        return jsonify({"message": "Compra registrada con éxito"}), 200
+    else:
+        return jsonify({"message": "Pedido no encontrado"}), 404

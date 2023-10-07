@@ -16,10 +16,10 @@ body, html {
 }
 
 .img-steps {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 30%;
+    /* height: 250px; */
+    /* border-radius: 50%; */
+    /* object-fit: cover; */
     object-position: center center;
 }
 

@@ -420,23 +420,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         return resp
       },
 
-      createPayment: async (paypal_id, create_time, payer_email, payer_name, payer_id, amount_currency, amount_value, description, payee_email, status) => {
+      createPayment: async (details) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/order", "POST", {
-          paypal_id,
-          create_time,
-          payer_email,
-          payer_name,
-          payer_id,
-          amount_currency,
-          amount_value,
-          description,
-          payee_email,
-          status,
+          paypal_id: details.id,
+          create_time: details.create_time,
+          payer_email: details.payer.email_address,
+          payer_name:details.payer.name.given_name + " " + details.payer.name.surname,
+          payer_id: details.payer.payer_id,
+          amount_currency: details.purchase_units[0].amount.currency_code,
+          amount_value: details.purchase_units[0].amount.value,
+          description: details.purchase_units[0].description,
+          payee_email: details.purchase_units[0].payee.email_address,
+          status: details.status
         });
         if (resp.code === 200) {
           console.log("Pago exitoso:", resp.data);
-          setStore({ createPayment: resp.data });
           return resp;
         } else {
           console.error("Error en el pago:", resp);

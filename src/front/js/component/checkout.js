@@ -31,12 +31,14 @@ const Checkout = () => {
     };
 
     // check Approval
-    const onApprove = (data, actions) => {
-        return actions.order.capture().then(function (details) {
+    const onApprove = (data,paypal_actions) => {
+        return paypal_actions.order.capture().then(function (details) {
             const { payer } = details;
             console.log(details)
+            console.log(actions)
             setSuccess(true);
             actions.createPayment(details)
+
         });
     };
 

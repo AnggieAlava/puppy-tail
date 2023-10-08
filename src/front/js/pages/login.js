@@ -22,7 +22,7 @@ export const Login = () => {
       setError("Usuario o contraseña incorrecto");
       return;
     } else {
-      setError(""); // Limpia el mensaje de error si las contraseñas coinciden.
+      setError(""); 
     }
     if (resp === 201) {
       navigate("/home");
@@ -30,38 +30,39 @@ export const Login = () => {
   }
 
   return (
-    <div className="col-md-6">
-      <div className="text-center wrap-login sm-2 text-sm">
-        <h2 className="title-login">Iniciar sesión</h2>
-        <form className="" onSubmit={login}>
-          <div className="mb-3 form-group">
-            <label htmlFor="inputEmail " className="form-label">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="inputEmail"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className="form-text"></div>
-            <HidePassword styleType="login" />
-            <button type="submit"
-              className="form-control"
-              name="submit"
-              id="btn-login">
-              Iniciar sesión
-            </button>
-          </div>
-          <p className="text-sm">Recupera tu contraseña<Link to="/recovery">
-            Aqui
-          </Link></p>
-          {error && <p className="text-danger">{error}</p>} {/* Muestra el mensaje de error si existe */}
-          <h6 className="text-sm">No tienes una cuenta?<Link to="/signup" className="text-sm">Regístrate</Link></h6>
-        </form>
-      </div>
-    </div>
+      <div className="container-fluid wrap-login text-center">
+          <form onSubmit={login} className="form-login">
+          <h2 className="title-login">Iniciar sesión</h2>
+            <div className="mb-3 form-group">
+              <label htmlFor="inputEmail " className="form-label mt-3">
+                Correo electrónico
+              </label>
+              <input
+                type="email"
+                className="form-control mt-2 p-2"
+                name="email"
+                id="inputEmail"
+                aria-describedby="emailHelp"
+              />
+              <div id="emailHelp" className="form-text"></div>
+              <HidePassword /> 
+              <button type="submit"
+                className="form-control btn-login mt-4"
+                name="submit"
+                id="btn-login">
+                Iniciar sesión
+              </button>
+            </div>
+            <div className="linea-decorativa text-center"></div>
+            <Link to="/recovery" className="recovery-link">
+            Olvidaste tu contraseña?
+            </Link>
+            <p className="mt-2 question">No tienes una cuenta?<Link to="/signup" className="click-signup"> Regístrate</Link></p>
+            {error && <p className="text-danger">{error}</p>}
+          </form>
+        </div>
+   
+
   );
 };
 Login.propTypes = {

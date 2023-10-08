@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/signup.css";
+import { Link } from "react-router-dom";
 import locations from "../../json/location.json";
 import { HidePassword } from "../component/hidePassword";
 
@@ -34,39 +35,38 @@ export const Signup = (props) => {
   }
 
   return (
-    <div id="signup-owner" className="text-center m-5">
-      <div className="container wrap-signup">
-        <h1>BIENVENIDOS</h1>
-        <form className="pe-3" onSubmit={signup} id="form-signup">
-          <div className="mb-6">
-            <label htmlFor="inputName" className="form-label">
+    <div className="container-fluid wrap-signup text-center">
+        <form className="pe-3" onSubmit={signup} className="form-signup">
+          <h1 className="title-signup">Registrate en Puppy Tail</h1>
+          <div className="mb-3 form-group">
+            <label htmlFor="inputName" className="form-label mt-2">
               Nombre
             </label>
             <input
               type="text"
-              className="form-control"
+              className="form-control p-2"
               name="first_name"
               id="inputName"
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="inputLastName" className="form-label">
+            <label htmlFor="inputLastName" className="form-label mt-2">
               Apellido
             </label>
             <input
               type="text"
-              className="form-control"
+              className="form-control p-2"
               name="last_name"
               id="inputLastName"
             />
           </div>
           <div className="mb-6">
-            <label htmlFor="inputEmail1" className="form-label">
+            <label htmlFor="inputEmail1" className="form-label mt-2">
               Correo electrónico
             </label>
             <input
               type="email"
-              className="form-control"
+              className="form-control p-2"
               name="email"
               id="inputEmail1"
               aria-describedby="emailHelp"
@@ -74,11 +74,11 @@ export const Signup = (props) => {
             <div id="emailHelp" className="form-text"></div>
           </div>
           <div className="mb-6">
-            <label htmlFor="inputLocation" className="form-label">
+            <label htmlFor="inputLocation" className="form-label mt-2">
               Pais
             </label>
             <select
-              className="form-control"
+              className="form-control p-2"
               id="inputLocation"
               defaultValue="0"
               onChange={(e) => setSelectedLocation(e.target.value)}>
@@ -98,12 +98,12 @@ export const Signup = (props) => {
             </select>
           </div>
           <HidePassword />
-          <button id="btn-signup" type="submit" className="btn btn-danger mt-3">
+          <button type="submit" className="form-control btn-signup mt-4">
             Registrarse
           </button>
+          <p className="mt-4 question-signup">Ya tienes cuenta?<Link to="/login" className="click-login"> Ingresa aqui</Link></p>
         </form>
       </div>
-    </div>
   );
 };
 Signup.propTypes = {

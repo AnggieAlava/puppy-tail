@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy	
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship

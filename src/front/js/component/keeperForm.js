@@ -47,7 +47,7 @@ export const KeeperForm = ({}) => {
     setfinalHour("")
     setTimes(["Obteniendo horas..."])
     if (isRange) {
-      setsecondTimes(["Obteniendo horas..."])
+      setsecondTimes("Obteniendo horas...")
       pickMultipleHours(date)
       return;
     };

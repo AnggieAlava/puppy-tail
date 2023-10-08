@@ -38,6 +38,7 @@ const Checkout = () => {
             console.log(actions)
             setSuccess(true);
             actions.createPayment(details)
+            const { createPayment} = actions;
 
         });
     };

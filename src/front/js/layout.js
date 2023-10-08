@@ -36,11 +36,10 @@ const Layout = () => {
             <Route element={<Login />} path="/login" />
             <Route element={<Home />} path="/home" />
             <Route element={<RecoveryPassword />} path="/recovery" />
-            <Route element={<NotFound />} path="/notFound" />
             <Route element={<ChangePassword />} path="/changePassword" />
             <Route element={<SignupPage />} path="/signuppage" />
             <Route element={<Checkout />} path="/checkout/keeper/:theid" />
-            <Route element={<h1>Not found!</h1>} />
+            <Route element={<NotFound />} path="/*" />
           </Routes>
         </ScrollToTop>
       </BrowserRouter>

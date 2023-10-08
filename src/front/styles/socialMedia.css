@@ -1,11 +1,13 @@
 .social-media {
+    padding-top:10px;
     display: flex;
     gap: 20px;
   }
   
   .social-icon {
-    width: 52px;
-    height: 52px;
+    text-decoration:none;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -26,7 +28,7 @@
   }
   
   .social-icon i {
-    font-size: 24px;
+    font-size: 35px;
     color: white;
   }
   

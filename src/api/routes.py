@@ -214,12 +214,12 @@ def keepers_list():
         else:
             experience_date = None
 
-        if keeper.services is not None:  # Check if keeper.services is not None
+        if keeper.services is not None:
             services = [service for service in keeper.services]
         else:
-            services = [] 
+            services = []
 
-            keeper_data = {
+        keeper_data = {
             "id": keeper.id,
             "first_name": keeper.first_name,
             "last_name": keeper.last_name,
@@ -256,7 +256,7 @@ def get_keeper(keeper_id):
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
         "bookings": [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in keeper.booking],
-        "services": [service for service in keeper.services],
+        "services": [service for service in keeper.services] if keeper.services else [],
         "profile_pic": imgUrl,
         "working_hours": [str(time) for time in keeper.working_hours]
     }
@@ -449,15 +449,15 @@ def getpetAvatar(pet_id):
 @api.route('/booking', methods=["POST"])
 def createBooking():
     data = request.get_json(force=True)
-    booking = Booking()
-    booking.start_date = data["start_date"]
-    booking.end_date = data["end_date"]
-    booking.keeper_id = data["keeper_id"]
-    if hasattr(data, "pets_id"):
-        booking.pets_id = data["pets_id"]
-    if hasattr(data, "owner_id"):
-        booking.owner_id = data["owner_id"]
-    booking.status = 'pending'
+    booking = Booking(**data, status='pending')
+    # booking.start_date = data["start_date"]
+    # booking.end_date = data["end_date"]
+    # booking.keeper_id = data["keeper_id"]
+    # if hasattr(data, "pets_id"):
+    #     booking.pets_id = data["pets_id"]
+    # if hasattr(data, "owner_id"):
+    #     booking.owner_id = data["owner_id"]
+    # booking.status = 'pending'
     db.session.add(booking)
     db.session.commit()
     return jsonify({"msg":"Booking created successfully"}), 201
@@ -562,3 +562,23 @@ def change_password():
     user.password = secure_password
     db.session.commit()
     return jsonify({"msg": "Contraseña actualizada exitosamente"}), 200
+
+@api.route('/order', methods=['POST'])
+def createPayment():
+    data = request.get_json(force=True)
+    order = Order(**data)
+    # order.paypal_id = data["paypal_id"]
+    # order.create_time = data["create_time"]
+    # order.payer_email = data["payer_email"]
+    # order.payer_name = data["payer_name"]
+    # order.payer_id = data["payer_id"]
+    # order.amount_currency = data["amount_currency"]
+    # order.amount_value = data["amount_value"]
+    # order.description= data["description"]
+    # order.payee_email = data["payee_email"]
+    # order.status = data["status"]
+    db.session.add(order)
+    db.session.commit()
+
+    return jsonify({"message": "Compra registrada con éxito"}), 200
+    

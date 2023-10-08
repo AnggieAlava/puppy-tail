@@ -196,13 +196,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
-        // let userData = {}
-        // if (localStorage.hasOwnProperty("userInfo") != null) {
-        //   userData = JSON.parse(localStorage.getItem("userInfo"))
-        // }
+        let userData = {}
+        if (localStorage.hasOwnProperty("userInfo") != null) {
+          userData = JSON.parse(localStorage.getItem("userInfo"))
+        }
         if (token) {
           setStore({ accessToken: token });
-          // setStore({ userInfo: userData })
+          setStore({ userInfo: userData })
         }
       },
 
@@ -417,8 +417,29 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         }
         )
-
         return resp
+      },
+
+      createPayment: async (details) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/order", "POST", {
+          paypal_id: details.id,
+          create_time: details.create_time,
+          payer_email: details.payer.email_address,
+          payer_name:details.payer.name.given_name + " " + details.payer.name.surname,
+          payer_id: details.payer.payer_id,
+          amount_currency: details.purchase_units[0].amount.currency_code,
+          amount_value: details.purchase_units[0].amount.value,
+          description: details.purchase_units[0].description,
+          payee_email: details.purchase_units[0].payee.email_address,
+          status: details.status
+        });
+        if (resp.code === 200) {
+          console.log("Pago exitoso:", resp.data);
+          return resp;
+        } else {
+          console.error("Error en el pago:", resp);
+        }
       },
     }
   };

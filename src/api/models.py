@@ -3,6 +3,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from datetime import datetime
+# from sqlalchemy_jsonfield import JSONField
 from enum import Enum
 
 db = SQLAlchemy()
@@ -117,3 +118,17 @@ class TokenBlockedList(db.Model, SerializerMixin):
        
     #     "polymorphic_identity": "token_blocked_list",
     # }
+
+class Order(db.Model,SerializerMixin):
+    __tablename__ = 'order'
+    id = db.Column(db.Integer, primary_key=True)
+    paypal_id = db.Column(db.String(200), unique=True, nullable=False)  
+    create_time = db.Column(db.DateTime, nullable=False) 
+    payer_email = db.Column(db.String(200), nullable=False) 
+    payer_name = db.Column(db.String(200), nullable=False) 
+    payer_id = db.Column(db.String(200), nullable=False) 
+    amount_currency = db.Column(db.String(3), nullable=False) 
+    amount_value = db.Column(db.Float, nullable=False)  
+    description = db.Column(db.String(200), nullable=False) 
+    payee_email = db.Column(db.String(200), nullable=False) 
+    status = db.Column(db.String(50), nullable=False) 

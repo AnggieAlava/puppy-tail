@@ -1,5 +1,7 @@
 import React from 'react';
 import "../../styles/headerLanding.css"
+import { Link } from "react-router-dom";
+
 const HeaderLanding = () => {
     return (
         <div className="container-fluid p-1 header-background">
@@ -12,7 +14,7 @@ const HeaderLanding = () => {
                         <div className="card-body ">
                             <h1 className="card-title landing-title text-center">Cuidamos tus mascotas mientras estás de vacaciones</h1>
                             <p className="card-text text-center landing-p ">Encuentra personas cariñosas, verificadas y con reseñas para cuidar a tus miembros peludos de la familia mientras estás fuera de casa.</p>
-                            <a href="#footer" className="btn-header-landing ">Registrate gratis</a>
+                           < Link to="/signup" className="btn-header-landing ">Registrate gratis</Link>
                         </div>
                     </div>
                 </div>

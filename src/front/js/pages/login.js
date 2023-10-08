@@ -39,7 +39,7 @@ export const Login = () => {
               </label>
               <input
                 type="email"
-                className="form-control mt-2"
+                className="form-control mt-2 p-2"
                 name="email"
                 id="inputEmail"
                 aria-describedby="emailHelp"

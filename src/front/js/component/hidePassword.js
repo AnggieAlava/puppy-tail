@@ -16,7 +16,7 @@ export const HidePassword = () => {
       <div className="input-group mb-6 form-control p-0">
         <input
           type={showPassword ? "text" : "password"}
-          className="form-control"
+          className="form-control p-2"
           name="password"
           id="inputPassword"
         />

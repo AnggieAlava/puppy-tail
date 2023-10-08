@@ -420,21 +420,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         return resp
       },
 
-        makePayment: async (orderID) => {
-          try {
-            const { apiFetch } = getActions();
-            const resp = await apiFetch("/order", "POST", {
-              order_id: orderID,
-            });
-            if (resp.code === 200) {
-              console.log("Pago exitoso:", resp.data);
-            } else {
-              console.error("Error en el pago:", resp);
-            }
-          } catch (error) {
-            console.error("Error en makePayment:", error);
-          }
-        },
+      createPayment: async (paypal_id, create_time, payer_email, payer_name, payer_id, amount_currency, amount_value, description, payee_email, status) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/order", "POST", {
+          paypal_id,
+          create_time,
+          payer_email,
+          payer_name,
+          payer_id,
+          amount_currency,
+          amount_value,
+          description,
+          payee_email,
+          status,
+        });
+        if (resp.code === 200) {
+          console.log("Pago exitoso:", resp.data);
+          setStore({ createPayment: resp.data });
+          return resp;
+        } else {
+          console.error("Error en el pago:", resp);
+        }
+      },
     }
   };
 };

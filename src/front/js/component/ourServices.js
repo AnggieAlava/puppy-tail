@@ -18,10 +18,10 @@ const OurServices = () => {
         setShowModal(false);
     };
     return (
-        <div className="container">
-            <h2 className="text-center">Nuestros servicios</h2>
-            <div className="row gx-3">
-                <div className="col d-flex justify-content-center" onClick={() => openModal('Detalles de como organizamos las fiestas')}>
+        <div className="container mt-5">
+            <h2 className="text-center mt-2">Nuestros servicios</h2>
+            <div className="row">
+                <div className="col d-flex justify-content-center mt-2" onClick={() => openModal('Detalles de como organizamos las fiestas')}>
                     <div className="card services-uno" style={{ width: '18rem' }}>
                         <div className="text-center">
                             {/* <img src={dogWalk} className="card-img-top img-services-land" alt="..." /> */}
@@ -32,7 +32,7 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center"onClick={() => openModal('Detalles de los paseos de perro')}>
+                <div className="col d-flex justify-content-center mt-2"onClick={() => openModal('Detalles de los paseos de perro')}>
                     <div className="card services-dos" style={{ width: '18rem' }}>
                         <div className="text-center">
                             {/* <img src={dogShower} className="card-img-top img-services-land" alt="..." /> */}
@@ -43,7 +43,7 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center"onClick={() => openModal('Detalles de las visitas a domicilio')}>
+                <div className="col d-flex justify-content-center mt-2"onClick={() => openModal('Detalles de las visitas a domicilio')}>
                     <div className="card services-tres" style={{ width: '18rem' }}>
                         <div className="text-center">
                             {/* <img src={dogParty} className="card-img-top img-services-land" alt="..." /> */}
@@ -54,7 +54,7 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center"onClick={() => openModal('Detalles de la Guardería de día')}>
+                <div className="col d-flex justify-content-center mt-2"onClick={() => openModal('Detalles de la Guardería de día')}>
                     <div className="card services-cuatro" style={{ width: '18rem' }}>
                         <div className="text-center">
                             {/* <img src={dogParty} className="card-img-top img-services-land" alt="..." /> */}

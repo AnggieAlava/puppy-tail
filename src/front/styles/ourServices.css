@@ -1,35 +1,51 @@
 .services-uno {
+    border-radius: 25px;
+    cursor: pointer;
     width: 150px;
     height: 450px;
     background-size:cover;
     background-repeat:no-repeat;
     background-image:url("https://images.unsplash.com/photo-1566674717261-e3b344428702?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1378&q=80")
-    /* background-color:#E8FFCE; */
 }
 .services-dos {
+    border-radius: 25px;
+    cursor: pointer;
     width: 150px;
     height: 450px;
     background-size:cover;
     background-repeat:no-repeat;
-    /* background-color:#ECF9FF; */
     background-image:url("https://images.unsplash.com/photo-1611749068164-59f552b7df9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
 }
 
 .services-tres{
+    border-radius: 25px;
+    cursor: pointer;
     width: 150px;
     height: 450px;
     background-size:cover;
     background-repeat:no-repeat;
-    /* background-color: #E8FFCE; */
     background-image:url("https://images.unsplash.com/photo-1504595403659-9088ce801e29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
 }
 
 .services-cuatro {
+    border-radius: 25px;
+    cursor: pointer;
     width: 150px;
     height: 450px;
     background-size:cover;
     background-repeat:no-repeat;
-    /* backround-color:#ECF9FF; */
     background-image:url("https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
     
+}
+
+.title-card-steps{
+    border-radius: 25px 25px 0 0 ;
+    padding: 25px;
+    color: beige;
+    background-color: rgba(26, 25, 25, 0.609);
+}
+
+.col-steps:hover {
+    transform: scale(1.1); 
+    transition: transform 0.3s ease;
 }

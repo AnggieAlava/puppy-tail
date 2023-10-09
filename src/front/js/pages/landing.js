@@ -16,7 +16,6 @@ export const Landing = () => {
       <OurServices />
       <ActionButtons />
       <Reasons />
-      {/* <Steps /> */}
       <Testimonial />
       <FooterLanding />
     </div>

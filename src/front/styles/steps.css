@@ -3,16 +3,14 @@ body, html {
 }
 
 .wrap-steps {
-    /* background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 0, 0, 0.5));
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);  */
     backdrop-filter: blur(10px); 
-    background-color: rgba(255, 255, 255, 0.375); 
+    background-color: transparent;
     border-radius: 10px; 
 }
 .container-steps{
-    background-color: red;
+    background-color: rgba(0, 0, 0, 0.36);
 }
+
 .card-container {
     background-color: transparent;
     border: none;
@@ -21,22 +19,22 @@ body, html {
     align-items: center;
     margin-bottom: 20px;
 }
-
 .img-steps {
-    width: 18%;
+    background-color: rgb(139, 228, 236);
+    width: 25%;
     object-position: center center;
 }
 
 .main-title-steps {
     font-size: 2rem;
     font-weight: 800;
-    color: black;
+    color: rgb(230, 213, 213);
 }
 
 .card-steps-title {
     font-weight: 800;
     color: inherit;
-    color: black;
+    color: rgb(214, 185, 185);
 }
 
 .card-steps-content h4{

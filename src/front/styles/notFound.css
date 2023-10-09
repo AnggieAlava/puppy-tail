@@ -1,0 +1,46 @@
+.not-found {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; 
+  height: 100vh; 
+  background-image: url("https://th.bing.com/th/id/OIP.Gfzn0VbWObOFQilT1aCtSQHaFE?pid=ImgDet&w=883&h=605&rs=1");
+  background-size: 50%; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  background-color: rgba(255, 255, 255, 0.5); 
+  padding: 20px; 
+}
+
+.error-flag {
+  background-color: white; 
+  color: white; 
+  padding: 10px;
+  font-size: 24px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.content {
+  text-align: center;
+  color: #000000; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; 
+  justify-content: flex-start;
+  flex: 1; 
+}
+
+button {
+  background-color: #ffffff; 
+  color: #4CAF50; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+button:hover {
+  background-color: #4CAF50; 
+  color: #ffffff; 
+}

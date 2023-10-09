@@ -15,7 +15,7 @@ export const KeeperForm = ({}) => {
   const days = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"];
   const [disabledCalendar, setdisabledCalendar] = useState([0, 1, 2, 3, 4, 5, 6])
   const [hour, setHour] = useState("")
-  const [maxDate, setmaxDate] = useState('')
+  const [maxDate, setmaxDate] = useState(new Date(new Date().getTime()+(366*24*60*60*1000)))
   const [finalHour, setfinalHour] = useState("")
   const params = useParams();
 
@@ -59,6 +59,7 @@ export const KeeperForm = ({}) => {
     if(date[0]!=null && date[1]==null){
       //This is the state when the user has clicked the first date and we have to set the calendar to only be able to be clicked at the following days without conflicts
       
+      return;
     }
     let first_date = date[0].getFullYear().toString()+"-"+(date[0].getMonth()+1).toString()+"-"+date[0].getDate().toString()
     let slots = await actions.getdailySlots(store.currentUser.id, first_date)
@@ -68,6 +69,7 @@ export const KeeperForm = ({}) => {
     setsecondTimes(second_slots)
     console.log(second_slots)
   }
+
   return (
     <div className="container pb-4 text-start" id="calendar">
       <h2><strong>Reservar</strong></h2>
@@ -83,7 +85,7 @@ export const KeeperForm = ({}) => {
           </div>
           )}):""}
           <h2 className="input-group-text mt-2">Disponibilidad</h2>
-          <Calendar onChange={(date)=>getSlots(date)} minDate={getDate()} maxDate={''} allowPartialRange={true} 
+          <Calendar onChange={(date)=>getSlots(date)} minDate={new Date()} maxDate={maxDate} allowPartialRange={true} 
           tileDisabled={({date}) => disabledCalendar.includes(date.getDay())} selectRange={isRange} 
           returnValue="range" value={value} locale="es"/> 
           {/* Aqui irian las horas del calendario si fueran en la columna 1*/}

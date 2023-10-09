@@ -7,7 +7,7 @@ import PasoTres from "../../img/paso3.png"
 const Steps = () => {
     return (
         <div className="container-fluid wrap-steps mt-5">
-            <div className='container container-steps'>
+            <div className='container container-steps w-75'>
                 <h2 className='text-center p-3 main-title-steps'>Encuentra el compañero perfecto para tu mascota en 3 simples pasos</h2>
                 <div className="row justify-content-center">
                     <div className="col-md-3 col-sm-6">

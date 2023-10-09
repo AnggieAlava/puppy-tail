@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 100vh; /* Ocupa al menos toda la altura de la pantalla */
-  background-color: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente para aclarar la imagen */
-  padding: 20px; /* Espacio alrededor del contenido */
+  min-height: 100vh; 
+  background-color: rgba(255, 255, 255, 0.5); 
+  padding: 20px; 
 }
 
 .image-container {
@@ -13,13 +13,13 @@
 }
 
 .error-image {
-  max-width: 100%; /* Ajusta el tamaño de la imagen al ancho del contenedor */
-  height: auto; /* Mantén la relación de aspecto de la imagen */
+  max-width: 100%; 
+  height: auto; 
 }
 
 .error-flag {
-  background-color: #00FF00; /* Color de fondo verde más claro para la bandera de error */
-  color: white; /* Color de texto blanco para la bandera de error */
+  background-color: #00FF00; 
+  color: white; 
   padding: 10px;
   font-size: 24px;
   border-radius: 5px;
@@ -29,12 +29,12 @@
 
 .content {
   text-align: center;
-  color: black; /* Color de texto negro para el contenido */
+  color: black; 
 }
 
 button {
-  background-color: white; /* Color de fondo blanco para el botón */
-  color: #4CAF50; /* Color de texto verde para el botón */
+  background-color: white; 
+  color: #4CAF50; 
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -43,13 +43,13 @@ button {
 }
 
 button:hover {
-  background-color: #4CAF50; /* Cambia el color de fondo del botón al pasar el cursor sobre él */
-  color: white; /* Cambia el color de texto del botón al pasar el cursor sobre él */
+  background-color: #4CAF50; 
+  color: white; 
 }
 
-/* Media Query para dispositivos móviles (ancho máximo de 600px) */
+
 @media screen and (max-width: 600px) {
   .not-found {
-    padding: 10px; /* Reduzca el espacio alrededor del contenido en dispositivos móviles */
+    padding: 10px; 
   }
 }

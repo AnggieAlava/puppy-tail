@@ -8,7 +8,7 @@ const Testimonial = () => {
             <div className="row">
                 <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>
-                        <div className="card-body text-center">
+                        <div className="card-body text-center text-white">
                             <h5 className="card-title">Carmen Rocio</h5>
                             <i className="fa-solid fa-quote-left"></i>
                             <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -18,7 +18,7 @@ const Testimonial = () => {
                 </div>
                 <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>
-                        <div className="card-body text-center">
+                        <div className="card-body text-center text-white">
                             <h5 className="card-title">Juanpa Roldos</h5>
                             <i className="fa-solid fa-quote-left"></i>
                             <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -28,7 +28,7 @@ const Testimonial = () => {
                 </div>
                 <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>
-                        <div className="card-body text-center">
+                        <div className="card-body text-center text-white">
                             <h5 className="card-title">Carol Martinez</h5>
                             <i className="fa-solid fa-quote-left"></i>
                             <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
@@ -38,7 +38,7 @@ const Testimonial = () => {
                 </div>
                 <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>
-                        <div className="card-body text-center">
+                        <div className="card-body text-center text-white">
                             <h5 className="card-title">Carol Martinez</h5>
                             <i className="fa-solid fa-quote-left"></i>
                             <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
@@ -48,7 +48,7 @@ const Testimonial = () => {
                 </div>
                 {/* <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>
-                        <div className="card-body text-center">
+                        <div className="card-body text-center text-white">
                             <h5 className="card-title">Carol Martinez</h5>
                             <i className="fa-solid fa-quote-left"></i>
                             <p className="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>

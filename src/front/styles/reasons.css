@@ -26,14 +26,16 @@
 }
 
 .wrap-reasons{
+    color: white;
+    font-size: 2rem;
+    font-weight: 900;
     border-radius: 10px;
-background-color: rgba(19, 13, 13, 0.498);
-    backdrop-filter: blur(10px);
-   box-shadow: 0 0 20px rgba(253, 219, 26, 0.5)0.5;
+    background-color: transparent;
 }
 
 .reasons{
+    background-color: rgba(0, 0, 0, 0.36);
     backdrop-filter: blur(10px); 
-    background-color: rgba(255, 255, 255, 0.419); 
     border-radius: 10px; 
 }
+

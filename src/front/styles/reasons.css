@@ -18,12 +18,22 @@
     align-items: center;
     width: 200px;
     height: 80px;
-    /* border: 10px solid transparent;
-    border-image: linear-gradient(45deg, #7bf085, #4a964f, rgb(51, 94, 51));  */
-    border-image-slice: 1; 
 }
 
 .icons-reasons{
-    font-size: 30px;
-    color:#879687;
+    font-size: 35px;
+    color:#f15454;
+}
+
+.wrap-reasons{
+    border-radius: 10px;
+background-color: rgba(19, 13, 13, 0.498);
+    backdrop-filter: blur(10px);
+   box-shadow: 0 0 20px rgba(253, 219, 26, 0.5)0.5;
+}
+
+.reasons{
+    backdrop-filter: blur(10px); 
+    background-color: rgba(255, 255, 255, 0.419); 
+    border-radius: 10px; 
 }

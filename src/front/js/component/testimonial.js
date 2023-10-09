@@ -46,7 +46,7 @@ const Testimonial = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center">
+                {/* <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>
                         <div className="card-body text-center">
                             <h5 className="card-title">Carol Martinez</h5>
@@ -85,7 +85,7 @@ const Testimonial = () => {
                             <i className="fa-solid fa-quote-right"></i>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

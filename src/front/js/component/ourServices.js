@@ -16,22 +16,21 @@ const OurServices = () => {
         setShowModal(false);
     };
     return (
-        <div className="container mt-5">
-            <h2 className="text-center mt-2">Nuestros servicios</h2>
-            <div className="row">
-                <div className="col d-flex justify-content-center mt-4 col-steps" onClick={() => openModal('Detalles de como organizamos las fiestas')}>
-                    <div className="card services-uno" style={{ width: '18rem' }}>
+        <div className="container-fluid p-0 d-flex justify-content-center align-items-center services-wrap mt-5">
+            <h2 className="text-center mt-2 services-title w-100">Nuestros servicios</h2>
+            <div className="row w-75">
+                <div className="col d-flex justify-content-center mt-4 col-steps">
+                    <div className="card services-uno" style={{ width: '18rem' }} onClick={() => openModal('Planificamos y decoramos eventos divertidos y seguros para celebrar cumpleaños, aniversarios u otras ocasiones especiales para tu peludo amigo')}>
                         <div className="text-center">
 
                         </div>
                         <div className="card-body p-0">
                             <h5 className="card-title text-center title-card-steps">Organizadores de fiesta</h5>
-
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center mt-4 col-steps" onClick={() => openModal('Detalles de los paseos de perro')}>
-                    <div className="card services-dos" style={{ width: '18rem' }}>
+                <div className="col d-flex justify-content-center mt-4 col-steps" >
+                    <div className="card services-dos" style={{ width: '18rem' }} onClick={() => openModal('Nuestros paseadores capacitados garantizan que tu mascota obtenga la dosis adecuada de actividad física y exploración al aire libre, manteniéndola feliz y saludable')}>
                         <div className="text-center">
 
                         </div>
@@ -41,8 +40,8 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center mt-4 col-steps" onClick={() => openModal('Detalles de las visitas a domicilio')}>
-                    <div className="card services-tres" style={{ width: '18rem' }}>
+                <div className="col d-flex justify-content-center mt-4 col-steps" >
+                    <div className="card services-tres" style={{ width: '18rem' }} onClick={() => openModal('Nuestros cuidadores de confianza atienden a tus mascotas en la comodidad de su entorno, asegurándose de que reciban comida, agua y cariño, además de supervisar su bienestar general')}>
                         <div className="text-center">
 
                         </div>
@@ -52,8 +51,8 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col d-flex justify-content-center mt-4 col-steps" onClick={() => openModal('Detalles de la Guardería de día')}>
-                    <div className="card services-cuatro" style={{ width: '18rem' }}>
+                <div className="col d-flex justify-content-center mt-4 col-steps" >
+                    <div className="card services-cuatro" style={{ width: '18rem' }} onClick={() => openModal(' Cuando tienes que trabajar o estar fuera de casa durante el día, nuestra guardería ofrece un ambiente seguro y divertido para tu mascota')}>
                         <div className="text-center">
 
                         </div>
@@ -70,15 +69,12 @@ const OurServices = () => {
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h5 className="modal-title">Detalles del Servicio</h5>
-                                {/* <button type="button" className="close" onClick={closeModal}>
-                                    <span aria-hidden="true">&times;</span>
-                                </button> */}
                             </div>
                             <div className="modal-body">
                                 <p>{modalContent}</p>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" onClick={closeModal}>
+                                <button type="button" className="btn btn-danger" onClick={closeModal}>
                                     Cerrar
                                 </button>
                             </div>

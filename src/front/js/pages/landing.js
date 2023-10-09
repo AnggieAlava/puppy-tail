@@ -11,14 +11,14 @@ import FooterLanding from "../component/footerLanding";
 export const Landing = () => {
 
   return (
-    <>
+    <div className="landing">
       <HeaderLanding />
-      <Reasons />
       <OurServices />
       <ActionButtons />
-      <Steps />
+      <Reasons />
+      {/* <Steps /> */}
       <Testimonial />
       <FooterLanding />
-    </>
+    </div>
   )
 };

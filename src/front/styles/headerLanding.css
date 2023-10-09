@@ -1,10 +1,16 @@
 body, html {
     font-family: 'Roboto';
 }
-
+.card-header {
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0.36);
+  border: none;
+  display: flex;
+  align-items: center;
+}
 .landing-title {
   font-family: 'Poppins';
-  color:black;
+  color:white;
   font-size: 3.5vw; 
   font-weight: 900;
 }
@@ -16,7 +22,7 @@ body, html {
 }
 
 .landing-p {
-  color: black;
+  color: white;
   font-size: 1.5rem;
   font-weight: 600;
   margin-top: 20px;
@@ -28,27 +34,27 @@ body, html {
     margin-top: 16px;
   }
 }
-
-.landing-img {
-  margin: 50px;
-  border-radius: 35px;
-  max-width: 100%;
-  height: auto; 
-}
-
-@media screen and (min-width: 1024px) {
-  .landing-img {
-    width: 45vw; 
-    max-width: none; 
-  }
-}
-.main-card, .box-card{
+.main-card{
+  flex-direction: column;
+  height: 70vh;
+  background-size:cover;
+  background-repeat:no-repeat;
+  background-position: center;
   border: none;
-  background-color: #ECF9FF;
+  background-image: url("https://images.unsplash.com/photo-1554365984-a5d47d98a744?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80");
+  /* background-image: url("https://images.unsplash.com/photo-1578857182382-c6f9c4dc5bad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80") */
+  /* background-image: url("https://images.unsplash.com/photo-1619326229465-1942c876e17c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"); */
+  /* background-image:url("https://images.unsplash.com/photo-1598188306155-25e400eb5078?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80") */
 }
 
-
+.mascotas-text{
+  color:aqua
+}
+.cuidamos-text{
+  color:#e85252;
+}
 .btn-header-landing {
+  float:bottom;
     background-color: #3DD1E7;
     margin: 50px auto;
     border: 0 solid #E5E7EB;

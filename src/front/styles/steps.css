@@ -3,9 +3,16 @@ body, html {
 }
 
 .wrap-steps {
-    background-color: #ECF9FF;
+    /* background: linear-gradient(135deg, rgba(0, 255, 0, 0.2), rgba(0, 0, 0, 0.5));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);  */
+    backdrop-filter: blur(10px); 
+    background-color: rgba(255, 255, 255, 0.375); 
+    border-radius: 10px; 
 }
-
+.container-steps{
+    background-color: red;
+}
 .card-container {
     background-color: transparent;
     border: none;
@@ -16,10 +23,7 @@ body, html {
 }
 
 .img-steps {
-    width: 30%;
-    /* height: 250px; */
-    /* border-radius: 50%; */
-    /* object-fit: cover; */
+    width: 18%;
     object-position: center center;
 }
 

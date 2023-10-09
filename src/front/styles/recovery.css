@@ -1,0 +1,26 @@
+.recovery-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family:'Roboto';
+    min-height: 100vh;
+    padding-top: 100px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-image: url("https://img.freepik.com/vector-premium/brillo-geometria-fondo-abstracto-blanco-gris-vector-elemento-capa-diseno-presentacion-traje-seminario-festivo-fiesta-institucion-corporativa-negocios-charlas_249611-4160.jpg?w=1480")
+  }
+
+  .btn-recovery{
+    border-radious:30px;
+    font-size:1.2rem;
+    padding:10px;
+    border:none;
+    font-weight:600;
+    color: white;
+    background-color: #de7f87;
+  }
+
+  .btn-recovery:hover{
+    background-color:#59ad51 ;
+  }

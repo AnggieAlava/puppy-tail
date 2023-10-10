@@ -411,6 +411,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(resp.status+": "+ resp.statusText)
         }
         return resp.data
+      },
+      getrangeSlots: async (id, start_date, end_date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/maxDate/${id}/?start_date=${start_date}&end_date=${end_date}`,"GET")
+        if (resp.code != 200){
+          console.error(resp.status+": "+ resp.statusText)
+        }
+        return resp.data
       }
     }
   };

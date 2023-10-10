@@ -529,10 +529,10 @@ def getmaxDate(keeper_id):
     end = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').date()
     delta = (end-start).days
     #Make start and end dates date objs to compare with bookings
-    if delta > 15: #Allow reservations no bigger than 15 days
-        end = start+datetime.timedelta(days=15)
+    if delta > 30: #Allow reservations no bigger than 30 days
+        end = start+datetime.timedelta(days=30)
         end = datetime.datetime.combine(end, datetime.time(23,59,59))
-    if delta <= 15:
+    if delta <= 30:
         end = datetime.datetime.combine(end, datetime.time(23,59,59))
     start = datetime.datetime.combine(start, datetime.time(00,00,00))
     working_hours = Keeper.query.get(keeper_id).working_hours

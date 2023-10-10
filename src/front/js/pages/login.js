@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../styles/login.css";
 import { HidePassword } from "../component/hidePassword";
+import Swal from "sweetalert2";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
@@ -20,11 +21,21 @@ export const Login = () => {
     let resp = await login(email, password);
     if (resp !== 201) {
       setError("Usuario o contraseña incorrecto");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Usuario o contraseña incorrecto",
+      });
       return;
     } else {
       setError("");
     }
     if (resp === 201) {
+      Swal.fire({
+        icon: "success",
+        title: "Bienvenido!",
+        text: "Ingreso correcto",
+      });
       navigate("/home");
     }
   }

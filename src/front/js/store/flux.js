@@ -216,9 +216,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
+        if(token!=null){
         setStore({ accessToken: token });
         setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
         localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
+        
+        }
         return resp.code;
       },
 

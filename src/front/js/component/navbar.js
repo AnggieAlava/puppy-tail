@@ -11,7 +11,7 @@ export const Navbar = () => {
       <div className="container-fluid">
         <div className="navbar-logo">
           <Link to="/">
-            <i className="fa-solid fa-paw">Puppy Tail</i>
+            <i className="fa-solid fa-paw logo">Puppy Tail</i>
           </Link>
         </div>
         <button
@@ -27,30 +27,30 @@ export const Navbar = () => {
         <div
           className="collapse navbar-collapse toggler-nav"
           id="navbarTogglerDemo02">
-          <ul className="navbar-nav ml-auto mb-2 mb-lg-0 text-navbar">
-            <li className="nav-item">
-              <a className="nav-link" aria-current="page" href="/home">
+          <ul className="navbar-nav ml-auto mb-2 mb-lg-0 text-navbar ">
+            <li className="nav-item text-navbar">
+              <a className="nav-link text-navbar" aria-current="page" href="/home">
                 Inicio
               </a>
             </li>
-            {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
-              <Link className="nav-link" to="/login">
+            {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item text-navbar">
+              <Link className="nav-link text-navbar" to="/login">
                 Iniciar sesión
               </Link>
             </li>)}
-            {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item">
-              <Link className="nav-link" to="/signup">
+            {((Object.keys(store.userInfo).length > 1) ? "" : <li className="nav-item text-navbar">
+              <Link className="nav-link text-navbar" to="/signup">
                 Registrarse
               </Link>
             </li>)}
             {((Object.keys(store.userInfo).length > 1) ? <Logout /> : "")}
             {((Object.keys(store.userInfo).length > 1) ?
-              <li className="nav-item">
-                <Link className="nav-link" to={"/profile/" + store.userInfo.user_type + "/" + store.userInfo.userId}>
+              <li className="nav-item text-navbar">
+                <Link className="nav-link text-navbar" to={"/profile/" + store.userInfo.user_type + "/" + store.userInfo.userId}>
                   Perfil <i className="fa-regular fa-user"></i>
                 </Link>
-              </li> : <li className="nav-item">
-                <Link className="nav-link" to="/signuppage">
+              </li> : <li className="nav-item text-navbar">
+                <Link className="nav-link text-navbar" to="/signuppage">
                   Quieres ser cuidador?
                 </Link>
               </li>)}

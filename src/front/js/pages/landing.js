@@ -7,13 +7,11 @@ import ActionButtons from "../component/actionButtons";
 import OurServices from "../component/ourServices"
 import Testimonial from "../component/testimonial";
 import FooterLanding from "../component/footerLanding";
-import Blob  from "../component/blobs";
 
 export const Landing = () => {
 
   return (
-     <div className="landing"> 
-     {/* <Blob/> */}
+    <div className="landing">
       <HeaderLanding />
       <OurServices />
       <ActionButtons />
@@ -21,6 +19,6 @@ export const Landing = () => {
       <Testimonial />
       <FooterLanding />
     </div>
-  
+
   )
 };

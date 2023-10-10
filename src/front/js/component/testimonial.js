@@ -4,7 +4,7 @@ import "../../styles/testimonial.css";
 const Testimonial = () => {
     return (
         <div className="container mt-5">
-            <h2 className="text-center">Algunas opiniones de nuestros clientes</h2>
+            <h2 className="text-center title-testimonial mb-4">Algunas opiniones de nuestros clientes</h2>
             <div className="row">
                 <div className="col d-flex justify-content-center">
                     <div className="card card-testimonial p-2 m-2" style={{ width: '18rem' }}>

@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import "../../styles/login.css";
+import "../../styles/changePassword.css"
+import Swal from "sweetalert2";
 export const ChangePassword = () => {
     const { store, actions } = useContext(Context);
 
@@ -36,47 +37,53 @@ export const ChangePassword = () => {
         let resp = await actions.changePasswordWithToken(tokenPassword, data.get("password"));
 
         if (resp.status === 200) {
+
+            Swal.fire({
+                icon: "success",
+                title: "Contraseña modificada",
+                text: "Has cambiado tu contraseña!",
+            });
             navigate("/login");
         }
     };
 
     return (
-        <div id="login-page" className="text-center">
-            <div className="container wrap-loginSignup">
-                <i id="cat-suit" className="fa-solid fa-cat"></i>
-                <h2>Cambiar Contraseña</h2>
+        <div className="container-fluid change-page text-center pt-5">
 
-                <form className="pe-3" onSubmit={submitForm}>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">
-                            Contraseña
-                        </label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            name="password"
-                            id="password"
-                            aria-describedby="emailHelp"
-                            required
-                        />
-                        <label htmlFor="passwordConfirm" className="form-label">
-                            Confirmar Contraseña
-                        </label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            name="passwordConfirm"
-                            id="passwordConfirm"
-                            aria-describedby="emailHelp"
-                            required
-                        />
-                    </div>
-                    {error && <p className="text-danger">{error}</p>} {/* Muestra el mensaje de error si existe */}
-                    <button id="btn-login" type="submit" className="btn">
-                        Cambiar Contraseña
-                    </button>
-                </form>
-            </div>
+            <h2>Cambiar Contraseña</h2>
+
+            <form className="pe-3" onSubmit={submitForm}>
+                <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                        Contraseña
+                    </label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        name="password"
+                        id="password"
+                        aria-describedby="emailHelp"
+                        required
+                    />
+                    <label htmlFor="passwordConfirm" className="form-label">
+                        Confirmar Contraseña
+                    </label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        name="passwordConfirm"
+                        id="passwordConfirm"
+                        aria-describedby="emailHelp"
+                        required
+                    />
+                </div>
+                {error && <p className="text-danger">{error}</p>} {/* Muestra el mensaje de error si existe */}
+                <button id="btn-login" type="submit" className="btn btn-change">
+                    Cambiar Contraseña
+                </button>
+            </form>
         </div>
+
     );
+
 };

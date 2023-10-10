@@ -1,0 +1,80 @@
+.services-uno {
+    border-radius: 25px;
+    cursor: pointer;
+    height: 450px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-image:url("https://images.unsplash.com/photo-1566674717261-e3b344428702?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1378&q=80")
+}
+.services-dos {
+    border-radius: 25px;
+    cursor: pointer;
+    height: 450px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-image:url("https://images.unsplash.com/photo-1611749068164-59f552b7df9c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
+}
+
+.services-tres{
+    border-radius: 25px;
+    cursor: pointer;
+    height: 450px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-image:url("https://images.unsplash.com/photo-1504595403659-9088ce801e29?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
+}
+
+.services-cuatro {
+    border-radius: 25px;
+    cursor: pointer;
+    height: 450px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-image:url("https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
+    
+}
+
+.title-card-steps{
+    margin:5px;
+    border-radius: 25px;
+    padding:20px;
+    color: beige;
+    background-color: rgba(26, 25, 25, 0.609);
+}
+
+.col-steps:hover {
+    transform: scale(1.1); 
+    transition: transform 0.3s ease;
+}
+
+.services-title {
+    background-color: rgba(26, 25, 25, 0.609);
+    padding: 25px;
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    /* background-image: url("https://images.unsplash.com/photo-1494179628276-420ae3a2842a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"); */
+    /* background-color: #A8DF8E;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); */
+  }
+.col-steps{
+    padding: 0;
+    width: 18rem;
+}
+.services-wrap{
+    flex-direction: column;
+
+}
+
+.modal{
+    background-color: rgba(0, 0, 0, 0.609);
+}
+.modal-content{
+    color: white;
+    font-weight: 400;
+    background-color: rgba(26, 25, 25, 0.609);
+}
+.modal-header,.modal-footer{
+    border:none;
+}

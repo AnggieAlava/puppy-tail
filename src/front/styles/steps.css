@@ -1,0 +1,43 @@
+body, html {
+    font-family: 'Roboto';
+}
+
+.wrap-steps {
+    backdrop-filter: blur(10px); 
+    background-color: transparent;
+    border-radius: 10px; 
+}
+.container-steps{
+    background-color: rgba(0, 0, 0, 0.36);
+}
+
+.card-container {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.img-steps {
+    background-color: rgb(139, 228, 236);
+    width: 25%;
+    object-position: center center;
+}
+
+.main-title-steps {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgb(230, 213, 213);
+}
+
+.card-steps-title {
+    font-weight: 800;
+    color: inherit;
+    color: rgb(214, 185, 185);
+}
+
+.card-steps-content h4{
+    font-weight:bolder;
+    font-size:1rem;
+}

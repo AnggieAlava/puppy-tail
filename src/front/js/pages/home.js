@@ -1,26 +1,31 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import { FilterLocation } from "../component/filterLocation";
+import Keepers from "../component/keepers";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
+  const [selectedLocation, setSelectedLocation] = useState(null);
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+  const handleLocationChange = (location) => {
+    setSelectedLocation(location);
+  };
+
+  const handleResetFilter = () => {
+    setSelectedLocation(null);
+  };
+
+  return (
+    <>
+      <div className="d-flex justify-content-center align-items-center mt-2">
+        {selectedLocation !== null && (
+          <button className="btn btn-link" onClick={handleResetFilter}>
+            <i className="fas fa-undo" style={{ color: "black" }}></i>
+          </button>
+        )}
+        <FilterLocation onLocationChange={handleLocationChange} />
+      </div>
+      <Keepers selectedLocation={selectedLocation} />
+    </>
+  );
 };

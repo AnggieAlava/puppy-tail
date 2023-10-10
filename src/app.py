@@ -6,11 +6,20 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_cors import CORS
+from flask_jwt_extended import JWTManager
 from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+
+from api.models import *
+#Firebase for storing pictures
+import firebase_admin
+from firebase_admin import credentials
+
+cred = credentials.Certificate("fb-key.json")
+firebase_admin.initialize_app(cred)
 
 #from models import Person
 
@@ -19,6 +28,18 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+#JWT
+jwt = JWTManager(app)
+app.config["JWT_SECRET_KEY"] =  'your-secret-key'
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = 5000
+def check_token_blocklist(jwt_header, jwt_payload) -> bool:
+   
+     tokenBlocked = TokenBlockedList.query.filter_by(
+          jti=jwt_payload["jti"]).first()
+     if not isinstance(tokenBlocked, TokenBlockedList):
+           if jwt_payload["password"] == None and request.path!="/api/changepassword": return True
+     else:
+          return True
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
@@ -29,6 +50,7 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
+
 
 # Allow CORS requests to this API
 CORS(app)

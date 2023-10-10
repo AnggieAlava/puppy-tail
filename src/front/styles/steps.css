@@ -18,11 +18,18 @@ body, html {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    
 }
-.img-steps {
-    background-color: rgb(139, 228, 236);
-    width: 25%;
-    object-position: center center;
+.card-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(168, 201, 205);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
 }
 
 .main-title-steps {

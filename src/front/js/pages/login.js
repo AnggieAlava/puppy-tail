@@ -56,6 +56,9 @@ export const Login = () => {
             aria-describedby="emailHelp"
           />
           <div id="emailHelp" className="form-text"></div>
+          <label htmlFor="inputPassword" className="form-label">
+        Contraseña
+      </label>
           <HidePassword />
           <button type="submit"
             className="form-control btn-login mt-4"

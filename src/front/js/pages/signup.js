@@ -97,6 +97,9 @@ export const Signup = (props) => {
             })}
           </select>
         </div>
+        <label htmlFor="inputPassword" className="form-label">
+        Contraseña
+      </label>
         <HidePassword />
         <button type="submit" className="form-control btn-signup mt-4">
           Registrarse

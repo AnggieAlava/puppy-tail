@@ -1,15 +1,18 @@
 import React from 'react'
 import HeaderSignupPage from '../component/headerSignupPage';
 import { SignupKeeper } from './signupKeeper';
-import ServicesSection from '../component/servicesSection';
+import ServicesList from '../component/servicesList';
+import Steps from "../component/steps"
 import FeatureServices from '../component/featureServices';
+import "../../styles/signupPage.css"
 
 const SignupPage = () => {
     return (
-        <div>
+        <div className="signup-page">
             <HeaderSignupPage />
-            <ServicesSection />
+            {/* <ServicesList /> */}
             <FeatureServices />
+            <Steps />
             <SignupKeeper />
         </div>
     )

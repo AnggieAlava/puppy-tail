@@ -101,7 +101,10 @@ export const SignupKeeper = (props) => {
             })}
           </select>
         </div>
-        <HidePassword styleType="signup" />
+        <label htmlFor="inputPassword" className="form-label">
+        Contraseña
+      </label>
+        <HidePassword />
         <button type="submit" className="form-control mt-4 btn-signup-keeper">
           Registrarse
         </button>

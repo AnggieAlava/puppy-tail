@@ -1,7 +1,7 @@
 import React from "react";
-import "../../styles/servicesSection.css"
+import "../../styles/servicesList.css"
 
-const ServicesSection = () => {
+const ServicesList = () => {
     return (
         <div className="container">
             <div className="row">
@@ -34,4 +34,4 @@ const ServicesSection = () => {
     );
 };
 
-export default ServicesSection;
+export default ServicesList;

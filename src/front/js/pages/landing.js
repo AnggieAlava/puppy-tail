@@ -1,6 +1,5 @@
 import React from "react";
 import "../../styles/landing.css";
-import Steps from "../component/steps";
 import HeaderLanding from "../component/headerLanding";
 import Reasons from "../component/reasons";
 import ActionButtons from "../component/actionButtons";

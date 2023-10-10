@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { Context } from "../store/appContext";
 import "../../styles/recovery.css"
+import Swal from "sweetalert2";
 
 export const RecoveryPassword = () => {
   const { store, actions } = useContext(Context);
@@ -17,31 +18,38 @@ export const RecoveryPassword = () => {
     } else {
       setError(""); // Limpia el mensaje de error si la solicitud es exitosa
     }
-    
+    if (resp.code === 200) {
+      Swal.fire({
+        icon: "info",
+        title: "Recuperar contraseña",
+        text: "Mail enviado correctamente",
+      });
+    }
+
   }
 
   return (
-      <div className="container-fluid recovery-page text-center pt-5">
-        <h2>Recuperar contraseña</h2>
-        <form className="pe-3" onSubmit={submitForm}>
-          <div className="mb-3">
-            <label htmlFor="inputEmail" className="form-label">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="inputEmail"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className="form-text"></div>
-          </div>
-          {error && <p className="text-danger">{error}</p>}
-          <button type="submit" className="btn btn-recovery">
-            Recuperar contraseña
-          </button>
-        </form>
-      </div>
+    <div className="container-fluid recovery-page text-center pt-5">
+      <h2>Recuperar contraseña</h2>
+      <form className="pe-3" onSubmit={submitForm}>
+        <div className="mb-3">
+          <label htmlFor="inputEmail" className="form-label">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            className="form-control"
+            name="email"
+            id="inputEmail"
+            aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" className="form-text"></div>
+        </div>
+        {error && <p className="text-danger">{error}</p>}
+        <button type="submit" className="btn btn-recovery">
+          Recuperar contraseña
+        </button>
+      </form>
+    </div>
   );
 };

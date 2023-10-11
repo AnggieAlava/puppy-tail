@@ -62,8 +62,8 @@ export const KeeperForm = ({ }) => {
   }
   async function pickMultipleHours(date) {
     if (date[0] != null && date[1] == null) {
-      document.getElementById("datesText1").textContent = "Escoge las horas despues de escoger tus fechas"
-      document.getElementById("datesText2").textContent = "Escoge las horas despues de escoger tus fechas"
+      document.getElementById("datesText1").textContent = "Escoge las horas despues de escoger las fechas"
+      document.getElementById("datesText2").textContent = "Escoge las horas despues de escoger las fechas"
       //This is the state when the user has clicked the first date and we have to set the calendar to only be able to be clicked at the following days without conflicts
       setTimes([])
       return;

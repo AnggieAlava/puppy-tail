@@ -48,7 +48,7 @@
 }
 
 .services-title {
-    background-color: rgba(26, 25, 25, 0.609);
+    background-color: #A4BE7B;
     padding: 25px;
     color: white;
     font-size: 3rem;
@@ -62,9 +62,7 @@
     flex-direction: column;
 }
 
-/* .modal{
-    background-color: rgba(0, 0, 0, 0.609);
-} */
+
 .modal-content{
     color: white;
     font-weight: 400;

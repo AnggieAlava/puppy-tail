@@ -18,17 +18,24 @@ body, html {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    
 }
-.img-steps {
-    background-color: rgb(139, 228, 236);
-    width: 25%;
-    object-position: center center;
+.card-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(112, 121, 122);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
 }
 
 .main-title-steps {
     font-size: 2rem;
     font-weight: 800;
-    color: rgb(230, 213, 213);
+    color: rgb(244, 224, 224);
 }
 
 .card-steps-title {
@@ -41,3 +48,4 @@ body, html {
     font-weight:bolder;
     font-size:1rem;
 }
+

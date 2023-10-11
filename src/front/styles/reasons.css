@@ -35,7 +35,8 @@
 }
 
 .reasons{
-    background-color: rgba(0, 0, 0, 0.36);
+    background-color: #5F8D4E;
+    /* background-color: rgba(0, 0, 0, 0.36); */
     backdrop-filter: blur(10px); 
     border-radius: 10px; 
 }

@@ -26,6 +26,8 @@ export const KeeperForm = ({ }) => {
   }
   function setTime(time) {
     setHour(time)
+    setfinalHour("")
+    if(isRange) return;
     let date = new Date(`20 December 2019 ${time}`) //Dummy date info to strip time from it
     date.setHours(date.getHours() + 1)
     date = date.getHours().toString() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString()
@@ -56,6 +58,7 @@ export const KeeperForm = ({ }) => {
     let new_date = date[0].getFullYear().toString() + "-" + (date[0].getMonth() + 1).toString() + "-" + date[0].getDate().toString()
     let slots = await actions.getdailySlots(store.currentUser.id, new_date)
     setTimes(slots)
+    setEdit(false)
   }
   async function pickMultipleHours(date) {
     if (date[0] != null && date[1] == null) {
@@ -92,7 +95,7 @@ export const KeeperForm = ({ }) => {
           {Array.isArray(store.currentUser.services) ? store.currentUser.services.map((service, index) => {
             return (
               <div className="form-check form-check-inline" key={index}>
-                <input href="#calendar" className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
+                <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
                 <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
               </div>
             )
@@ -105,20 +108,6 @@ export const KeeperForm = ({ }) => {
         </div>
         <div className="col">
           {/* Horas a escoger, se esconde si escoges el rol de cuidador */}
-          {(value.length > 1 && isRange == false) ?
-            <div className="mb-2">
-              <h2 className="input-group-text">Horas disponibles</h2>
-              {(times.length > 0) ?
-                <div className="d-flex flex-row flex-wrap gap-2">
-                  {(times.map((time, index) => {
-                    return (
-                      <a key={index} href="#Reserva" className="btn btn-outline-dark" onClick={() => setTime(time)}>{time}</a>
-                    )
-                  }))}
-                </div>
-                : "No hay disponibilidad para este día"}
-            </div>
-            : ""}
           <div className="row">
             <h2 className="input-group-text">Reserva</h2>
           </div>
@@ -137,15 +126,13 @@ export const KeeperForm = ({ }) => {
                         <label htmlFor="basic-url" className="form-label">Fecha de inicio</label>
                         <div className="input-group">
                           <span className="input-group-text" id="basic-addon3">
-                            {days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString() + " " + hour}
+                            {days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}
                           </span>
-                          {(isRange?
-                            <select className="form-select" id="startHour" disabled={edit}>
+                          <select className="form-select" id="startHour" disabled={edit} onChange={(e)=>setTime(e.target.value)}>
                             {times.map((time, index) =>
                               <option key={index} value={time}>{time}</option>
                             )}
                           </select>
-                            :"")}
                         </div>
                         {(isRange?<div className="form-text" id="datesText1">Escoge las horas despues de escoger las fechas</div>:"")}
                       </div>
@@ -154,15 +141,15 @@ export const KeeperForm = ({ }) => {
                         <label htmlFor="basic-url" className="form-label">Fecha final</label>
                         <div className="input-group">
                           <span className="input-group-text" id="basic-addon3">
-                            {(date == null ? "Escoger fecha final" : (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString() + " " + finalHour}`))}
+                            {(date == null ? "Escoger fecha final" : (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
                           </span>
-                          {(isRange?
-                            <select className="form-select" id="endHour" disabled={edit}>
-                            {secondTimes.map((time, index) =>
+                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>setfinalHour(e.target.value)}>
+                            {(isRange?
+                              secondTimes.map((time, index) =>
                               <option key={index} value={time}>{time}</option>
-                            )}
+                            )
+                              :<option value={finalHour}>{finalHour}</option>)}
                           </select>
-                            :"")}
                         </div>
                         {(isRange?<div className="form-text" id="datesText2">Escoge las horas despues de escoger las fechas</div>:"")}
                       </div>
@@ -173,8 +160,8 @@ export const KeeperForm = ({ }) => {
             })}
           </div>
           {(value.length > 1 ?
-            <Link to={`/checkout/keeper/${store.currentUser.id}`}>
-              <button className="btn btn-outline-dark btn-lg" role="button">Reservar</button>
+            <Link to={((finalHour==""?"#":`/checkout/keeper/${store.currentUser.id}`))}>
+              <button className="btn btn-outline-dark btn-lg" role="button" disabled={((finalHour == "")?true:false)}>Reservar</button>
             </Link> : "")}
         </div>
       </div>

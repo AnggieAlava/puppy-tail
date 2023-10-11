@@ -16,9 +16,10 @@ const OurServices = () => {
         setShowModal(false);
     };
     return (
-        <div className="container-fluid p-0 d-flex justify-content-center align-items-center services-wrap mt-5">
-            <h2 className="text-center mt-2 services-title w-100">Nuestros servicios</h2>
-            <div className="row w-75">
+        <div className="container-fluid p-0 d-flex justify-content-center align-items-center services-wrap">
+            <div className="linea"></div>
+            <h2 className="text-center mt-2 services-title w-75">Nuestros servicios</h2>
+            <div className="row w-75 pb-5">
                 <div className="col d-flex justify-content-center mt-4 col-steps">
                     <div className="card services-uno" style={{ width: '18rem' }} onClick={() => openModal('Planificamos y decoramos eventos divertidos y seguros para celebrar cumpleaños, aniversarios u otras ocasiones especiales para tu peludo amigo')}>
                         <div className="text-center">
@@ -63,6 +64,7 @@ const OurServices = () => {
                     </div>
                 </div>
             </div>
+            <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle"/></div>
             {showModal && (
                 <div className="modal show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
                     <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">

@@ -1,3 +1,6 @@
+html. body {
+    font-family: 'Young Serif', serif;
+}
 .services-uno {
     border-radius: 25px;
     cursor: pointer;
@@ -33,6 +36,13 @@
     background-image:url("https://images.unsplash.com/photo-1591946614720-90a587da4a36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80")
     
 }
+.services-title {
+    background-color:#f7e1d2;
+    padding: 25px;
+    color: #2b2c30;
+    font-size: 3rem;
+    font-weight: 800;
+  }
 
 .title-card-steps{
     margin:5px;
@@ -47,18 +57,12 @@
     transition: transform 0.3s ease;
 }
 
-.services-title {
-    background-color: #A4BE7B;
-    padding: 25px;
-    color: white;
-    font-size: 3rem;
-    font-weight: 800;
-  }
 .col-steps{
     padding: 0;
     width: 18rem;
 }
 .services-wrap{
+    background-color:#f7e1d2;
     flex-direction: column;
 }
 
@@ -66,9 +70,47 @@
 .modal-content{
     color: white;
     font-weight: 400;
-    background-color:black;
-    /* background-color: rgba(26, 25, 25, 0.609); */
+    background-color:#2b2c30;
 }
 .modal-header,.modal-footer{
     border:none;
+}
+
+.linea{
+    margin: 50px;
+    width: 70%;
+    border-top: solid 2px #9c8f8f;
+}
+.bottom-squiggle{
+    background-color:white;
+    -webkit-text-size-adjust: 100%;
+    --graphite: #2b2c30;
+    --ivory: #f7e1d2;
+    --gray: #58595c;
+    --stone: #bfc1b9;
+    --fern: #0c3a23;
+    --gold: #edbc4f;
+    --swiper-theme-color: #007aff;
+    --swiper-navigation-size: 44px;
+    --cyan: #00bcd4;
+    --grey: #647076;
+    --black: #000000;
+    --white: #ffffff;
+    --coral: #EE4B4A;
+    --snow: #FFFCFA;
+    color: #333;
+    font-family: tenon,sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    aspect-ratio: auto 1792 / 128;
+    box-sizing: border-box;
+    border: 0;
+    vertical-align: middle;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    margin-top: -1px;
+    display: block;
 }

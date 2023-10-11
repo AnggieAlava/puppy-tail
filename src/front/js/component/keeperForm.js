@@ -62,8 +62,6 @@ export const KeeperForm = ({ }) => {
   }
   async function pickMultipleHours(date) {
     if (date[0] != null && date[1] == null) {
-      document.getElementById("datesText1").textContent = "Escoge las horas despues de escoger las fechas"
-      document.getElementById("datesText2").textContent = "Escoge las horas despues de escoger las fechas"
       //This is the state when the user has clicked the first date and we have to set the calendar to only be able to be clicked at the following days without conflicts
       setTimes([])
       return;
@@ -143,7 +141,7 @@ export const KeeperForm = ({ }) => {
                           <span className="input-group-text" id="basic-addon3">
                             {(date == null ? "Escoger fecha final" : (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
                           </span>
-                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>setfinalHour(e.target.value)}>
+                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>setfinalHour(e.target.value)} defaultValue={"Escoge hora"}>
                             {(isRange?
                               secondTimes.map((time, index) =>
                               <option key={index} value={time}>{time}</option>

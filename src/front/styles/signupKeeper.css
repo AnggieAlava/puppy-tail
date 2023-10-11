@@ -4,12 +4,8 @@
     align-items: center;
     text-align: center;
     font-family:'Roboto';
-    min-height: 100vh;
-    padding-top: 80px;
+    padding: 80px;
     font-family:'Roboto';
-    min-height: 100vh;
-    background-size:cover;
-    background-repeat:no-repeat;
   }
   
   .title-signup-keeper{

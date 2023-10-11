@@ -47,6 +47,7 @@ export const KeeperForm = ({ }) => {
     setHour("")
     setfinalHour("")
     setTimes([])
+    setsecondTimes([])
     if (isRange) {
       setEdit(true) //Editar los campos de horas
       pickMultipleHours(date)
@@ -146,7 +147,7 @@ export const KeeperForm = ({ }) => {
                           </select>
                             :"")}
                         </div>
-                        {(isRange?<div className="form-text" id="datesText1">Escoge las fechas despues de escoger las horas</div>:"")}
+                        {(isRange?<div className="form-text" id="datesText1">Escoge las horas despues de escoger las fechas</div>:"")}
                       </div>
                       :
                       <div className="mb-3">
@@ -163,7 +164,7 @@ export const KeeperForm = ({ }) => {
                           </select>
                             :"")}
                         </div>
-                        {(isRange?<div className="form-text" id="datesText2">Escoge las fechas despues de escoger las horas</div>:"")}
+                        {(isRange?<div className="form-text" id="datesText2">Escoge las horas despues de escoger las fechas</div>:"")}
                       </div>
                     )}
                   </strong>

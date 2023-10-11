@@ -82,7 +82,7 @@ export const KeeperInfo = ({ keeper }) => {
     }
 
     return (
-        <div className="container-fluid wrap-profile">
+        <div className="container-fluid">
             <div className="d-flex align-items-center justify-content-end">
                 <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={loadServices} >Editar</button>
                 {/* <!-- Modal --> */}

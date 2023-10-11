@@ -3,7 +3,7 @@ import "../../styles/testimonial.css";
 
 const Testimonial = () => {
     return (
-        <div className="container mt-5">
+        <div className="container mb-5">
             <h2 className="text-center title-testimonial mb-4">Algunas opiniones de nuestros clientes</h2>
             <div className="row">
                 <div className="col d-flex justify-content-center">

@@ -18,7 +18,7 @@ const HeaderLanding = () => {
                         <p className="text-landind">
                             Encuentra personas cariñosas, verificadas y con reseñas para cuidar a tus miembros peludos de la familia mientras estás fuera de casa.
                         </p>
-                        <a href="#signup-owner" className="btn btn-header-landing">
+                        <a href="/signup" className="btn btn-header-landing">
                             Crea tu cuenta gratuita
                         </a>
                     </div>

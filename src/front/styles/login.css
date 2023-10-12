@@ -8,7 +8,15 @@
   padding-top: 100px;
   background-size:cover;
   background-repeat:no-repeat;
-  background-image: url("https://img.freepik.com/vector-premium/brillo-geometria-fondo-abstracto-blanco-gris-vector-elemento-capa-diseno-presentacion-traje-seminario-festivo-fiesta-institucion-corporativa-negocios-charlas_249611-4160.jpg?w=1480")
+  background-color: #F7E1D2;
+    backdrop-filter: blur(10px); 
+    background-image: url(https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c4fb4ce47c4_Sribbles%2004.svg),url(https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c2b23ce47c5_Sribbles%2003.svg);
+    background-position: 100% 100%,0 0;
+    background-repeat: no-repeat,no-repeat;
+    background-size: auto,auto;
+    border-radius: 20px;
+    padding: 6.5rem 1.5rem;
+    position: relative;
 }
 
 .btn-login{

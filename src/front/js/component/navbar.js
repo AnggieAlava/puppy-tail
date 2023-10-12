@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.css";
 import { Link } from "react-router-dom";
@@ -10,7 +10,6 @@ export const Navbar = () => {
   useEffect(()=>{
     actions.loadTokens();
   },[])
-
 
   return (
     <nav className="navbar navbar-expand-lg py-3 px-5">

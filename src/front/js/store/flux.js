@@ -2,7 +2,7 @@ import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      accessToken: null,
+      accessToken: "null",
       userInfo: {},
       message: null,
       pets: [],
@@ -194,21 +194,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
-loadTokens: () => {
+      loadTokens: () => {
+        // localStorage.removeItem("userInfo");
+        // localStorage.setItem("userInfo", JSON.stringify({}));
         let token = localStorage.getItem("accessToken");
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null) {
-          userData = JSON.parse(localStorage.getItem("userInfo"))
-        }
-        if (token) {
-          setStore({ accessToken: token });
-          setStore({ userInfo: userData })
-        }
-      },
-  
-
-        let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null) {
+        if (localStorage.hasOwnProperty("userInfo") !== "null") {
           userData = JSON.parse(localStorage.getItem("userInfo"))
         }
         if (token) {
@@ -227,20 +218,20 @@ loadTokens: () => {
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
-        if(token!=null){
+        if(token!="null"){
         setStore({ accessToken: token });
-        setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
-        localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
-        
+        let userData = { "userId": user_id, "user_type": user_type }
+        setStore({ userInfo: userData })
+        localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
       },
 
       logout: () => {
-        setStore({ accessToken: null });
+        setStore({ accessToken: "null" });
         setStore({ userInfo: {} })
         localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", null);
+        localStorage.setItem("accessToken", "null");
       },
 
       getUserInfo: async () => {

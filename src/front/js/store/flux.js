@@ -196,13 +196,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
-        let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null) {
-          userData = JSON.parse(localStorage.getItem("userInfo"))
-        }
+        // let userData = {}
+        // if (localStorage.hasOwnProperty("userInfo") != null) {
+        //   userData = JSON.parse(localStorage.getItem("userInfo"))
+        // }
         if (token) {
           setStore({ accessToken: token });
-          setStore({ userInfo: userData })
+          // setStore({ userInfo: userData })
         }
       },
 
@@ -400,6 +400,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`, "GET")
         if (resp.code != 200) {
           console.error(resp.status + ": " + resp.statusText)
+        }
+        return resp.data
+      },
+      getrangeSlots: async (id, start_date, end_date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/maxDate/${id}/?start_date=${start_date}&end_date=${end_date}`,"GET")
+        if (resp.code != 200){
+          console.error(resp.status+": "+ resp.statusText)
         }
         return resp.data
       },

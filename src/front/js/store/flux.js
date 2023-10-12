@@ -194,25 +194,26 @@ const getState = ({ getStore, getActions, setStore }) => {
         return { code: resp.status, data };
       },
 
-      // loadTokens: () => {
-      //   let token = localStorage.getItem("accessToken");
-      //   let userData = {}
-      //   if (localStorage.hasOwnProperty("userInfo") != null) {
-      //     userData = JSON.parse(localStorage.getItem("userInfo"))
-      //   }
-      //   if (token) {
-      //     setStore({ accessToken: token });
-      //     setStore({ userInfo: userData })
-      //   }
-      // },
-      loadTokens: () => {
+loadTokens: () => {
         let token = localStorage.getItem("accessToken");
-        let userData = {};
-      
-        if (token && token !== "null") {
-          userData = JSON.parse(localStorage.getItem("userInfo"));
+        let userData = {}
+        if (localStorage.hasOwnProperty("userInfo") != null) {
+          userData = JSON.parse(localStorage.getItem("userInfo"))
+        }
+        if (token) {
           setStore({ accessToken: token });
-          setStore({ userInfo: userData });
+          setStore({ userInfo: userData })
+        }
+      },
+  
+
+        let userData = {}
+        if (localStorage.hasOwnProperty("userInfo") != null) {
+          userData = JSON.parse(localStorage.getItem("userInfo"))
+        }
+        if (token) {
+          setStore({ accessToken: token });
+          setStore({ userInfo: userData })
         }
       },
 

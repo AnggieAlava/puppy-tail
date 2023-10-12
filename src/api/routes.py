@@ -574,11 +574,9 @@ def getmaxDate(keeper_id):
             end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
             start_slots = start_slots[start_slots.index(end_time)::]
         if booking.start_date > datetime.datetime.combine(end, datetime.time(00,00,00)):
-            print("Running 1")
             start_time = datetime.time(booking.start_date.hour, booking.start_date.minute)
             end_slots = end_slots[:end_slots.index(start_time):]
         if booking.end_date > datetime.datetime.combine(start, datetime.time(00,00,00)) and booking.end_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1):
-            print("Running 2")
             end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
             start_slots = start_slots[start_slots.index(end_time)::]
 

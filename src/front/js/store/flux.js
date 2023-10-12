@@ -12,8 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
+      dates:null
     },
     actions: {
+      setDates: (obj) => {
+        const {dates} = getStore()
+        setStore({dates:obj})
+      },
       getPets: async () => {
         const { pets } = getStore();
         try {
@@ -218,9 +223,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.setItem("accessToken", token);
         if(token!=null){
         setStore({ accessToken: token });
-        setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
-        localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
-        
+        let userData = { "userId": user_id, "user_type": user_type }
+        setStore({ userInfo: userData })
+        localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
       },

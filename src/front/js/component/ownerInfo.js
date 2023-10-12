@@ -43,13 +43,13 @@ export const OwnerInfo = ({ owner }) => {
     }
 
     return (
-        <div className="container-fluid">
+        <div className="container">
             <div className="d-flex align-items-center justify-content-end">
                 <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={fillForm}>Editar</button>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
+                        <div className="modal-content border-0">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="editUserLabel">Editar</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -64,7 +64,7 @@ export const OwnerInfo = ({ owner }) => {
                                     </div>
                                     <div className="text-center mb-3">
                                         <input type="file" name="avatar" id="avatarImg" onChange={(event) => setAvatar(URL.createObjectURL(event.target.files[0]))} hidden />
-                                        <label className="btn btn-outline-dark" htmlFor="avatarImg">Seleccionar foto</label>
+                                        <label className="btn btn-green" htmlFor="avatarImg">Seleccionar foto</label>
                                     </div>
                                     <div className="row mb-3">
                                         <div className="col">
@@ -88,8 +88,8 @@ export const OwnerInfo = ({ owner }) => {
                                 {/* END OF FORM BODY */}
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={() => setAvatar(currentUser.profile_pic)}>Cancelar</button>
-                                <button type="submit" className="btn btn-outline-success" data-bs-dismiss="modal" onClick={updateUser}>Guardar cambios</button>
+                                <button type="button" className="btn btn-orange" data-bs-dismiss="modal" onClick={() => setAvatar(currentUser.profile_pic)}>Cancelar</button>
+                                <button type="submit" className="btn btn-green" data-bs-dismiss="modal" onClick={updateUser}>Guardar cambios</button>
                             </div>
                         </div>
                     </div>
@@ -110,9 +110,9 @@ export const OwnerInfo = ({ owner }) => {
                     <p>{store.currentUser.location}</p>
                 </div>
             </div>
-            <div className="d-block mb-2" style={{ textAlign: "left" }}>
+            <div className="d-block" style={{ textAlign: "left" }}>
                 <h3><strong>Sobre mi</strong></h3>
-                <p>{store.currentUser.description}</p>
+                <p className="m-0">{(store.currentUser.description == "" ? "Sin descripción" : store.currentUser.description)}</p>
             </div>
         </div>
     );

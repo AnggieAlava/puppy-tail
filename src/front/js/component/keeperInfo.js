@@ -20,9 +20,9 @@ export const KeeperInfo = ({ keeper }) => {
         setAvatar(response.profile_pic)
     }
     function loadServices() {
-        document.getElementById("petSitter").checked = currentUser.services.includes("Cuidador(a) de mascotas")
-        document.getElementById("petWalker").checked = currentUser.services.includes("Paseador(a) de mascotas")
-        document.getElementById("partyPlanner").checked = currentUser.services.includes("Organizador(a) de fiestas")
+        document.getElementById("petSitter").checked = currentUser.services.includes("Cuidar mascotas")
+        document.getElementById("petWalker").checked = currentUser.services.includes("Pasear mascotas")
+        document.getElementById("partyPlanner").checked = currentUser.services.includes("Organizar fiesta")
     }
     function imgErrorHandler(e) {
         e.target.src = stock_avatar
@@ -50,10 +50,10 @@ export const KeeperInfo = ({ keeper }) => {
     async function updateUser() {
         //Services
         let arr = [];
-        if (document.getElementById("petWalker").checked) arr.push("Paseador(a) de mascotas");
-        if (document.getElementById("petSitter").checked) arr.push("Cuidador(a) de mascotas");
+        if (document.getElementById("petWalker").checked) arr.push("Pasear mascotas");
+        if (document.getElementById("petSitter").checked) arr.push("Cuidar mascotas");
         if (document.getElementById("partyPlanner").checked)
-        arr.push("Organizador(a) de fiestas");
+        arr.push("Organizar fiesta");
         //Experience
         let xp = document.getElementById("experienceInput").value
         if (xp == "") {
@@ -82,7 +82,7 @@ export const KeeperInfo = ({ keeper }) => {
     }
 
     return (
-        <div className="container-fluid">
+        <div className="container">
             <div className="d-flex align-items-center justify-content-end">
                 <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={loadServices} >Editar</button>
                 {/* <!-- Modal --> */}
@@ -136,15 +136,15 @@ export const KeeperInfo = ({ keeper }) => {
                                         <label htmlFor="flexSwitchCheckDefault" className="form-label">Servicios</label>
                                         <div className="form-check form-switch">
                                             <input className="form-check-input" type="checkbox" role="switch" id="petWalker" />
-                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Paseador(a) de mascotas</label>
+                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Pasear mascotas</label>
                                         </div>
                                         <div className="form-check form-switch">
                                             <input className="form-check-input" type="checkbox" role="switch" id="petSitter" />
-                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Cuidador(a) de mascotas</label>
+                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Cuidar mascotas</label>
                                         </div>
                                         <div className="form-check form-switch">
                                             <input className="form-check-input" type="checkbox" role="switch" id="partyPlanner" />
-                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Organizador(a) de fiestas</label>
+                                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Organizar fiesta</label>
                                         </div>
                                     </div>
                                     <div className="mb-3">
@@ -168,33 +168,31 @@ export const KeeperInfo = ({ keeper }) => {
                     <img onError={imgErrorHandler} src={store.currentUser.profile_pic} className="card-img-top rounded-circle object-fit-cover" alt="..." />
                 </div>
             </div>
-            <div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
+            <div className="row d-flex text-center mb-2">
                 <h2>{store.currentUser.first_name}</h2>
             </div>
-            <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
+            <div className="d-flex flex-row flex-wrap justify-content-around mb-2 text-center">
                 <div className="d-block">
                     <p><strong>Experiencia</strong></p>
                     <p>{yearsExperience(store.currentUser.experience)}</p>
                 </div>
                 <div className="d-block">
-                    <p><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></p>
-                    <p>{store.currentUser.location}</p>
-                </div>
-                <div className="d-block">
-                    <p><strong>Servicios</strong></p>
+                    <p><strong >Servicios</strong></p>
                     <ul style={{ textAlign: "left" }}>
-                        {(!Array.isArray(store.currentUser.services) ? "" : store.currentUser.services < 1 ?
-                            "Sin servicios" : store.currentUser.services.map((service, index) => {
-                                return (
-                                    <li key={index}>{service}</li>
-                                )
+                        {(!Array.isArray(store.currentUser.services) ? "" :store.currentUser.services < 1?
+                            store.currentUser.first_name+" no ha establecido servicios" : store.currentUser.services.map((service, index) => {
+                                return (<li key={index}>{service}</li>)
                         }))}
                     </ul>
                 </div>
+                <div className="d-block">
+                    <p><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></p>
+                    <p>{store.currentUser.location}</p>
+                </div>
             </div>
-            <div className="d-block mb-2" style={{ textAlign: "left" }}>
+            <div className="d-block" style={{ textAlign: "left" }}>
                 <h3><strong>Sobre mi</strong></h3>
-                <p>{(store.currentUser.description == "" ? "Sin descripción" : store.currentUser.description)}</p>
+                <p className="m-0">{(store.currentUser.description == "" ? "Sin descripción" : store.currentUser.description)}</p>
             </div>
         </div>
     );

@@ -1,0 +1,51 @@
+body, html {
+    font-family: 'Roboto';
+}
+
+.wrap-steps {
+    backdrop-filter: blur(10px); 
+    background-color: transparent;
+    border-radius: 10px; 
+}
+.container-steps{
+    background-color: rgba(0, 0, 0, 0.36);
+}
+
+.card-container {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    
+}
+.card-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(112, 121, 122);
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+
+.main-title-steps {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgb(244, 224, 224);
+}
+
+.card-steps-title {
+    font-weight: 800;
+    color: inherit;
+    color: rgb(214, 185, 185);
+}
+
+.card-steps-content h4{
+    font-weight:bolder;
+    font-size:1rem;
+}
+

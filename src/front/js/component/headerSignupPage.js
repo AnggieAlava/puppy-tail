@@ -1,22 +1,18 @@
 import React from 'react';
+import "../../styles/headerSignupPage.css"
+import ActionButtons from './actionButtons';
 
 const HeaderSignupPage = () => {
     return (
-        <header className="bg-primary text-white text-center py-4">
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-6">
-                        <h1 className="display-4">Obtén ingresos por cuidar mascotas</h1>
-                        <p className="lead">
-                            Anúnciate en Puppy Tail, la red de dueños de mascotas más grande del mundo.
-                        </p>
-                        <a href="#" className="btn btn-light btn-lg">
-                            Comenzar
-                        </a>
-                    </div>
-                </div>
+        <div className="container-fluid text-center bg-signup-page d-flex">
+            <div className="col-md-12 pt-5">
+                <h1 className="display ">Obtén ingresos por cuidar mascotas</h1>
+                <p className="lead">
+                    Anúnciate en Puppy Tail, la red de dueños de mascotas más grande del mundo
+                </p>
+                <ActionButtons />
             </div>
-        </header>
+        </div>
     );
 };
 

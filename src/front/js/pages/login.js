@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import "../../styles/login.css";
 import { HidePassword } from "../component/hidePassword";
+import Swal from "sweetalert2";
 
 export const Login = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
 
   async function login(e) {
     e.preventDefault();
@@ -17,43 +19,64 @@ export const Login = () => {
     const password = data.get("password");
     const { login } = actions;
     let resp = await login(email, password);
+    if (resp !== 201) {
+      setError("Usuario o contraseña incorrecto");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Usuario o contraseña incorrecto",
+      });
+      return;
+    } else {
+      setError("");
+    }
     if (resp === 201) {
+      Swal.fire({
+        icon: "success",
+        title: "Bienvenido!",
+        text: "Ingreso correcto",
+      });
       navigate("/home");
     }
   }
 
   return (
-    <div className="col-md-6">
-      <div className="text-center wrap-login sm-2 text-sm">
+    <div className="container-fluid wrap-login text-center">
+      <form onSubmit={login} className="form-login">
         <h2 className="title-login">Iniciar sesión</h2>
-        <form className="" onSubmit={login}>
-          <div className="mb-3 form-group">
-            <label htmlFor="inputEmail " className="form-label">
-              Correo electrónico
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="inputEmail"
-              aria-describedby="emailHelp"
-            />
-            <div id="emailHelp" className="form-text"></div>
-            <HidePassword styleType="login" />
-            <button type="submit"
-              className="form-control"
-              name="submit"
-              id="btn-login">
-              Iniciar sesión
-            </button>
-          </div>
-          <p className="text-sm">Recupera tu contraseña<Link to="#">
-            Aqui
-          </Link></p>
-          <h6 className="text-sm">No tienes una cuenta?<Link to="/signup" className="text-sm">Regístrate</Link></h6>
-        </form>
-      </div>
+        <div className="mb-3 form-group">
+          <label htmlFor="inputEmail " className="form-label mt-3">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            className="form-control mt-2 p-2"
+            name="email"
+            id="inputEmail"
+            aria-describedby="emailHelp"
+          />
+          <div id="emailHelp" className="form-text"></div>
+          <label htmlFor="inputPassword" className="form-label">
+        Contraseña
+      </label>
+          <HidePassword />
+          <button type="submit"
+            className="form-control btn-login mt-4"
+            name="submit"
+            id="btn-login">
+            Iniciar sesión
+          </button>
+        </div>
+        <div className="linea-decorativa text-center"></div>
+        <Link to="/recovery" className="recovery-link">
+          Olvidaste tu contraseña?
+        </Link>
+        <p className="mt-2 question">No tienes una cuenta?<Link to="/signup" className="click-signup"> Regístrate</Link></p>
+        {error && <p className="text-danger">{error}</p>}
+      </form>
     </div>
+
+
   );
 };
 Login.propTypes = {

@@ -1,0 +1,37 @@
+.bg-signup-page {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.205)), url("https://images.unsplash.com/photo-1494947665470-20322015e3a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+  background-size: cover;
+  height: 80vh;
+  position: relative;
+}
+.display {
+  font-family: 'Poppins';
+  /* color: #C70039; */
+  color: rgb(225, 253, 218);
+  font-size: 3.5vw;
+  font-weight: 900;
+  /* text-shadow: 2px 2px 0px #FF5733;  */
+}
+
+  
+  @media screen and (max-width: 1024px) {
+    .display {
+      font-size: 1.5rem; 
+    }
+  }
+  
+  .lead{
+    color: rgb(225, 253, 218);
+    /* text-shadow: 2px 2px 0px #434749;  */
+    font-size: 2vw;
+    font-weight: 800;
+    margin-top: 20px;
+  }
+  
+  @media screen and (max-width: 1024px){
+    .lead{
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+  }

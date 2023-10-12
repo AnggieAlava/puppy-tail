@@ -1,0 +1,20 @@
+
+.fa-quote-right, .fa-quote-left{
+    font-size: 1.5rem;
+}
+.card-testimonial{
+    background-color: #070606c6; 
+    background-size: 25px 25px; 
+}
+.title-testimonial{
+    color: white;
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .title-testimonial {
+      font-size: 1.5rem; 
+      font-weight: 500;
+    }
+  }

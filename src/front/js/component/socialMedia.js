@@ -1,38 +1,35 @@
 import React from "react";
-import "../../styles/footer.css"
+import "../../styles/socialMedia.css"
 
-const socialMedia = [
-  {
-    nombre: "Twitter",
-    url: "https://twitter.com/thepuppytaill",
-    icono: "fab fa-twitter",
-  },
-  {
-    nombre: "Instagram",
-    url: "https://www.instagram.com/thepuppytail",
-    icono: "fab fa-instagram",
-  },
-  {
-    nombre: "TikTok",
-    url: "https://www.tiktok.com/@thepuppytail",
-    icono: "fab fa-tiktok",
-  },
-];
-
-export const SocialMedia = () => (
-  <div className="content text-center d-none d-md-block">
-    <div className="icon">
-      {socialMedia.map((red, index) => (
-        <a
-          key={index}
-          href={red.url}
-          className=""
-          target="_blank"
-          rel="noopener noreferrer"
-          role="button">
-          <i id="red-icon" className={red.icono}></i>
-        </a>
-      ))}
+const SocialMedia = () => {
+  return (
+    <div className="social-media container-fluid d-flex justify-content-center">
+      <a
+        href="https://twitter.com/thepuppytaill"
+        className="social-icon twitter"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i className="fab fa-twitter"></i>
+      </a>
+      <a
+        href="https://www.instagram.com/thepuppytail"
+        className="social-icon instagram"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i className="fab fa-instagram"></i>
+      </a>
+      <a
+        href="https://www.tiktok.com/@thepuppytail"
+        className="social-icon tiktok"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <i className="fab fa-tiktok"></i>
+      </a>
     </div>
-  </div>
-);
+  );
+};
+
+export default SocialMedia;

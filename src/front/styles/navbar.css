@@ -1,0 +1,30 @@
+.navbar{
+  background-color:#f7e1d2;
+}
+.logo {
+    font-style: italic;
+    text-decoration: none;
+    font-family: 'Young Serif', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color:black;
+    transition: transform 0.3s, color 0.3s;
+  }
+
+.text-navbar{ 
+    font-family: 'Young Serif', serif;
+    font-size:1.2rem;
+    font-weight:500;
+    color:black;
+}
+#action-navbar{
+  color:snow;
+  padding:10px 30px;
+  background-color:#07562f;
+  border-radius:4.2rem;
+}
+
+#action-navbar:hover{
+  background-color:#157b48;
+  color:snow;
+}

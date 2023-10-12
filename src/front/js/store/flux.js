@@ -212,25 +212,16 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-        if (resp.code == 401) {
-          swal({
-            icon: "error",
-            title: "Usuario inexistente",
-            text: "El usuario no existe en el sistema.",
-          });
-        } else if (resp.code == 400) {
-          swal({
-            icon: "error",
-            title: "Contraseña incorrecta",
-            text: "La contraseña ingresada es incorrecta.",
-          });
-        }
+
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
+        if(token!=null){
         setStore({ accessToken: token });
         setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
         localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
+        
+        }
         return resp.code;
       },
 
@@ -402,13 +393,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error saving profile, code: " + resp.code);
           return resp;
         }
-        setStore({currentUser: resp.data})
+        setStore({ currentUser: resp.data })
       },
       getdailySlots: async (id, date) => {
         const { apiFetch } = getActions();
-        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`,"GET")
-        if (resp.code != 200){
-          console.error(resp.status+": "+ resp.statusText)
+        const resp = await apiFetch(`/bookings/${id}/?start_date=${date}`, "GET")
+        if (resp.code != 200) {
+          console.error(resp.status + ": " + resp.statusText)
         }
         return resp.data
       },
@@ -419,7 +410,48 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error(resp.status+": "+ resp.statusText)
         }
         return resp.data
-      }
+      },
+      requestPasswordRecovery: async (email) => {
+        console.log(email);
+        const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
+
+
+        return response
+      },
+      changePasswordWithToken: async (tokenPassword, password) => {
+        let resp = await fetch(process.env.BACKEND_URL + `/api/changepassword`, {
+          method: "POST",
+          body: JSON.stringify({ password }),
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer  ${tokenPassword}`
+          },
+        }
+        )
+        return resp
+      },
+
+      createPayment: async (details) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/order", "POST", {
+          paypal_id: details.id,
+          create_time: details.create_time,
+          payer_email: details.payer.email_address,
+          payer_name:details.payer.name.given_name + " " + details.payer.name.surname,
+          payer_id: details.payer.payer_id,
+          amount_currency: details.purchase_units[0].amount.currency_code,
+          amount_value: details.purchase_units[0].amount.value,
+          description: details.purchase_units[0].description,
+          payee_email: details.purchase_units[0].payee.email_address,
+          status: details.status
+        });
+        if (resp.code === 200) {
+          console.log("Pago exitoso:", resp.data);
+          return resp;
+        } else {
+          console.error("Error en el pago:", resp);
+        }
+      },
     }
   };
 };

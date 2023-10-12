@@ -1,0 +1,43 @@
+.list-reasons{
+    border: none;
+}
+
+.suit-list{
+    color: #A8DF8E;
+}
+
+.col-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.col-title {
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    width: 200px;
+    height: 80px;
+}
+
+.icons-reasons{
+    margin:5px;
+    font-size: 30px;
+    color:#f15454;
+}
+
+.wrap-reasons{
+    color: white;
+    font-size: 2rem;
+    font-weight: 900;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+.reasons{
+    background-color: #5F8D4E;
+    /* background-color: rgba(0, 0, 0, 0.36); */
+    backdrop-filter: blur(10px); 
+    border-radius: 10px; 
+}
+

@@ -1,0 +1,27 @@
+.wrap-signup-keeper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family:'Roboto';
+    padding: 80px;
+    font-family:'Roboto';
+  }
+  
+  .title-signup-keeper{
+    font-weight:600;
+    font-size:2rem;
+  }
+  .btn-signup-keeper{
+    font-size:1.2rem;
+    padding:18px;
+    border:none;
+    font-weight:600;
+    color: white;
+    background-color: #2c60ac;
+  }
+  
+
+  .btn-signup-keeper:hover{
+    filter: brightness(1.2);
+  }

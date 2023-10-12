@@ -16,6 +16,10 @@ from sqlalchemy import asc, desc
 from datetime import date
 import numpy as np
 import locale
+
+import smtplib
+import ssl
+from email.message import EmailMessage
 locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 
 api = Blueprint('api', __name__)
@@ -212,10 +216,10 @@ def keepers_list():
         else:
             experience_date = None
 
-        if keeper.services is not None:  # Check if keeper.services is not None
+        if keeper.services is not None:
             services = [service for service in keeper.services]
         else:
-            services = [] 
+            services = []
 
         keeper_data = {
             "id": keeper.id,
@@ -228,13 +232,12 @@ def keepers_list():
             "profile_pic": getprofilePic(keeper.id),
             "experience": experience_date,
             "services": services,
-            "working_hours": [str(time) for time in keeper.working_hours]
+            "working_hours": [str(time) for time in keeper.working_hours] if keeper.working_hours else []
         }
 
         keepers_data.append(keeper_data)
 
     return jsonify(keepers_data), 200
-
 
 @api.route('/keeper/<int:keeper_id>', methods=['GET'])
 def get_keeper(keeper_id):
@@ -255,7 +258,7 @@ def get_keeper(keeper_id):
         "hourly_pay": keeper.hourly_pay,
         "description": keeper.description,
         "bookings": [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in keeper.booking],
-        "services": [service for service in keeper.services],
+        "services": [service for service in keeper.services] if keeper.services else [],
         "profile_pic": imgUrl,
         "working_hours": [str(time) for time in keeper.working_hours]
     }
@@ -268,7 +271,7 @@ def updateKeeper(keeper_id):
     keeper.first_name = (data["first_name"].lower()).title()
     keeper.last_name = (data["last_name"].lower()).title()
     if data["hourly_pay"] != "" and locale.atof((data["hourly_pay"]).replace(',','.')) > 0:
-        keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) #corregir no dejar data null
+        keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) 
     keeper.description = data["description"]
     keeper.experience = data["experience"]
     keeper.services = [service for service in data["services"]]
@@ -448,15 +451,15 @@ def getpetAvatar(pet_id):
 @api.route('/booking', methods=["POST"])
 def createBooking():
     data = request.get_json(force=True)
-    booking = Booking()
-    booking.start_date = data["start_date"]
-    booking.end_date = data["end_date"]
-    booking.keeper_id = data["keeper_id"]
-    if hasattr(data, "pets_id"):
-        booking.pets_id = data["pets_id"]
-    if hasattr(data, "owner_id"):
-        booking.owner_id = data["owner_id"]
-    booking.status = 'pending'
+    booking = Booking(**data, status='pending')
+    # booking.start_date = data["start_date"]
+    # booking.end_date = data["end_date"]
+    # booking.keeper_id = data["keeper_id"]
+    # if hasattr(data, "pets_id"):
+    #     booking.pets_id = data["pets_id"]
+    # if hasattr(data, "owner_id"):
+    #     booking.owner_id = data["owner_id"]
+    # booking.status = 'pending'
     db.session.add(booking)
     db.session.commit()
     return jsonify({"msg":"Booking created successfully"}), 201
@@ -582,3 +585,72 @@ def getmaxDate(keeper_id):
     slots = [start_slots, end_slots]
     slots = [[time.strftime('%-H:%M') for time in slot] for slot in slots]
     return jsonify(slots),200
+    
+@api.route('/recoverypassword', methods=['POST'])
+def recovery_password():
+   email= request.json.get("email")
+   user=User.query.filter_by(email=email).first()
+   if  user is None:
+        return jsonify({"msg": "Se requiere un correo electrónico"}), 400
+   token = create_access_token(
+       identity=user.id, additional_claims={"type": "password"})
+   send_simple_message(email, token)
+   return jsonify({"recoveryToken": token}),200
+def send_simple_message(user_email, token):
+    email_sender = "puppy.tail.verificacion@gmail.com"
+    password = "okscwjyfwjlvmakx"
+    email_receiver = user_email
+    subject = "Recuperar contraseña"
+    body = f"""Estimado Usuario,
+Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Puppy Tail.
+Para recuperar la contraseña, haz clic aquí:
+https://refactored-journey-xg7pwwg665pcgw-3000.app.github.dev/changePassword?token={token}
+Si no solicitaste este cambio de contraseña, por favor ignora este mensaje o contáctanos inmediatamente si crees que tu cuenta está en peligro.
+El enlace expirará en 5 minutos por motivos de seguridad. Si el enlace ha caducado, puedes solicitar un nuevo enlace de recuperación de contraseña en la página de inicio de sesión de Puppy Tail.
+Gracias,
+Puppy Tail team
+"""
+    em = EmailMessage()
+    em["From"] = email_sender
+    em["To"] = email_receiver
+    em["Subject"] = subject
+    em.set_content(body, subtype="plain")  # Utiliza subtype="plain" para texto sin formato
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as smtp:
+        smtp.login(email_sender, password)
+        smtp.send_message(em)
+    print("enviado")
+@api.route('/changepassword', methods=['POST'])
+@jwt_required()
+def change_password():
+    new_password = request.json.get("password")
+    user_id = get_jwt_identity()
+    if new_password is None:
+        return jsonify({"msg": "Se requiere una nueva contraseña"}), 400
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
+    secure_password = bcrypt.generate_password_hash(new_password, rounds=None).decode("utf-8")
+    user.password = secure_password
+    db.session.commit()
+    return jsonify({"msg": "Contraseña actualizada exitosamente"}), 200
+
+@api.route('/order', methods=['POST'])
+def createPayment():
+    data = request.get_json(force=True)
+    order = Order(**data)
+    # order.paypal_id = data["paypal_id"]
+    # order.create_time = data["create_time"]
+    # order.payer_email = data["payer_email"]
+    # order.payer_name = data["payer_name"]
+    # order.payer_id = data["payer_id"]
+    # order.amount_currency = data["amount_currency"]
+    # order.amount_value = data["amount_value"]
+    # order.description= data["description"]
+    # order.payee_email = data["payee_email"]
+    # order.status = data["status"]
+    db.session.add(order)
+    db.session.commit()
+
+    return jsonify({"message": "Compra registrada con éxito"}), 200
+    

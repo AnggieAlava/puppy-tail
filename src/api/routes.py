@@ -12,6 +12,8 @@ from datetime import timezone
 from firebase_admin import storage
 import tempfile
 import datetime
+from sqlalchemy import asc, desc
+from datetime import date
 import numpy as np
 import locale
 
@@ -469,18 +471,22 @@ def getBookings():
     return jsonify(bookings), 200
 
 @api.route('/bookings/<int:keeper_id>/', methods=["GET"])
-def getavailableSlots(keeper_id):
+def getdailySlots(keeper_id):
     if request.args.get('start_date') is None:
         return jsonify({"msg": "No start date added to request"}), 400
     start_date = request.args.get('start_date')+" 00:00:00"
     end_date = request.args.get('start_date') +" 23:59:59"
+    if request.args.get('end_date') != None:
+        print("Getting end_date: ")
+        print(request.args.get('end_date'))
+        end_date = request.args.get('end_date') +" 23:59:59"
     #Getting working hours and making a list of all available working slots for the day
     working_hours = Keeper.query.get(keeper_id).working_hours
     slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
     slots = slots.tolist()
     slots.pop() #Removes last 30min slot we won't offer due to 1-hour minimum service
     #Getting reservations for the day
-    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.start_date<=end_date).all()
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.end_date<=end_date).all()
     if len(bookings) < 1:
         return jsonify([slot.strftime('%-H:%M') for slot in slots]), 200
     #Remove any conflicting slots based on booking times
@@ -496,7 +502,7 @@ def getavailableSlots(keeper_id):
         if time in slots:    
             slots.remove(time)
     slots = [slot.strftime('%-H:%M') for slot in slots]
-    return jsonify(slots), 200
+    return slots
 
 @api.route("/booking/<int:booking_id>", methods=["PUT", "DELETE"])
 def modifyBooking(booking_id):
@@ -513,6 +519,72 @@ def modifyBooking(booking_id):
         booking.pets_id = data["pets_id"]
         db.session.commit()
         return jsonify({"msg":"Booking successfully updated"}), 200
+
+@api.route("/bookings/maxDate/<int:keeper_id>", methods=["GET"])
+def getmaxDate(keeper_id):
+    if request.args.get('start_date') is None:
+        return jsonify({"msg": "No start date added to request"}), 400
+    start_date = request.args.get('start_date')+" 00:00:00"
+    if request.args.get('end_date') is None:
+        return jsonify({"msg": "No end date added to request"}), 400
+    end_date = request.args.get('end_date') +" 23:59:59"
+    start = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S').date()
+    end = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').date()
+    delta = (end-start).days
+    #Make start and end dates date objs to compare with bookings
+    if delta > 30: #Allow reservations no bigger than 30 days
+        end = start+datetime.timedelta(days=30)
+        end = datetime.datetime.combine(end, datetime.time(23,59,59))
+    if delta <= 30:
+        end = datetime.datetime.combine(end, datetime.time(23,59,59))
+    start = datetime.datetime.combine(start, datetime.time(00,00,00))
+    working_hours = Keeper.query.get(keeper_id).working_hours
+    start_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
+    start_slots = start_slots.tolist()
+    start_slots.pop()
+    end_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
+    end_slots = end_slots.tolist()
+    end_slots.pop()
+    #start_booking = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start, Booking.start_date<= datetime.datetime.combine(start, datetime.time(23,59,59))).order_by(desc(Booking.start_date)).first()    
+    #start_booking is None when no match
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(((Booking.start_date >= start) & (Booking.start_date <= end)).self_group()|((Booking.end_date >= start) & (Booking.end_date <= end)).self_group()).order_by(asc(Booking.start_date)).all()
+
+    if bookings is None:
+        bookings = []
+    if start.date() == end.date():
+         same_slots = getdailySlots(keeper_id)
+         dupslots = same_slots
+         print(same_slots)
+         return ([same_slots,dupslots]), 200
+
+    for booking in bookings:
+        if booking.start_date>start+datetime.timedelta(days=1) and booking.end_date<end-datetime.timedelta(days=1):
+            #Ver si algun booking esta entre los dias de la reserva pero no directamente en los dias selecionados start y end
+            return jsonify([[],[]]),200
+        last_hour_start = datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1) #Ultima hora laboral del dia inicial seleccionado
+
+        if booking.start_date > start and booking.start_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1) and booking.end_date > datetime.datetime.combine(start, datetime.time(working_hours[1].hour, working_hours[1].minute,00)):
+            #Booking inicia el dia seleccionado pero termina otro dia
+            return jsonify([[],[]]),200
+        if booking.start_date > datetime.datetime.combine(start, datetime.time(23,59,59)) and booking.start_date < datetime.datetime.combine(end, datetime.time(00,00,00)):
+            #Booking inicia despues de mi inicio solicitado
+            return jsonify([[],[]]),200
+        if booking.start_date > start and booking.end_date <= last_hour_start:
+            #El inicio y fin de la reserva estan en el dia de inicio seleccionado
+            end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
+            start_slots = start_slots[start_slots.index(end_time)::]
+        if booking.start_date > datetime.datetime.combine(end, datetime.time(00,00,00)):
+            print("Running 1")
+            start_time = datetime.time(booking.start_date.hour, booking.start_date.minute)
+            end_slots = end_slots[:end_slots.index(start_time):]
+        if booking.end_date > datetime.datetime.combine(start, datetime.time(00,00,00)) and booking.end_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1):
+            print("Running 2")
+            end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
+            start_slots = start_slots[start_slots.index(end_time)::]
+
+    slots = [start_slots, end_slots]
+    slots = [[time.strftime('%-H:%M') for time in slot] for slot in slots]
+    return jsonify(slots),200
     
 @api.route('/recoverypassword', methods=['POST'])
 def recovery_password():

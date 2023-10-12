@@ -1,13 +1,15 @@
 .footer-landing {
   font-size: 1.5rem;
-  font-family: 'Roboto';
+  font-family: '';
   background-color: #bfc1b9;
 }
   
   .btn-footer-landing {
-    font-size: 2rem;
-    font-weight: 400;
-    padding: 25px 60px;
+    padding: 18px 45px;
+    border-radius: 4.2rem;
+    font-size: 1.5rem;
+    color:white;
+    background-color: #cc3736; 
   }
 .top-squiggle{
   background-color:white;
@@ -39,6 +41,9 @@ vertical-align: middle;
 max-width: 100%;
 width: 100%;
 height: auto;
-margin-bottom: -1px;
-display: block;
+margin-bottom: -6px;
+}
+.ready-text{
+  font-weight:600;
+  font-style:bold;
 }

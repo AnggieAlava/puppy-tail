@@ -1,7 +1,5 @@
-import React, { useContext, useState } from 'react';
-import dogWalk from "../../img/dogWalk.png"
-import dogShower from "../../img/shower.png"
-import dogParty from "../../img/dogParty.png"
+import React, { useState } from 'react';
+import ActionButtons from "../component/actionButtons";
 import "../../styles/ourServices.css"
 const OurServices = () => {
     const [showModal, setShowModal] = useState(false);
@@ -63,8 +61,9 @@ const OurServices = () => {
                         </div>
                     </div>
                 </div>
+                <ActionButtons />
             </div>
-            <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle"/></div>
+            <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" /></div>
             {showModal && (
                 <div className="modal show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
                     <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">

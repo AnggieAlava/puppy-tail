@@ -17,14 +17,26 @@
     font-weight:500;
     color:black;
 }
-#action-navbar{
-  color:snow;
-  padding:10px 30px;
-  background-color:#07562f;
-  border-radius:4.2rem;
+#action-navbar {
+  color: snow;
+  padding: 10px 30px;
+  background-color: #0c3a23;
+  border-radius: 4.2rem;
+  font-size: 1rem; 
+  width: auto; 
+  height: auto;
 }
 
-#action-navbar:hover{
-  background-color:#157b48;
-  color:snow;
+#action-navbar:hover {
+  background-color: #157b48;
+  color: snow;
+}
+
+
+@media (max-width: 768px) {
+  #action-navbar {
+    font-size: 1rem; 
+    padding: 5px 15px; 
+    border-radius: 3rem; 
+  }
 }

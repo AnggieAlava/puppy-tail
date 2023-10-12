@@ -1,10 +1,4 @@
-.list-reasons{
-    border: none;
-}
 
-.suit-list{
-    color: #A8DF8E;
-}
 
 .col-container{
     display: flex;
@@ -16,8 +10,6 @@
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 200px;
-    height: 80px;
 }
 
 .icons-reasons{
@@ -26,18 +18,19 @@
     color:#f15454;
 }
 
-.wrap-reasons{
-    color: white;
-    font-size: 2rem;
-    font-weight: 900;
-    border-radius: 10px;
-    background-color: transparent;
-}
 
 .reasons{
-    background-color: #5F8D4E;
-    /* background-color: rgba(0, 0, 0, 0.36); */
+    width:85%;
+    font-family: 'Young Serif', serif;
+    color: black;
+    background-color: #bfc1b9;
     backdrop-filter: blur(10px); 
-    border-radius: 10px; 
+    background-image: url(https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c4fb4ce47c4_Sribbles%2004.svg),url(https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c2b23ce47c5_Sribbles%2003.svg);
+    background-position: 100% 100%,0 0;
+    background-repeat: no-repeat,no-repeat;
+    background-size: auto,auto;
+    border-radius: 20px;
+    padding: 6.5rem 1.5rem;
+    position: relative;
 }
 

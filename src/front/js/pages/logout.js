@@ -31,5 +31,4 @@ Logout.propTypes = {
   match: PropTypes.object,
 };
 {
-  //  {(token === null ? "":<button>Profile</button>)}
 }

@@ -1,13 +1,13 @@
-.button {
+.btn-action {
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 12px 15px;
-  border-radius: 10px;
+  border-radius: 4.2rem;
   border: none;
   overflow: hidden;
-  background: white;
+  background: #0c3a23;
   color: #fff;
 }
 
@@ -25,11 +25,11 @@
   transition-duration: 0.3s;
 }
 
-.button:hover .button-text {
+.btn-action:hover .button-text {
   transform: translateX(0px);
 }
 
-.button:hover .iconer {
+.btn-action:hover .iconer {
   transform: translateY(0px);
 }
 

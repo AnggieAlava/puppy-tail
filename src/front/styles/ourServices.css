@@ -37,6 +37,7 @@ html. body {
     
 }
 .services-title {
+    font-family: 'Young Serif', serif;
     background-color:#f7e1d2;
     padding: 25px;
     color: #2b2c30;
@@ -45,6 +46,7 @@ html. body {
   }
 
 .title-card-steps{
+    font-family: 'Young Serif', serif;
     margin:5px;
     border-radius: 25px;
     padding:20px;

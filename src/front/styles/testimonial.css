@@ -1,20 +1,47 @@
 
-.fa-quote-right, .fa-quote-left{
-    font-size: 1.5rem;
-}
-.card-testimonial{
-    background-color: #070606c6; 
-    background-size: 25px 25px; 
-}
-.title-testimonial{
-    color: white;
-    font-weight: 800;
-    font-size: 2.5rem;
+.carousel-test {
+    font-family: 'Young Serif', serif;
+    min-height: 15vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@media screen and (max-width: 1024px) {
-    .title-testimonial {
-      font-size: 1.5rem; 
-      font-weight: 500;
-    }
-  }
+.carousel-container{
+  border-radius: 1.5rem;
+  font-family: 'Young Serif', serif;
+  background-color: #f7e1d2;
+  background-image:url(https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c7320ce4797_Testimonial%20Mobile%20Scribble%2002.svg),url(https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c50acce4796_Testimonial%20Mobile%20Scribble%2001.svg);
+  background-position: 100% 100%,0 0;
+  background-repeat: no-repeat,no-repeat;
+  background-size: auto,auto;
+  border-radius: 20px;
+  position: relative;
+}
+
+.quote-carousel{
+  color:#0c3a23;
+}
+.btn-prev-next {
+  border-radius: 4.2rem;
+  width: 6rem;
+  padding: 5px 10px;
+  background-color: #0c3a23;
+  color:snow;
+}
+
+.arrow-left:hover, .arrow-right:hover{
+  color:yellow;
+}
+
+.btn-prev-next:hover {
+  background-color:#0c3a23;
+}
+
+.carousel-button-container {
+  position: absolute;
+  top: 90%; 
+  right: 45px; 
+  transform: translateY(-50%);
+  z-index: 2; 
+}

@@ -192,7 +192,7 @@ export const KeeperInfo = ({ keeper }) => {
             </div>
             <div className="d-block" style={{ textAlign: "left" }}>
                 <h3><strong>Sobre mi</strong></h3>
-                <p className="m-0">{(store.currentUser.description == "" ? "Sin descripción" : store.currentUser.description)}</p>
+                <h6 className="m-0 pb-2">{(store.currentUser.description == "" ? "Sin descripción" : store.currentUser.description)}</h6>
             </div>
         </div>
     );

@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import "../../styles/profile.css"
 
 export const KeeperForm = ({ }) => {
   const { store, actions } = useContext(Context)

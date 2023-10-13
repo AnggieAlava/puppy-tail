@@ -113,7 +113,7 @@ export const OwnerInfo = ({ owner }) => {
             </div>
             <div className="d-block" style={{ textAlign: "left" }}>
                 <h3 className="mb-0"><strong>Sobre mi</strong></h3>
-                <h6 className="m-0">{(store.currentUser.description == " "  || null ? "Sin descripción" : store.currentUser.description)}</h6>
+                <h6 className="m-0 pb-2">{(store.currentUser.description == ""  || null ? "Sin descripción" : store.currentUser.description)}</h6>
             </div>
         </div>
     );

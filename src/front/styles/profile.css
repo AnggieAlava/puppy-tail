@@ -16,7 +16,11 @@ html, body {
     font-weight: bold;
 }
 .btn-green:hover{
-    background-color: #15683e;
+    background-color: #1a834e;
+    color:white;
+}
+.btn-green:disabled{
+    color:black;
 }
 .btn-orange{
     background-color: #EE4B4A;

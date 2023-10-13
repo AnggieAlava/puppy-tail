@@ -1,3 +1,26 @@
 .card-wrap {
   padding-bottom: 150px;
 }
+.select-container {
+  position: relative;
+  display: inline-block;
+}
+
+.select-container select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.select-container::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 7px solid transparent;
+  border-top-color: #000; 
+  pointer-events: none;
+}

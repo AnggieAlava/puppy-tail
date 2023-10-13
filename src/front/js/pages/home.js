@@ -1,31 +1,41 @@
-import React, { useState, useContext } from "react";
-import { Context } from "../store/appContext";
-import { FilterLocation } from "../component/filterLocation";
+import React, { useState } from "react";
+import FilterLocation from "../component/filterLocation";
 import Keepers from "../component/keepers";
 
 export const Home = () => {
-  const { store, actions } = useContext(Context);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [filters, setFilters] = useState({
+    location: "",
+    name: "",
+    services: "",
+    experience: "",
+  });
+  const [showFilters, setShowFilters] = useState(false);
 
-  const handleLocationChange = (location) => {
-    setSelectedLocation(location);
+  const handleFilterChange = (name, value) => {
+    setFilters({ ...filters, [name]: value });
   };
 
-  const handleResetFilter = () => {
-    setSelectedLocation(null);
+  const toggleFilters = () => {
+    setShowFilters(!showFilters);
   };
 
   return (
-    <>
-      <div className="d-flex justify-content-center align-items-center mt-2">
-        {selectedLocation !== null && (
-          <button className="btn btn-link" onClick={handleResetFilter}>
-            <i className="fas fa-undo" style={{ color: "black" }}></i>
-          </button>
-        )}
-        <FilterLocation onLocationChange={handleLocationChange} />
+
+    <div className="home">
+      <div className="container-fluid p-0 d-flex align-items-center justify-content-center main-card">
+        <div className="card card-header">
+          <div className="card-body text-center">
+            <h1 className="card-title landing-title">
+              <span className="cuidamos-text">Busca</span> los{" "}
+              <span className="mascotas-text">mejores cuidadores</span> para tus mascotas
+            </h1>
+          </div>
+        </div>
       </div>
-      <Keepers selectedLocation={selectedLocation} />
-    </>
+
+
+      <Keepers />
+    </div>
+
   );
 };

@@ -75,6 +75,7 @@
 	"dependencies": {
 		"@paypal/react-paypal-js": "^7.8.3",
 		"firebase": "^10.4.0",
+		"moment": "^2.29.4",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
 		"react-calendar": "^4.6.0",

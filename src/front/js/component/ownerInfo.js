@@ -46,10 +46,10 @@ export const OwnerInfo = ({ owner }) => {
     return (
         <div className="container">
             <div className="d-flex align-items-center justify-content-end">
-                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={fillForm}>Editar</button>
+                <button type="button" className="btn btn-green" data-bs-toggle="modal" data-bs-target="#editUser" onClick={fillForm}>Editar</button>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                         <div className="modal-content border-0">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="editUserLabel">Editar</h1>
@@ -102,19 +102,18 @@ export const OwnerInfo = ({ owner }) => {
                     <img onError={imgErrorHandler} src={store.currentUser.profile_pic} className="card-img-top rounded-circle object-fit-cover" alt="..." />
                 </div>
             </div>
-            <div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
+            <div className="row d-flex text-center mb-2">
                 <h2>{store.currentUser.first_name}</h2>
             </div>
-            <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
-                <div className="d-block">
-                    <p><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></p>
-                    <p>{store.currentUser.location}</p>
+            <div className="d-flex flex-row flex-wrap text-center mb-2">
+                <div className="col">
+                    <h5><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></h5>
+                    <h6>{store.currentUser.location}</h6>
                 </div>
             </div>
             <div className="d-block" style={{ textAlign: "left" }}>
                 <h3 className="mb-0"><strong>Sobre mi</strong></h3>
-                <p className="m-0">{(store.currentUser.description == " "  || null ? "Sin descripción" : store.currentUser.description)}</p>
-               
+                <h6 className="m-0 pb-2">{(store.currentUser.description == ""  || null ? "Sin descripción" : store.currentUser.description)}</h6>
             </div>
         </div>
     );

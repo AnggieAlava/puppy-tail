@@ -4,6 +4,7 @@ import { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import "../../styles/profile.css"
 
 export const KeeperForm = ({ }) => {
   const { store, actions } = useContext(Context)
@@ -22,6 +23,7 @@ export const KeeperForm = ({ }) => {
   const params = useParams();
 
   useEffect(()=>{
+    console.log("Running useEffect!")
     if(hour!=""&&finalHour!=""){
       let start_date = value[0].getDate().toString() + "-" + (value[0].getMonth() + 1).toString() + "-" + value[0].getFullYear().toString()
       let end_date = value[1].getDate().toString() + "-" + (value[1].getMonth() + 1).toString() + "-" + value[1].getFullYear().toString()
@@ -38,6 +40,8 @@ export const KeeperForm = ({ }) => {
 
 
   function setRange(service) {
+    //Reset everything when choosing another service type
+    actions.setDates(null)
     setCurrentService(service)
     setValue([])
     setTimes([])
@@ -87,12 +91,12 @@ export const KeeperForm = ({ }) => {
       document.getElementById("datesText2").textContent = "" 
     }//Editar los campos de horas
   }
-  function sendDate(e, dates){
-    if(isRange && e.target.id == "startHour"){
+  function sendDate(e){
+    if(isRange && e.target.id == "startHour" && e.target.value !=""){
       setHour(e.target.value)
-      //setfinalHour("")      
     }
-    if(!isRange && e.target.id=="startHour"){
+    if(!isRange && e.target.id=="startHour" && e.target.value !=""){
+      setHour(e.target.value)
       let date = new Date(`20 December 2019 ${e.target.value}`) //Dummy date info to strip time from it
       date.setHours(date.getHours() + 1)
       date = date.getHours().toString() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString()
@@ -165,7 +169,7 @@ export const KeeperForm = ({ }) => {
                             {(date == null ? "Escoger fecha final" : 
                             (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
                           </span>
-                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>sendDate(e, date)} 
+                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>sendDate(e)} 
                           defaultValue={"Escoge hora"}>
                             {(isRange?
                               secondTimes.map((time, index) =>
@@ -182,8 +186,8 @@ export const KeeperForm = ({ }) => {
             })}
           </div>
           {(value.length > 1 ?
-            <Link to={((finalHour==""?"#":`/checkout/keeper/${store.currentUser.id}`))}>
-              <button className="btn btn-outline-dark btn-lg" role="button" disabled={((finalHour == "")?true:false)}>Reservar</button>
+            <Link to={(((finalHour==""||hour=="")?"#":`/checkout/keeper/${store.currentUser.id}`))}>
+              <button className="btn btn-green" onMouseDown={()=>console.log(hour+""+finalHour)} role="button" disabled={((finalHour == "" || hour == "")?true:false)}>Reservar</button>
             </Link> : "")}
         </div>
       </div>

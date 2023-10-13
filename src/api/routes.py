@@ -495,7 +495,7 @@ def getdailySlots(keeper_id):
     #Getting reservations for the day
     bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.end_date<=end_date).all()
     if len(bookings) < 1:
-        return jsonify([slot.strftime('%-H:%M') for slot in slots]), 200
+        return jsonify([""]+[slot.strftime('%-H:%M') for slot in slots]), 200
     #Remove any conflicting slots based on booking times
     timetoRemove = []
     #Making start_date a datetime object from str
@@ -508,7 +508,7 @@ def getdailySlots(keeper_id):
     for time in timetoRemove:
         if time in slots:    
             slots.remove(time)
-    slots = [slot.strftime('%-H:%M') for slot in slots]
+    slots = [""]+[slot.strftime('%-H:%M') for slot in slots]
     return slots
 
 @api.route("/booking/<int:booking_id>", methods=["PUT", "DELETE"])
@@ -549,20 +549,19 @@ def getmaxDate(keeper_id):
     start_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
     start_slots = start_slots.tolist()
     start_slots.pop()
-    end_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
-    end_slots = end_slots.tolist()
-    end_slots.pop()
-    #start_booking = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start, Booking.start_date<= datetime.datetime.combine(start, datetime.time(23,59,59))).order_by(desc(Booking.start_date)).first()    
-    #start_booking is None when no match
+    end_slots = start_slots
+    # end_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
+    # end_slots = end_slots.tolist()
+    #end_slots.pop()
     bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(((Booking.start_date >= start) & (Booking.start_date <= end)).self_group()|((Booking.end_date >= start) & (Booking.end_date <= end)).self_group()).order_by(asc(Booking.start_date)).all()
 
     if bookings is None:
         bookings = []
     if start.date() == end.date():
          same_slots = getdailySlots(keeper_id)
+         same_slots = same_slots[0].get_json() #Tuple object
          dupslots = same_slots
-         print(same_slots)
-         return ([same_slots,dupslots]), 200
+         return ([[""]+same_slots,[""]+dupslots]), 200
 
     for booking in bookings:
         if booking.start_date>start+datetime.timedelta(days=1) and booking.end_date<end-datetime.timedelta(days=1):
@@ -589,7 +588,7 @@ def getmaxDate(keeper_id):
 
     slots = [start_slots, end_slots]
     slots = [[time.strftime('%-H:%M') for time in slot] for slot in slots]
-    return jsonify(slots),200
+    return jsonify([[""]+slots[0],[""]+slots[1]]),200
     
 @api.route('/recoverypassword', methods=['POST'])
 def recovery_password():

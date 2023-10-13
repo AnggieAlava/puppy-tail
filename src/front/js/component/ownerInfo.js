@@ -12,8 +12,9 @@ export const OwnerInfo = ({ owner }) => {
     const [currentUser, setUser] = useState({})
 
     useEffect(() => {
+       {console.log(store.currentUser.description)}
         loadData()
-    }, [])
+    }, [store.currentUser.description])
     async function loadData() {
         let resp = actions.getOwner(params.theid)
         setAvatar(resp.profile_pic)
@@ -43,13 +44,13 @@ export const OwnerInfo = ({ owner }) => {
     }
 
     return (
-        <div className="container-fluid wrap-profile">
+        <div className="container">
             <div className="d-flex align-items-center justify-content-end">
-                <button type="button" className="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#editUser" onClick={fillForm}>Editar</button>
+                <button type="button" className="btn btn-green" data-bs-toggle="modal" data-bs-target="#editUser" onClick={fillForm}>Editar</button>
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
+                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content border-0">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="editUserLabel">Editar</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -64,7 +65,7 @@ export const OwnerInfo = ({ owner }) => {
                                     </div>
                                     <div className="text-center mb-3">
                                         <input type="file" name="avatar" id="avatarImg" onChange={(event) => setAvatar(URL.createObjectURL(event.target.files[0]))} hidden />
-                                        <label className="btn btn-outline-dark" htmlFor="avatarImg">Seleccionar foto</label>
+                                        <label className="btn btn-green" htmlFor="avatarImg">Seleccionar foto</label>
                                     </div>
                                     <div className="row mb-3">
                                         <div className="col">
@@ -88,8 +89,8 @@ export const OwnerInfo = ({ owner }) => {
                                 {/* END OF FORM BODY */}
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-outline-dark" data-bs-dismiss="modal" onClick={() => setAvatar(currentUser.profile_pic)}>Cancelar</button>
-                                <button type="submit" className="btn btn-outline-success" data-bs-dismiss="modal" onClick={updateUser}>Guardar cambios</button>
+                                <button type="button" className="btn btn-orange" data-bs-dismiss="modal" onClick={() => setAvatar(currentUser.profile_pic)}>Cancelar</button>
+                                <button type="submit" className="btn btn-green" data-bs-dismiss="modal" onClick={updateUser}>Guardar cambios</button>
                             </div>
                         </div>
                     </div>
@@ -101,18 +102,18 @@ export const OwnerInfo = ({ owner }) => {
                     <img onError={imgErrorHandler} src={store.currentUser.profile_pic} className="card-img-top rounded-circle object-fit-cover" alt="..." />
                 </div>
             </div>
-            <div className="row d-flex flex-row flex-wrap justify-content-between mb-2">
+            <div className="row d-flex text-center mb-2">
                 <h2>{store.currentUser.first_name}</h2>
             </div>
-            <div className="d-flex flex-row flex-wrap justify-content-around mb-2">
-                <div className="d-block">
-                    <p><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></p>
-                    <p>{store.currentUser.location}</p>
+            <div className="d-flex flex-row flex-wrap text-center mb-2">
+                <div className="col">
+                    <h5><i className="fa-solid fa-location-dot"></i><strong> Ubicacion</strong></h5>
+                    <h6>{store.currentUser.location}</h6>
                 </div>
             </div>
-            <div className="d-block mb-2" style={{ textAlign: "left" }}>
-                <h3><strong>Sobre mi</strong></h3>
-                <p>{store.currentUser.description}</p>
+            <div className="d-block" style={{ textAlign: "left" }}>
+                <h3 className="mb-0"><strong>Sobre mi</strong></h3>
+                <h6 className="m-0 pb-2">{(store.currentUser.description == ""  || null ? "Sin descripción" : store.currentUser.description)}</h6>
             </div>
         </div>
     );

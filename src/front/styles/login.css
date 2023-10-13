@@ -6,10 +6,9 @@
   font-family:'Roboto';
   min-height: 100vh;
   padding-top: 100px;
-  background-size:cover;
-  background-repeat:no-repeat;
-  background-image: url("https://img.freepik.com/vector-premium/brillo-geometria-fondo-abstracto-blanco-gris-vector-elemento-capa-diseno-presentacion-traje-seminario-festivo-fiesta-institucion-corporativa-negocios-charlas_249611-4160.jpg?w=1480")
+  background-color: #f7e1d2;
 }
+
 
 .btn-login{
   font-size:1.2rem;

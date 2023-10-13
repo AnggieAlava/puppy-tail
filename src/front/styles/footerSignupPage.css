@@ -1,0 +1,11 @@
+.footer-signup {
+  font-size: 1.5rem;
+  font-family: 'Roboto';
+  background-color: rgba(19, 13, 13, 0.498);
+}
+  
+  .btn-footer-signup {
+    font-size: 2rem;
+    font-weight: 400;
+    padding: 25px 60px;
+  }

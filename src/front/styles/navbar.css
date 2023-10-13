@@ -1,21 +1,42 @@
+.navbar{
+  background-color:#f7e1d2;
+}
 .logo {
     font-style: italic;
     text-decoration: none;
-    font-family: 'Poppins';
+    font-family: 'Young Serif', serif;
     font-size: 2rem;
     font-weight: 900;
-    color: green;
+    color:black;
     transition: transform 0.3s, color 0.3s;
   }
-  .logo:hover {
-    transform: scale(0.9); 
-    color:#3DD1E7; 
-  }  
- 
 
 .text-navbar{ 
-    font-family: 'Roboto';
+    font-family: 'Young Serif', serif;
     font-size:1.2rem;
-    font-weight:600;
-    color:white;
+    font-weight:500;
+    color:black;
+}
+#action-navbar {
+  color: snow;
+  padding: 10px 30px;
+  background-color: #0c3a23;
+  border-radius: 4.2rem;
+  font-size: 1rem; 
+  width: auto; 
+  height: auto;
+}
+
+#action-navbar:hover {
+  background-color: #157b48;
+  color: snow;
+}
+
+
+@media (max-width: 768px) {
+  #action-navbar {
+    font-size: 1rem; 
+    padding: 5px 15px; 
+    border-radius: 3rem; 
+  }
 }

@@ -2,7 +2,7 @@ import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      accessToken: null,
+      accessToken: "null",
       userInfo: {},
       message: null,
       pets: [],
@@ -12,8 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
+      dates: null //Si se cambia este null ir tambien a keeperForm en setRange y cambiar el argumento de setDates
     },
     actions: {
+      setDates: (obj) => {
+        const { dates } = getStore()
+        setStore({ dates: obj })
+      },
       getPets: async () => {
         const { pets } = getStore();
         try {
@@ -197,7 +202,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null) {
+        if (localStorage.hasOwnProperty("userInfo") != "null") {
           userData = JSON.parse(localStorage.getItem("userInfo"))
         }
         if (token) {
@@ -216,17 +221,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
-        setStore({ accessToken: token });
-        setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
-        localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
+        if (token != "null") {
+          setStore({ accessToken: token });
+          let userData = { "userId": user_id, "user_type": user_type }
+          setStore({ userInfo: userData })
+          localStorage.setItem("userInfo", JSON.stringify(userData))
+        }
         return resp.code;
       },
 
       logout: () => {
-        setStore({ accessToken: null });
+        setStore({ accessToken: "null" });
         setStore({ userInfo: {} })
         localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", null);
+        localStorage.setItem("accessToken", "null");
       },
 
       getUserInfo: async () => {
@@ -257,6 +265,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         last_name,
         email,
         location,
+        phone_number,
         password
       ) => {
         const { apiFetch } = getActions();
@@ -265,6 +274,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           last_name,
           email,
           location,
+          phone_number,
           password,
         });
         if (resp.code === 201) {
@@ -290,6 +300,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           experience: obj.experience,
           services: obj.services,
           location: obj.location,
+          phone_number: obj.phone_number,
         });
         if (resp.code != 200) {
           console.error("Error saving profile, code: " + resp.code);
@@ -400,6 +411,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         return resp.data
       },
+      getrangeSlots: async (id, start_date, end_date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/maxDate/${id}/?start_date=${start_date}&end_date=${end_date}`, "GET")
+        if (resp.code != 200) {
+          console.error(resp.status + ": " + resp.statusText)
+        }
+        return resp.data
+      },
       requestPasswordRecovery: async (email) => {
         console.log(email);
         const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
@@ -426,7 +445,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           paypal_id: details.id,
           create_time: details.create_time,
           payer_email: details.payer.email_address,
-          payer_name:details.payer.name.given_name + " " + details.payer.name.surname,
+          payer_name: details.payer.name.given_name + " " + details.payer.name.surname,
           payer_id: details.payer.payer_id,
           amount_currency: details.purchase_units[0].amount.currency_code,
           amount_value: details.purchase_units[0].amount.value,

@@ -1,6 +1,43 @@
+html, body {
+    font-family: 'Young Serif', serif;
+}
 .textLeft{
     text-align: left !important;
 }
 .wrap-profile{
     margin-top: 110px;
 }
+.bg-custom{
+    background-color: #f7e1d2;
+}
+.btn-green{
+    background-color: #0C3A23;
+    color: white;
+    font-weight: bold;
+}
+.btn-green:hover{
+    background-color: #1a834e;
+    color:white;
+}
+.btn-green:disabled{
+    color:black;
+}
+.btn-orange{
+    background-color: #EE4B4A;
+    color: white;
+    font-weight: bold;
+}
+.btn-orange:hover{
+    background-color: #ff6f6f;
+}
+input, textarea{
+    border: none;
+    color: white;
+}
+.form-control{
+    border: none;
+}
+.modal{
+    border:none;
+}
+

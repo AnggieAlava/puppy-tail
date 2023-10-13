@@ -10,9 +10,9 @@ export const HidePassword = () => {
 
   return (
     <div className="mb-6">
-      <label htmlFor="inputPassword" className="form-label">
+      {/* <label htmlFor="inputPassword" className="form-label">
         Contraseña
-      </label>
+      </label> */}
       <div className="input-group mb-6 form-control p-0">
         <input
           type={showPassword ? "text" : "password"}

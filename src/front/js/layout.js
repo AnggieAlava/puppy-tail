@@ -15,7 +15,7 @@ import NotFound from "./pages/notFound";
 import { ChangePassword } from "./pages/changePassword";
 import Checkout from "./component/checkout";
 import SignupPage from "./pages/signupPage";
-import Spinner from "./component/spinner"; 
+
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -28,7 +28,6 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
-          <Suspense fallback={<Spinner />}>
             <Routes>
               <Route element={<Landing />} path="/" />
               <Route element={<Signup />} path="/signup" />
@@ -42,7 +41,6 @@ const Layout = () => {
               <Route element={<Checkout />} path="/checkout/keeper/:theid" />
               <Route element={<NotFound />} path="/*" />
             </Routes>
-          </Suspense>
         </ScrollToTop>
       </BrowserRouter>
     </div>

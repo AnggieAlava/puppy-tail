@@ -12,8 +12,9 @@ export const OwnerInfo = ({ owner }) => {
     const [currentUser, setUser] = useState({})
 
     useEffect(() => {
+       {console.log(store.currentUser.description)}
         loadData()
-    }, [])
+    }, [store.currentUser.description])
     async function loadData() {
         let resp = actions.getOwner(params.theid)
         setAvatar(resp.profile_pic)
@@ -111,8 +112,9 @@ export const OwnerInfo = ({ owner }) => {
                 </div>
             </div>
             <div className="d-block" style={{ textAlign: "left" }}>
-                <h3><strong>Sobre mi</strong></h3>
-                <p className="m-0">{(store.currentUser.description == "" ? "Sin descripción" : store.currentUser.description)}</p>
+                <h3 className="mb-0"><strong>Sobre mi</strong></h3>
+                <p className="m-0">{(store.currentUser.description == " "  || null ? "Sin descripción" : store.currentUser.description)}</p>
+               
             </div>
         </div>
     );

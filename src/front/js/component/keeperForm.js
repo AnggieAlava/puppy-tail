@@ -18,6 +18,7 @@ export const KeeperForm = ({ }) => {
   const [maxDate, setmaxDate] = useState(new Date(new Date().getTime() + (366 * 24 * 60 * 60 * 1000)))
   const [finalHour, setfinalHour] = useState("")
   const [edit, setEdit] = useState(true) //Editar los campos de horas
+  const [currentService, setCurrentService] = useState(" ");
   const params = useParams();
 
   useEffect(()=>{
@@ -28,13 +29,16 @@ export const KeeperForm = ({ }) => {
         "start_date":start_date,
         "end_date":end_date,
         "start_hour":hour,
-        "end_hour":finalHour
+        "end_hour":finalHour,
+        "service": currentService,
       }
       actions.setDates(obj);
     }
   },[hour,finalHour])
 
+
   function setRange(service) {
+    setCurrentService(service)
     setValue([])
     setTimes([])
     setdisabledCalendar([])

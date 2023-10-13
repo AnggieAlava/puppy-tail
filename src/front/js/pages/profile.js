@@ -13,7 +13,7 @@ export const Profile = ({ keeper }) => {
 			<div className="bg-custom">
 				{(params.type == 'owner' ? <OwnerInfo /> : <KeeperInfo />)}
 			</div>
-			<img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" class="bottom-squiggle" />
+			<img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" />
 			{/* Componente condicional aqui, pasar user type por props */}
 			{(params.type == 'owner' ? < Pets owner_id={params.theid} /> : <KeeperForm keeper={keeper} />)}
 			<div className="text-center container pt-3">

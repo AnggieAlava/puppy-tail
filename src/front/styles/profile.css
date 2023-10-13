@@ -13,6 +13,7 @@ html, body {
 .btn-green{
     background-color: #0C3A23;
     color: white;
+    font-weight: bold;
 }
 .btn-green:hover{
     background-color: #15683e;
@@ -20,14 +21,19 @@ html, body {
 .btn-orange{
     background-color: #EE4B4A;
     color: white;
+    font-weight: bold;
 }
 .btn-orange:hover{
     background-color: #ff6f6f;
 }
-input{
+input, textarea{
     border: none;
+    color: white;
 }
 .form-control{
     border: none;
+}
+.modal{
+    border:none;
 }
 

@@ -57,7 +57,7 @@ const Keepers = () => {
     ? keepers.filter((keeper) => {
       return (
         keeper.first_name.toLowerCase().includes(filters.first_name.toLowerCase()) &&
-        // keeper.services.toLowerCase().includes(filters.services.toLowerCase()) &&
+        keeper.services.toLowerCase().includes(filters.services.toLowerCase()) &&
         calculateExperienceInYears(keeper.experience) >= filters.experience &&
         keeper.location.toLowerCase().includes(filters.location.toLowerCase())
       );
@@ -120,9 +120,8 @@ const Keepers = () => {
 
       <div className="row row-cols-1 row-cols-sm-3 g-4 card-wrap">
 
-
         {filteredKeepers.map((keeper, index) => (
-          <div className="col p-4 " key={index}>
+          <div className="col p-4" key={index}>
             <Link
               to={"/profile/keeper/" + keeper.id}
               onClick={() =>
@@ -141,16 +140,19 @@ const Keepers = () => {
                     {keeper.first_name} {keeper.last_name}
                   </h5>
                   <h6 className="card-text">{keeper.location}</h6>
-
-                  <p className="card-text">{keeper.services}</p>
+                  <p className="card-text">
+                    Servicios:
+                    <ul>
+                      {keeper.services.map((service, serviceIndex) => (
+                        <li key={serviceIndex}>{service}</li>
+                      ))}
+                    </ul>
+                  </p>
                   <p className="card-text">Años de experiencia: {calculateExperienceInYears(keeper.experience)}</p>
                 </div>
               </div>
-
             </Link>
           </div>
-
-
         ))}
 
       </div>

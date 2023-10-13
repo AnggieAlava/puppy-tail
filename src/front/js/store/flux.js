@@ -2,7 +2,7 @@ import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      accessToken: null,
+      accessToken: "null",
       userInfo: {},
       message: null,
       pets: [],
@@ -202,7 +202,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != null) {
+        if (localStorage.hasOwnProperty("userInfo") != "null") {
           userData = JSON.parse(localStorage.getItem("userInfo"))
         }
         if (token) {
@@ -221,20 +221,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
-        if(token!=null){
-        setStore({ accessToken: token });
-        let userData = { "userId": user_id, "user_type": user_type }
-        setStore({ userInfo: userData })
-        localStorage.setItem("userInfo", JSON.stringify(userData))
+        if (token != "null") {
+          setStore({ accessToken: token });
+          let userData = { "userId": user_id, "user_type": user_type }
+          setStore({ userInfo: userData })
+          localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
       },
 
       logout: () => {
-        setStore({ accessToken: null });
+        setStore({ accessToken: "null" });
         setStore({ userInfo: {} })
         localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", null);
+        localStorage.setItem("accessToken", "null");
       },
 
       getUserInfo: async () => {
@@ -410,9 +410,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       getrangeSlots: async (id, start_date, end_date) => {
         const { apiFetch } = getActions();
-        const resp = await apiFetch(`/bookings/maxDate/${id}/?start_date=${start_date}&end_date=${end_date}`,"GET")
-        if (resp.code != 200){
-          console.error(resp.status+": "+ resp.statusText)
+        const resp = await apiFetch(`/bookings/maxDate/${id}/?start_date=${start_date}&end_date=${end_date}`, "GET")
+        if (resp.code != 200) {
+          console.error(resp.status + ": " + resp.statusText)
         }
         return resp.data
       },
@@ -442,7 +442,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           paypal_id: details.id,
           create_time: details.create_time,
           payer_email: details.payer.email_address,
-          payer_name:details.payer.name.given_name + " " + details.payer.name.surname,
+          payer_name: details.payer.name.given_name + " " + details.payer.name.surname,
           payer_id: details.payer.payer_id,
           amount_currency: details.purchase_units[0].amount.currency_code,
           amount_value: details.purchase_units[0].amount.value,

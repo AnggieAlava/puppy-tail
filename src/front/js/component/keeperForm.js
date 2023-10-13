@@ -18,6 +18,7 @@ export const KeeperForm = ({ }) => {
   const [maxDate, setmaxDate] = useState(new Date(new Date().getTime() + (366 * 24 * 60 * 60 * 1000)))
   const [finalHour, setfinalHour] = useState("")
   const [edit, setEdit] = useState(true) //Editar los campos de horas
+  const [currentService, setCurrentService] = useState(" ");
   const params = useParams();
 
   useEffect(()=>{
@@ -29,15 +30,18 @@ export const KeeperForm = ({ }) => {
         "start_date":start_date,
         "end_date":end_date,
         "start_hour":hour,
-        "end_hour":finalHour
+        "end_hour":finalHour,
+        "service": currentService,
       }
       actions.setDates(obj);
     }
   },[hour,finalHour])
 
+
   function setRange(service) {
     //Reset everything when choosing another service type
     actions.setDates(null)
+    setCurrentService(service)
     setValue([])
     setTimes([])
     setdisabledCalendar([])
@@ -182,7 +186,7 @@ export const KeeperForm = ({ }) => {
           </div>
           {(value.length > 1 ?
             <Link to={(((finalHour==""||hour=="")?"#":`/checkout/keeper/${store.currentUser.id}`))}>
-              <button className="btn btn-outline-dark btn-lg" onMouseDown={()=>console.log(hour+""+finalHour)} role="button" disabled={((finalHour == "" || hour == "")?true:false)}>Reservar</button>
+              <button className="btn btn-green" onMouseDown={()=>console.log(hour+""+finalHour)} role="button" disabled={((finalHour == "" || hour == "")?true:false)}>Reservar</button>
             </Link> : "")}
         </div>
       </div>

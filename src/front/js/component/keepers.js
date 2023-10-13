@@ -54,15 +54,17 @@ const Keepers = () => {
   }
 
   const filteredKeepers = dataLoaded
+
     ? keepers.filter((keeper) => {
       return (
         keeper.first_name.toLowerCase().includes(filters.first_name.toLowerCase()) &&
-        keeper.services.toLowerCase().includes(filters.services.toLowerCase()) &&
+        (filters.services === "" || keeper.services.includes(filters.services)) && // Filtrar si está seleccionado un servicio
         calculateExperienceInYears(keeper.experience) >= filters.experience &&
         keeper.location.toLowerCase().includes(filters.location.toLowerCase())
       );
     })
     : [];
+
   function calculateExperienceInYears(experienceStartDate) {
     const startDate = moment(experienceStartDate);
     const endDate = moment(); // Fecha actual
@@ -88,6 +90,7 @@ const Keepers = () => {
             type="text"
             name="first_name"
             placeholder="Nombre del cuidador"
+            className="text-black"
             onChange={(e) => handleFilterChange("first_name", e.target.value)}
           />
 
@@ -140,14 +143,8 @@ const Keepers = () => {
                     {keeper.first_name} {keeper.last_name}
                   </h5>
                   <h6 className="card-text">{keeper.location}</h6>
-                  <p className="card-text">
-                    Servicios:
-                    <ul>
-                      {keeper.services.map((service, serviceIndex) => (
-                        <li key={serviceIndex}>{service}</li>
-                      ))}
-                    </ul>
-                  </p>
+                  <h6 className="card-text">{keeper.services}</h6>
+
                   <p className="card-text">Años de experiencia: {calculateExperienceInYears(keeper.experience)}</p>
                 </div>
               </div>

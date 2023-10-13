@@ -24,3 +24,6 @@
   border-top-color: #000; 
   pointer-events: none;
 }
+.filter-home{
+  background-color: aquamarine;
+}

@@ -60,6 +60,8 @@ def create_keeper():
         return jsonify({"msg": "Email already registered"}), 400
     new_keeper = Keeper()
     signup_by_type(new_keeper, data)
+    if 'phone_number' in data and data['phone_number']:
+        new_keeper.phone_number = data['phone_number']
     if hasattr(data, "services") is False:
         new_keeper.services = []
     if hasattr(data, "description") is False:
@@ -232,6 +234,7 @@ def keepers_list():
             "profile_pic": getprofilePic(keeper.id),
             "experience": experience_date,
             "services": services,
+            "phone_number": keeper.phone_number,
             "working_hours": [str(time) for time in keeper.working_hours] if keeper.working_hours else []
         }
 
@@ -256,6 +259,7 @@ def get_keeper(keeper_id):
         "location": keeper.location,
         "experience": keeper.experience,
         "hourly_pay": keeper.hourly_pay,
+        "phone_number": keeper.phone_number,
         "description": keeper.description,
         "bookings": [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in keeper.booking],
         "services": [service for service in keeper.services] if keeper.services else [],
@@ -274,6 +278,8 @@ def updateKeeper(keeper_id):
         keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) 
     keeper.description = data["description"]
     keeper.experience = data["experience"]
+    if "phone_number" in data:
+        keeper.phone_number = data["phone_number"]
     keeper.services = [service for service in data["services"]]
     keeper.location = data["location"]
     db.session.commit()
@@ -284,6 +290,7 @@ def updateKeeper(keeper_id):
         "hourly_pay":keeper.hourly_pay,
         "description":keeper.description,
         "experience":keeper.experience,
+        "phone_number":keeper.phone_number,
         "services": [service for service in keeper.services],
         "location": keeper.location
     }

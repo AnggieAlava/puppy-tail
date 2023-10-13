@@ -1,0 +1,161 @@
+[
+{
+"flag": "https://twemoji.maxcdn.com/2/svg/1f1e6-1f1f7.svg",
+"name": "Argentina",
+"dial_code": "+54",
+"code": "AR"
+},
+{
+"name": "Aruba",
+"dial_code": "+297",
+"code": "AW"
+},
+{
+"name": "Bahamas",
+"dial_code": "+1242",
+"code": "BS"
+},
+{
+"name": "Barbados",
+"dial_code": "+1246",
+"code": "BB"
+},
+{
+"name": "Belize",
+"dial_code": "+501",
+"code": "BZ"
+},
+{
+"name": "Bermuda",
+"dial_code": "+1441",
+"code": "BM"
+},
+{
+"name": "Bolivia, Plurinational State of",
+"dial_code": "+591",
+"code": "BO"
+},
+{
+"name": "Brazil",
+"dial_code": "+55",
+"code": "BR"
+},
+{
+"name": "Canada",
+"dial_code": "+1",
+"code": "CA"
+},
+{
+"name": "Cayman Islands",
+"dial_code": "+ 345",
+"code": "KY"
+},
+{
+"name": "Chile",
+"dial_code": "+56",
+"code": "CL"
+},
+{
+"name": "Colombia",
+"dial_code": "+57",
+"code": "CO"
+},
+{
+"name": "Costa Rica",
+"dial_code": "+506",
+"code": "CR"
+},
+{
+"name": "Cuba",
+"dial_code": "+53",
+"code": "CU"
+},
+{
+"name": "Denmark",
+"dial_code": "+45",
+"code": "DK"
+},
+{
+"name": "Dominica",
+"dial_code": "+1767",
+"code": "DM"
+},
+{
+"name": "Dominican Republic",
+"dial_code": "+1849",
+"code": "DO"
+},
+{
+"flag": "https://twemoji.maxcdn.com/2/svg/1f1ea-1f1e8.svg",
+"name": "Ecuador",
+"dial_code": "+593",
+"code": "EC"
+},
+
+{
+"name": "El Salvador",
+"dial_code": "+503",
+"code": "SV"
+},
+
+{
+"name": "Honduras",
+"dial_code": "+504",
+"code": "HN"
+},
+{
+"name": "Martinique",
+"dial_code": "+596",
+"code": "MQ"
+},
+{
+"name": "Mexico",
+"dial_code": "+52",
+"code": "MX"
+},
+{
+"name": "Nicaragua",
+"dial_code": "+505",
+"code": "NI"
+},
+{
+"name": "Panama",
+"dial_code": "+507",
+"code": "PA"
+},
+{
+"name": "Paraguay",
+"dial_code": "+595",
+"code": "PY"
+},
+{
+"name": "Peru",
+"dial_code": "+51",
+"code": "PE"
+},
+{
+"name": "Pitcairn",
+"dial_code": "+872",
+"code": "PN"
+},
+{
+"name": "Puerto Rico",
+"dial_code": "+1939",
+"code": "PR"
+},
+{
+"name": "United States",
+"dial_code": "+1",
+"code": "US"
+},
+{
+"name": "Uruguay",
+"dial_code": "+598",
+"code": "UY"
+},
+{
+"name": "Venezuela, Bolivarian Republic of Venezuela",
+"dial_code": "+58",
+"code": "VE"
+}
+]

@@ -20,9 +20,13 @@ export const KeeperInfo = ({ keeper }) => {
         setAvatar(response.profile_pic)
     }
     function loadServices() {
-        document.getElementById("petSitter").checked = currentUser.services.includes("Cuidar mascotas")
-        document.getElementById("petWalker").checked = currentUser.services.includes("Pasear mascotas")
-        document.getElementById("partyPlanner").checked = currentUser.services.includes("Organizar fiesta")
+        if (currentUser.services) {
+            document.getElementById("petSitter").checked = currentUser.services.includes("Cuidar mascotas")
+            document.getElementById("petWalker").checked = currentUser.services.includes("Pasear mascotas")
+            document.getElementById("partyPlanner").checked = currentUser.services.includes("Organizar fiesta")
+        } else {
+            alert("No se han especificado servicios. Por favor, configure sus servicios en su perfil.");
+        }
     }
     function imgErrorHandler(e) {
         e.target.src = stock_avatar

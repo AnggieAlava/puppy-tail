@@ -7,9 +7,9 @@ import { Logout } from "../pages/logout";
 export const Navbar = () => {
   const { store, actions } = useContext(Context)
 
-  useEffect(()=>{
+  useEffect(() => {
     actions.loadTokens();
-  },[])
+  }, [])
 
   return (
     <nav className="navbar navbar-expand-lg py-3 px-5">
@@ -55,7 +55,7 @@ export const Navbar = () => {
                   Perfil <i className="fa-regular fa-user"></i>
                 </Link>
               </li> : <li className="nav-item">
-                <Link id="action-navbar"className="nav-link text-navbar" to="/signuppage">
+                <Link id="action-navbar" className="nav-link text-navbar" to="/signuppage">
                   Quieres ser cuidador?
                 </Link>
               </li>)}

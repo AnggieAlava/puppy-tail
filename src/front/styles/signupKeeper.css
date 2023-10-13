@@ -25,3 +25,6 @@
   .btn-signup-keeper:hover{
     filter: brightness(1.2);
   }
+  #inputCountryCode{
+    width: 150px;
+  }

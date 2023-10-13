@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { HidePassword } from "../component/hidePassword";
 import locations from "../../json/location.json";
+import countryCodes from "../../json/countryCodes.json";
 import "../../styles/signupKeeper.css"
 
 
@@ -13,6 +14,7 @@ export const SignupKeeper = (props) => {
   const navigate = useNavigate();
   const [shouldNavigate, setShouldNavigate] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(" ");
+  const [selectedCountryCode, setSelectedCountryCode] = useState(" ");
   useEffect(() => {
     if (shouldNavigate) {
       navigate("/login");
@@ -25,6 +27,7 @@ export const SignupKeeper = (props) => {
     const last_name = data.get("last_name");
     const email = data.get("email");
     const location = selectedLocation;
+    const phone_number = `${selectedCountryCode}${data.get("phone_number")}`;
     const password = data.get("password");
     const { signupKeeper } = actions;
     let resp = await signupKeeper(
@@ -32,6 +35,7 @@ export const SignupKeeper = (props) => {
       last_name,
       email,
       location,
+      phone_number,
       password
     );
     setShouldNavigate(true);
@@ -101,9 +105,39 @@ export const SignupKeeper = (props) => {
             })}
           </select>
         </div>
+        <div className="mb-6">
+          <label htmlFor="inputCountryCode" className="form-label">
+            Numero celular
+          </label>
+          <div className="d-flex">
+            <select
+              className="form-control form-control-sm"
+              id="inputCountryCode"
+              defaultValue="0"
+              onChange={(e) => setSelectedCountryCode(e.target.value)}
+            >
+              <option value="0" disabled>
+                Codigo celular
+              </option>
+              {countryCodes.map((code, index) => {
+                return (
+                  <option value={code.dial_code} key={index}>
+                    {code.dial_code}
+                  </option>
+                );
+              })}
+            </select>
+            <input
+              type="text"
+              className="form-control p-2 ms-2"
+              name="phone_number"
+              id="inputPhoneNumber"
+            />
+          </div>
+        </div>
         <label htmlFor="inputPassword" className="form-label">
-        Contraseña
-      </label>
+          Contraseña
+        </label>
         <HidePassword />
         <button type="submit" className="form-control mt-4 btn-signup-keeper">
           Registrarse

@@ -12,12 +12,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
-      dates:null
+      dates: null
     },
     actions: {
       setDates: (obj) => {
-        const {dates} = getStore()
-        setStore({dates:obj})
+        const { dates } = getStore()
+        setStore({ dates: obj })
       },
       getPets: async () => {
         const { pets } = getStore();
@@ -265,6 +265,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         last_name,
         email,
         location,
+        phone_number,
         password
       ) => {
         const { apiFetch } = getActions();
@@ -273,6 +274,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           last_name,
           email,
           location,
+          phone_number,
           password,
         });
         if (resp.code === 201) {
@@ -298,6 +300,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           experience: obj.experience,
           services: obj.services,
           location: obj.location,
+          phone_number: obj.phone_number,
         });
         if (resp.code != 200) {
           console.error("Error saving profile, code: " + resp.code);

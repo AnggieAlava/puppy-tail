@@ -17,11 +17,8 @@ const Keepers = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const URL = 'https://miniature-invention-wqp577q66v5c5xq6-3001.app.github.dev/api/keeper';
+  const URL = 'https://glorious-acorn-qw4xjqjxjwrfx5j9-3001.app.github.dev/api/keeper';
   const [selectedLocation, setSelectedLocation] = useState(null);
-
-
-
 
 
   const showData = async () => {
@@ -52,7 +49,6 @@ const Keepers = () => {
   function imgErrorHandler(e) {
     e.target.src = avatar;
   }
-
   const filteredKeepers = dataLoaded
 
     ? keepers.filter((keeper) => {
@@ -113,9 +109,7 @@ const Keepers = () => {
             placeholder="Experiencia"
             onChange={(e) => handleFilterChange("experience", e.target.value)}
           />
-
           <FilterLocation onLocationChange={handleLocationChange} />
-
         </div>
 
       )}

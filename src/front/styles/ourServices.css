@@ -72,7 +72,8 @@ html. body {
 .modal-content{
     color: white;
     font-weight: 400;
-    background-color:#2b2c30;
+    /* background-color:#2b2c30; */
+    background-color: #BCBEB6;
 }
 .modal-header,.modal-footer{
     border:none;

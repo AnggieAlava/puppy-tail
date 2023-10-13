@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useState, useContext } from "react";
 import { Context } from "../store/appContext";
@@ -20,24 +20,25 @@ export const KeeperForm = ({ }) => {
   const [edit, setEdit] = useState(true) //Editar los campos de horas
   const params = useParams();
 
-  function getDate() {
-    let today = new Date()
-    return today
-  }
-  function setTime(time) {
-    setHour(time)
-    setfinalHour("")
-    if(isRange) return;
-    let date = new Date(`20 December 2019 ${time}`) //Dummy date info to strip time from it
-    date.setHours(date.getHours() + 1)
-    date = date.getHours().toString() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString()
-    setfinalHour(date)
-  }
+  useEffect(()=>{
+    if(hour!=""&&finalHour!=""){
+      let start_date = value[0].getDate().toString() + "-" + (value[0].getMonth() + 1).toString() + "-" + value[0].getFullYear().toString()
+      let end_date = value[1].getDate().toString() + "-" + (value[1].getMonth() + 1).toString() + "-" + value[1].getFullYear().toString()
+      let obj = {
+        "start_date":start_date,
+        "end_date":end_date,
+        "start_hour":hour,
+        "end_hour":finalHour
+      }
+      actions.setDates(obj);
+    }
+  },[hour,finalHour])
+
   function setRange(service) {
     setValue([])
     setTimes([])
     setdisabledCalendar([])
-    if (service == "Cuidador(a) de mascotas") {
+    if (service == "Cuidar mascotas") {
       setisRange(true)
     }
     else {
@@ -82,26 +83,44 @@ export const KeeperForm = ({ }) => {
       document.getElementById("datesText2").textContent = "" 
     }//Editar los campos de horas
   }
+  function sendDate(e, dates){
+    if(isRange && e.target.id == "startHour"){
+      setHour(e.target.value)
+      //setfinalHour("")      
+    }
+    if(!isRange && e.target.id=="startHour"){
+      let date = new Date(`20 December 2019 ${e.target.value}`) //Dummy date info to strip time from it
+      date.setHours(date.getHours() + 1)
+      date = date.getHours().toString() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString()
+      setfinalHour(date)
+    }
+    if(e.target.id == "endHour"){
+      setfinalHour(e.target.value)
+    }
+
+  }
   return (
-    <div className="container pb-4 text-start" id="calendar">
-      <h2><strong>Reservar</strong></h2>
+    <div className="container d-flex flex-column justify-content-center pb-4 text-start p-4" id="calendar">
+      <h2 className="row"><strong>Reservar</strong></h2>
       <div className="row gap-2">
         {/* Dos columnas principales */}
         <div className="col px-0">
           <h2 className="input-group-text">Servicios</h2>
           {/* Escogencia de servicios */}
-          {Array.isArray(store.currentUser.services) ? store.currentUser.services.map((service, index) => {
+          {Array.isArray(store.currentUser.services) && (store.currentUser.hourly_pay!=null)? store.currentUser.services.map((service, index) => {
             return (
               <div className="form-check form-check-inline" key={index}>
                 <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
                 <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
               </div>
             )
-          }) : ""}
+          }) : store.currentUser.first_name+" no ha establecido servicios o tarifa"}
           <h2 className="input-group-text mt-2">Disponibilidad</h2>
-          <Calendar onChange={(date) => getSlots(date)} minDate={new Date()} maxDate={maxDate} allowPartialRange={true}
-            tileDisabled={({ date }) => disabledCalendar.includes(date.getDay())} selectRange={isRange}
-            returnValue="range" value={value} locale="es" />
+          <div className="d-flex justify-content-center">
+            <Calendar onChange={(date) => getSlots(date)} minDate={new Date()} maxDate={maxDate} allowPartialRange={true}
+              tileDisabled={({ date }) => disabledCalendar.includes(date.getDay())} selectRange={isRange}
+              returnValue="range" value={value} locale="es" />
+          </div>
           {/* Aqui irian las horas del calendario si fueran en la columna 1*/}
         </div>
         <div className="col">
@@ -126,7 +145,7 @@ export const KeeperForm = ({ }) => {
                           <span className="input-group-text" id="basic-addon3">
                             {days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}
                           </span>
-                          <select className="form-select" id="startHour" disabled={edit} onChange={(e)=>setTime(e.target.value)}>
+                          <select className="form-select" id="startHour" disabled={edit} onChange={(e)=>sendDate(e)}>
                             {times.map((time, index) =>
                               <option key={index} value={time}>{time}</option>
                             )}
@@ -139,13 +158,14 @@ export const KeeperForm = ({ }) => {
                         <label htmlFor="basic-url" className="form-label">Fecha final</label>
                         <div className="input-group">
                           <span className="input-group-text" id="basic-addon3">
-                            {(date == null ? "Escoger fecha final" : (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
+                            {(date == null ? "Escoger fecha final" : 
+                            (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
                           </span>
-                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>setfinalHour(e.target.value)} defaultValue={"Escoge hora"}>
+                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>sendDate(e, date)} 
+                          defaultValue={"Escoge hora"}>
                             {(isRange?
                               secondTimes.map((time, index) =>
-                              <option key={index} value={time}>{time}</option>
-                            )
+                              <option key={index} value={time}>{time}</option>)
                               :<option value={finalHour}>{finalHour}</option>)}
                           </select>
                         </div>

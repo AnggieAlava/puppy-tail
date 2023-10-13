@@ -12,8 +12,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
+      dates:null
     },
     actions: {
+      setDates: (obj) => {
+        const {dates} = getStore()
+        setStore({dates:obj})
+      },
       getPets: async () => {
         const { pets } = getStore();
         try {
@@ -197,7 +202,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") !== "null") {
+        if (localStorage.hasOwnProperty("userInfo") != "null") {
           userData = JSON.parse(localStorage.getItem("userInfo"))
         }
         if (token) {

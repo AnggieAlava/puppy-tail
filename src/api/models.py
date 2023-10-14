@@ -45,7 +45,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     location = db.Column(db.String(255), unique=False, nullable=True)
     password = db.Column(db.String(255), unique=False, nullable=False)
-    description = db.Column(db.String(2000), unique=False, nullable=True)
+    description = db.Column(db.String(2000), unique=False, nullable=True, default="")
     profile_pic = db.Column(db.String(150), unique=False, nullable=True)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     user_type = db.Column(db.String(50))

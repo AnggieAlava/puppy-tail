@@ -18,6 +18,7 @@ export const Pets = (props) => {
     function fillForm(pet) {
         setPet(pet)
         setSize(pet.size)
+        setPreview(pet.profile_pic)
     }
     async function createPet() {
         let newPet = {
@@ -39,7 +40,9 @@ export const Pets = (props) => {
     }
 
     async function updatePet() {
-        if (preview != stock_pet) {
+        console.log(preview)
+        console.log(currentPet.profile_pic)
+        if (preview != (stock_pet && currentPet.profile_pic)) {
             const formData = new FormData()
             formData.append("avatar", document.getElementById("petImg").files[0])
             let resp = await actions.uploadpetAvatar(formData, currentPet.id)
@@ -56,10 +59,6 @@ export const Pets = (props) => {
         actions.updatePet(updatedPet)
         setPreview(stock_pet)
     }
-
-    useEffect(() => {
-        //actions.getOwner(1);
-    }, []);
     return (
         <div className="container text-left my-2">
             <div className="d-flex flex-row justify-content-between align-items-center mb-2">

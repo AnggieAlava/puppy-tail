@@ -72,7 +72,6 @@ html. body {
 .modal-content{
     color: white;
     font-weight: 400;
-    /* background-color:#2b2c30; */
     background-color: #BCBEB6;
 }
 .modal-header,.modal-footer{
@@ -85,7 +84,7 @@ html. body {
     border-top: solid 2px #9c8f8f;
 }
 .bottom-squiggle{
-    background-color:white;
+    background-color:snow;
     -webkit-text-size-adjust: 100%;
     --graphite: #2b2c30;
     --ivory: #f7e1d2;

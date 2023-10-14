@@ -35,6 +35,9 @@ export const Signup = (props) => {
   }
 
   return (
+    <>
+            <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" /></div>
+
     <div className="container-fluid wrap-signup text-center">
       <form onSubmit={signup} className="form-signup pe-3">
         <h1 className="title-signup">Registrate en Puppy Tail</h1>
@@ -107,6 +110,7 @@ export const Signup = (props) => {
         <p className="mt-4 question-signup">Ya tienes cuenta?<Link to="/login" className="click-login"> Ingresa aqui</Link></p>
       </form>
     </div>
+    </>
   );
 };
 Signup.propTypes = {

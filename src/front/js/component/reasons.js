@@ -5,8 +5,8 @@ import "../../styles/reasons.css"
 
 const Reasons = () => {
     return (
-
-        <div className="container-fluid reasons my-5">
+        <div className="container-fluid wrap-reasons my-5">
+            <div className="container reasons py-5">
             <h3 className="text-center pt-5">¿Por qué elegir Puppy Tail?</h3>
             <div className="row mt-1 py-4">
                 <div className="col col-container ">
@@ -29,6 +29,7 @@ const Reasons = () => {
                 </div>
             </div>
             <StepsLanding />
+            </div>
         </div>
 
     );

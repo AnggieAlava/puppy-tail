@@ -29,16 +29,19 @@ export const RecoveryPassword = () => {
   }
 
   return (
+    <>
+    <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" /></div>
     <div className="container-fluid recovery-page text-center pt-5">
-      <h2>Recuperar contraseña</h2>
-      <form className="pe-3" onSubmit={submitForm}>
-        <div className="mb-3">
+    <div className="bg-recovery p-5">
+      <form className=" pe-3" onSubmit={submitForm}>
+      <h4>Recuperar contraseña</h4>
+        <div className="mb-3 ">
           <label htmlFor="inputEmail" className="form-label">
             Correo electrónico
           </label>
           <input
             type="email"
-            className="form-control"
+            className="form-control mt-2 p-2"
             name="email"
             id="inputEmail"
             aria-describedby="emailHelp"
@@ -46,10 +49,12 @@ export const RecoveryPassword = () => {
           <div id="emailHelp" className="form-text"></div>
         </div>
         {error && <p className="text-danger">{error}</p>}
-        <button type="submit" className="btn btn-recovery">
+        <button type="submit" className="btn btn-recovery btn-orange">
           Recuperar contraseña
         </button>
       </form>
+      </div>
     </div>
+    </>
   );
 };

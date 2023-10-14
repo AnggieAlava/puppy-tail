@@ -66,7 +66,7 @@ export const Pets = (props) => {
                 <button onClick={() => setEdit(!edit)} className="btn btn-orange">Editar</button>
             </div>
             {/* Lista de mascotas */}
-            <ul className="p-0 d-flex flex-row flex-wrap justify-content-start align-items-center gap-4">
+            <ul className="p-0 d-flex flex-row flex-wrap justify-content-center align-items-center gap-4">
                 {(store.pets.length < 1 ? "" : store.pets.map((pet, index) => {
                     return (
                         <div style={{ width: "18rem" }} key={index}>

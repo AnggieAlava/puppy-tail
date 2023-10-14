@@ -23,7 +23,6 @@ export const KeeperForm = ({ }) => {
   const params = useParams();
 
   useEffect(()=>{
-    console.log("Running useEffect!")
     if(hour!=""&&finalHour!=""){
       let start_date = value[0].getDate().toString() + "-" + (value[0].getMonth() + 1).toString() + "-" + value[0].getFullYear().toString()
       let end_date = value[1].getDate().toString() + "-" + (value[1].getMonth() + 1).toString() + "-" + value[1].getFullYear().toString()

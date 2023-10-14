@@ -58,15 +58,18 @@ export const ChangePassword = () => {
     };
 
     return (
+        <>
+        <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" /></div>
         <div className="container-fluid change-page text-center pt-5">
-            <h2>Cambiar Contraseña</h2>
+        <div className="bg-change p-5">
             <form className="pe-3" onSubmit={submitForm}>
+            <h4>Cambiar Contraseña</h4>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">
                         Contraseña
                     </label>
                     <input
-                        type={passwordType} // Use the passwordType state
+                        type={passwordType} 
                         className="form-control"
                         name="password"
                         id="password"
@@ -77,7 +80,7 @@ export const ChangePassword = () => {
                         Confirmar Contraseña
                     </label>
                     <input
-                        type={passwordType} // Use the passwordType state
+                        type={passwordType} 
                         className="form-control"
                         name="passwordConfirm"
                         id="passwordConfirm"
@@ -93,10 +96,12 @@ export const ChangePassword = () => {
                     </button>
                 </div>
                 {error && <p className="text-danger">{error}</p>}
-                <button id="btn-login" type="submit" className="btn btn-change">
+                <button id="btn-login" type="submit" className="btn btn-change btn-orange">
                     Cambiar Contraseña
                 </button>
             </form>
         </div>
+        </div>
+        </>
     );
 };

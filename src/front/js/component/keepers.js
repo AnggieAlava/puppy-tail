@@ -21,9 +21,6 @@ const Keepers = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
 
 
-
-
-
   const showData = async () => {
     try {
       const response = await fetch(URL);
@@ -52,7 +49,6 @@ const Keepers = () => {
   function imgErrorHandler(e) {
     e.target.src = avatar;
   }
-
   const filteredKeepers = dataLoaded
 
     ? keepers.filter((keeper) => {
@@ -113,9 +109,7 @@ const Keepers = () => {
             placeholder="Experiencia"
             onChange={(e) => handleFilterChange("experience", e.target.value)}
           />
-
           <FilterLocation onLocationChange={handleLocationChange} />
-
         </div>
 
       )}

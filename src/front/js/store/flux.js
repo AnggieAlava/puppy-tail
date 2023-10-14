@@ -217,7 +217,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-
         console.log({ resp });
         const { message, token, user_id, user_type } = resp.data;
         localStorage.setItem("accessToken", token);
@@ -225,6 +224,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ accessToken: token });
           let userData = { "userId": user_id, "user_type": user_type }
           setStore({ userInfo: userData })
+          console.log(userData)
           localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
@@ -233,8 +233,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       logout: () => {
         setStore({ accessToken: "null" });
         setStore({ userInfo: {} })
-        localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", "null");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("keeper");
+        localStorage.removeItem("__paypal_storage__");
       },
 
       getUserInfo: async () => {

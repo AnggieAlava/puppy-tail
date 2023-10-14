@@ -22,6 +22,12 @@ import ssl
 from email.message import EmailMessage
 locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 
+import os
+
+
+frontend_url = os.environ.get("FRONTEND_URL")
+
+
 api = Blueprint('api', __name__)
 # Agregado al boilerplate
 app = Flask(__name__)
@@ -592,6 +598,7 @@ def getmaxDate(keeper_id):
     
 @api.route('/recoverypassword', methods=['POST'])
 def recovery_password():
+   
    email= request.json.get("email")
    user=User.query.filter_by(email=email).first()
    if  user is None:
@@ -608,7 +615,7 @@ def send_simple_message(user_email, token):
     body = f"""Estimado Usuario,
 Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Puppy Tail.
 Para recuperar la contraseña, haz clic aquí:
-https://refactored-journey-xg7pwwg665pcgw-3000.app.github.dev/changePassword?token={token}
+{frontend_url}/changePassword?token={token}
 Si no solicitaste este cambio de contraseña, por favor ignora este mensaje o contáctanos inmediatamente si crees que tu cuenta está en peligro.
 El enlace expirará en 5 minutos por motivos de seguridad. Si el enlace ha caducado, puedes solicitar un nuevo enlace de recuperación de contraseña en la página de inicio de sesión de Puppy Tail.
 Gracias,

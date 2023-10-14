@@ -64,7 +64,7 @@ export const Login = () => {
       </label>
           <HidePassword />
           <button type="submit"
-            className="form-control btn-login mt-4"
+            className="form-control btn-green mt-4"
             name="submit"
             id="btn-login">
             Iniciar sesión
@@ -80,7 +80,6 @@ export const Login = () => {
       </div>
     </div>
     </>
-
 
   );
 };

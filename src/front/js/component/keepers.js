@@ -40,8 +40,7 @@ const Keepers = () => {
     showData();
   }, []);
   const handleLocationChange = (location) => {
-    setSelectedLocation(location);
-    filters.location = location
+    setFilters({ ...filters, location });
   };
   const handleFilterChange = (name, value) => {
     setFilters({ ...filters, [name]: value });
@@ -67,11 +66,16 @@ const Keepers = () => {
     const yearsOfExperience = endDate.diff(startDate, "years");
     return yearsOfExperience;
   }
-  useEffect(() => {
-    showData();
-  }, []);
   const toggleFilters = () => {
     setShowFilters(!showFilters);
+    if (!showFilters) {
+      setFilters({
+        first_name: "",
+        services: "",
+        experience: "",
+        location: ""
+      });
+    }
   };
 
   return (
@@ -92,10 +96,11 @@ const Keepers = () => {
 
           <div className="select-container">
             <select
+              defaultValue="0"
               name="services"
               onChange={(e) => handleFilterChange("services", e.target.value)}
             >
-              <option value="" disabled selected>
+              <option value="0" disabled>
                 Tipo de trabajo
               </option>
               <option value="Cuidar mascotas">Cuidar mascotas</option>
@@ -111,10 +116,7 @@ const Keepers = () => {
           />
           <FilterLocation onLocationChange={handleLocationChange} />
         </div>
-
       )}
-
-
       <div className="row row-cols-1 row-cols-sm-3 g-4 card-wrap">
 
         {filteredKeepers.map((keeper, index) => (
@@ -138,7 +140,6 @@ const Keepers = () => {
                   </h5>
                   <h6 className="card-text">{keeper.location}</h6>
                   <h6 className="card-text">{keeper.services}</h6>
-
                   <p className="card-text">Años de experiencia: {calculateExperienceInYears(keeper.experience)}</p>
                 </div>
               </div>

@@ -17,7 +17,7 @@ const Keepers = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const URL = 'https://miniature-invention-wqp577q66v5c5xq6-3001.app.github.dev/api/keeper';
+  const URL = (process.env.BACKEND_URL + '/api/keeper');
   const [selectedLocation, setSelectedLocation] = useState(null);
 
 

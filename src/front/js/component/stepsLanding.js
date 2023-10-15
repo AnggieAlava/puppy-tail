@@ -19,7 +19,7 @@ const StepsLanding = () => {
                         <div className=" card text-center mb-3 card-container">
                             <div className="card-number">2</div>
                             <div className="card-body steps-content">
-                                <h5 className="steps-title">Establece horarios</h5>
+                                <h5 className="steps-title">Revisa los perfiles de cuidadores</h5>
                               
                             </div>
                         </div>
@@ -28,7 +28,7 @@ const StepsLanding = () => {
                         <div className="card text-center mb-3 card-container">
                             <div className="card-number">3</div>
                             <div className="card-body steps-content">
-                                <h5 className="steps-title">Recibe pagos</h5>
+                                <h5 className="steps-title">Reserva tu cuidador</h5>
                              
                             </div>
                         </div>

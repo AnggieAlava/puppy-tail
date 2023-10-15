@@ -2,8 +2,8 @@
  background-color:#F7E1D2;
 }
 .display {
-  font-family: 'Poppins';
-  color: rgb(225, 253, 218);
+  font-family: 'Young Serif', serif;
+  color: #2B2C30;
   font-size: 3.5vw;
   font-weight: 900;
 }
@@ -14,7 +14,7 @@
   }
   
   .lead{
-    color: rgb(225, 253, 218);
+    color: #2B2C30;
     font-size: 2vw;
     font-weight: 800;
     margin-top: 20px;
@@ -26,4 +26,15 @@
       font-weight: 600;
       margin-top: 16px;
     }
+  }
+
+  .img-header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    max-width:700px;
+  }
+  .custom-img{
+    background-color:transparent;
+    border-radius:2.5rem;
   }

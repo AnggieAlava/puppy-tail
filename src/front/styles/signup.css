@@ -17,7 +17,6 @@
   padding: 6.5rem 1.5rem;
   position: relative;
 }
-
 .title-signup{
   font-weight:600;
   font-size:2rem;
@@ -30,12 +29,10 @@
   font-weight:600;
   color: white;
 }
-
 .question-signup{
   font-weight:400;
   font-size:1.2rem;
 }
-
 .click-login{
   text-decoration: none;
   color:#e43c3c;

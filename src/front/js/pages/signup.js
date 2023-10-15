@@ -39,8 +39,8 @@ export const Signup = (props) => {
    <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" /></div>
     <div className="container-fluid wrap-signup text-center">
      <div className="bg-signup p-5">
-        <h1 className="title-signup">Registrate en Puppy Tail</h1>
       <form onSubmit={signup} className="form-signup pe-3">
+        <h4 className="title-signup">Registrate en Puppy Tail</h4>
         <div className="mb-3 form-group">
           <label htmlFor="inputName" className="form-label mt-2">
             Nombre

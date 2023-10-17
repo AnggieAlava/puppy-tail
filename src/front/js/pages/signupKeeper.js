@@ -27,7 +27,8 @@ export const SignupKeeper = (props) => {
     const last_name = data.get("last_name");
     const email = data.get("email");
     const location = selectedLocation;
-    const phone_number = `${selectedCountryCode}${data.get("phone_number")}`;
+    const phone_number_with_plus = `${selectedCountryCode}${data.get("phone_number")}`;
+    const phone_number = phone_number_with_plus.substring(1);
     const password = data.get("password");
     const { signupKeeper } = actions;
     let resp = await signupKeeper(

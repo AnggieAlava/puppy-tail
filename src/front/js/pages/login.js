@@ -45,7 +45,7 @@ export const Login = () => {
     <div className="bottom-squiggle-wrapper container-fluid p-0"><img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg" loading="lazy" width="1792" height="128" alt="" className="bottom-squiggle" /></div>
     <div className="container-fluid wrap-login text-center">
       <div className="bg-login p-5">
-      <form onSubmit={login} className="form-login pe-3">
+      <form onSubmit={login} className="form-login">
         <h2 className="title-login">Iniciar sesión</h2>
         <div className="mb-3 form-group">
           <label htmlFor="inputEmail " className="form-label mt-3">

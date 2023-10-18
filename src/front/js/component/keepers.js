@@ -8,7 +8,7 @@ const Keepers = () => {
   const [keepers, setKeepers] = useState([]);
   const [filters, setFilters] = useState({
     first_name: "",
-    services: "",
+    services: "0",
     experience: "",
     location: ""
   });
@@ -88,7 +88,6 @@ const Keepers = () => {
         />
         <div className="select-container">
           <select
-            defaultValue="0"
             name="services"
             value={filters.services}
             onChange={(e) => handleFilterChange("services", e.target.value)}
@@ -154,7 +153,7 @@ const Keepers = () => {
                       {keeper.first_name} {keeper.last_name}
                     </h5>
 
-                    <h7 className="card-text">{keeper.location}</h7>
+                    <h6 className="card-text">{keeper.location}</h6>
                     <p className="card-text">Años de experiencia: {calculateExperienceInYears(keeper.experience)}</p>
                     <p className="card-text">Tarifa: {keeper.hourly_pay} por hora</p>
                     <Link

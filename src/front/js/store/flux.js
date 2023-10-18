@@ -462,6 +462,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en el pago:", resp);
         }
       },
+      createBooking: async (bookingData) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/booking", "POST", {
+          start_date: bookingData.start_date,
+          end_date: bookingData.end_date,
+          status: bookingData.status,
+          keeper_id: bookingData.keeper_id,
+          owner_id: bookingData.owner_id,
+          pets_id: bookingData.pets_id,
+        });
+        if (resp.code === 201) {
+          console.log("Booking created successfully:", resp.data);
+          return resp;
+        } else {
+          console.error("Error en el booking:", resp);
+        }
+      },
+
     }
   };
 };

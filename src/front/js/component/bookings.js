@@ -26,21 +26,22 @@ export const Bookings = () => {
         return jsDate.getDate()+"-"+(jsDate.getMonth()+1).toString()+"-"+jsDate.getFullYear()+" "+jsDate.getHours()+":"+(jsDate.getMinutes() < 10 ? '0' : '') + jsDate.getMinutes()
     }
     return (
-        <div className='container text-left'>
-            <div className='d-flex flex-row flex-nowrap justify-content-center align-items-center gap-2' style={{overflowX:"scroll"}}>
+        <div className='container-fluid text-left'>
+            <div className='d-flex flex-row flex-nowrap gap-3 align-items-center card-container'>
                 {bookings.length<1?"Sin reservas":
                 bookings.map((booking, index)=>{
                     return(
                         <div className="card rounded" style={{width: "16rem"}} key={index}>
-                            <img onError={imgErrorHandler} src={(params.type=="owner"?booking.keeper.profile_pic:booking.pets[0].profile_pic)} className="card-img-top rounded-img object-fit-cover p-3" />
+                            <img onError={imgErrorHandler} src={(params.type=="owner"?booking.keeper.profile_pic:booking.pets[0].profile_pic)} className="card-img-top rounded-img object-fit-cover p-2" />
                             <div className="card-body">
-                                <h4 className='card-title'>{booking.service}</h4>
+                                <h5 className='card-title'>{booking.service}</h5>
                                 <p className="card-text">Inicio: <strong>{formatDate(booking.start_date)}</strong></p>
                                 <p className="card-text">Fin: <strong>{formatDate(booking.end_date)}</strong></p>
                                 {(params.type=='owner'?
                                 <p>Cuidador(a): {booking.keeper.first_name+" "+booking.keeper.last_name}</p>:
                                 <p>Dueño(a): {(Array.isArray(booking.pets)?`${booking.pets[0].owner_first_name+" "+booking.pets[0].owner_last_name}`:"Sin mascotas")}</p>
                                 )}
+                                <hr className='my-1'></hr>
                                 <small>Costo: ${booking.cost}</small>
                             </div>
                         </div>

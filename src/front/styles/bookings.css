@@ -1,7 +1,7 @@
 .rounded-img{
     border-radius: 4.25rem;
-    max-width: 250px;
-    max-height: 250px;
+    max-width: 225px;
+    max-height: 225px;
 }
 p{
     margin: 0;
@@ -9,7 +9,17 @@ p{
 .card{
     background-color: #BFC1B9;
     border-radius: 1.25rem;
+    min-width: 225px;
 }
 .card-body{
     padding-top: 0;
+}
+.card-container{
+    overflow-x: scroll;
+    padding-left: 25px;
+}
+@media (max-width: 750px) {
+    .card-container{
+        padding-left: 15px;
+    }
 }

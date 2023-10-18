@@ -22,20 +22,20 @@ export const KeeperForm = ({ }) => {
   const [currentService, setCurrentService] = useState(" ");
   const params = useParams();
 
-  useEffect(()=>{
-    if(hour!=""&&finalHour!=""){
+  useEffect(() => {
+    if (hour != "" && finalHour != "") {
       let start_date = value[0].getDate().toString() + "-" + (value[0].getMonth() + 1).toString() + "-" + value[0].getFullYear().toString()
       let end_date = value[1].getDate().toString() + "-" + (value[1].getMonth() + 1).toString() + "-" + value[1].getFullYear().toString()
       let obj = {
-        "start_date":start_date,
-        "end_date":end_date,
-        "start_hour":hour,
-        "end_hour":finalHour,
+        "start_date": start_date,
+        "end_date": end_date,
+        "start_hour": hour,
+        "end_hour": finalHour,
         "service": currentService,
       }
       actions.setDates(obj);
     }
-  },[hour,finalHour])
+  }, [hour, finalHour])
 
 
   function setRange(service) {
@@ -79,7 +79,7 @@ export const KeeperForm = ({ }) => {
     let slots = await actions.getrangeSlots(store.currentUser.id, first_date, second_date)
     setTimes(slots[0])
     setsecondTimes(slots[1])
-    if (slots[0].length == 0 && slots[1].length == 0){
+    if (slots[0].length == 0 && slots[1].length == 0) {
       document.getElementById("datesText1").textContent = "No hay disponibilidad para estas fechas"
       document.getElementById("datesText2").textContent = "No hay disponibilidad para estas fechas"
       setEdit(true)
@@ -87,21 +87,21 @@ export const KeeperForm = ({ }) => {
     else {
       setEdit(false)
       document.getElementById("datesText1").textContent = ""
-      document.getElementById("datesText2").textContent = "" 
+      document.getElementById("datesText2").textContent = ""
     }//Editar los campos de horas
   }
-  function sendDate(e){
-    if(isRange && e.target.id == "startHour" && e.target.value !=""){
+  function sendDate(e) {
+    if (isRange && e.target.id == "startHour" && e.target.value != "") {
       setHour(e.target.value)
     }
-    if(!isRange && e.target.id=="startHour" && e.target.value !=""){
+    if (!isRange && e.target.id == "startHour" && e.target.value != "") {
       setHour(e.target.value)
       let date = new Date(`20 December 2019 ${e.target.value}`) //Dummy date info to strip time from it
       date.setHours(date.getHours() + 1)
       date = date.getHours().toString() + ":" + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString()
       setfinalHour(date)
     }
-    if(e.target.id == "endHour"){
+    if (e.target.id == "endHour") {
       setfinalHour(e.target.value)
     }
 
@@ -114,14 +114,29 @@ export const KeeperForm = ({ }) => {
         <div className="col px-0">
           <h2 className="input-group-text">Servicios</h2>
           {/* Escogencia de servicios */}
-          {Array.isArray(store.currentUser.services) && (store.currentUser.hourly_pay!=null)? store.currentUser.services.map((service, index) => {
+          {Array.isArray(store.currentUser.services) && (store.currentUser.hourly_pay != null) ? store.currentUser.services.map((service, index) => {
             return (
               <div className="form-check form-check-inline" key={index}>
                 <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
                 <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
               </div>
             )
-          }) : store.currentUser.first_name+" no ha establecido servicios o tarifa"}
+          }) : store.currentUser.first_name + " no ha establecido servicios o tarifa"}
+
+
+          {/* SIN TERMINAR */}
+          {/* <h2 className="input-group-text">Mascotas</h2>
+          {Array.isArray(store.currentUser.pets) && (store.currentUser.hourly_pay!=null)? store.currentUser.pets.map((pet, index) => {
+            return (
+              <div className="form-check form-check-inline" key={index}>
+                <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
+                <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
+              </div>
+            )
+          }) : store.currentUser.first_name+" no ha establecido servicios o tarifa"} */}
+          {/* SIN TERMINAR */}
+
+
           <h2 className="input-group-text mt-2">Disponibilidad</h2>
           <div className="d-flex justify-content-center">
             <Calendar onChange={(date) => getSlots(date)} minDate={new Date()} maxDate={maxDate} allowPartialRange={true}
@@ -152,31 +167,31 @@ export const KeeperForm = ({ }) => {
                           <span className="input-group-text" id="basic-addon3">
                             {days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}
                           </span>
-                          <select className="form-select" id="startHour" disabled={edit} onChange={(e)=>sendDate(e)}>
+                          <select className="form-select" id="startHour" disabled={edit} onChange={(e) => sendDate(e)}>
                             {times.map((time, index) =>
                               <option key={index} value={time}>{time}</option>
                             )}
                           </select>
                         </div>
-                        {(isRange?<div className="form-text" id="datesText1">Escoge las horas despues de escoger las fechas</div>:"")}
+                        {(isRange ? <div className="form-text" id="datesText1">Escoge las horas despues de escoger las fechas</div> : "")}
                       </div>
                       :
                       <div className="mb-3">
                         <label htmlFor="basic-url" className="form-label">Fecha final</label>
                         <div className="input-group">
                           <span className="input-group-text" id="basic-addon3">
-                            {(date == null ? "Escoger fecha final" : 
-                            (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
+                            {(date == null ? "Escoger fecha final" :
+                              (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
                           </span>
-                          <select className="form-select" id="endHour" disabled={(isRange?edit:true)} onChange={(e)=>sendDate(e)} 
-                          defaultValue={"Escoge hora"}>
-                            {(isRange?
+                          <select className="form-select" id="endHour" disabled={(isRange ? edit : true)} onChange={(e) => sendDate(e)}
+                            defaultValue={"Escoge hora"}>
+                            {(isRange ?
                               secondTimes.map((time, index) =>
-                              <option key={index} value={time}>{time}</option>)
-                              :<option value={finalHour}>{finalHour}</option>)}
+                                <option key={index} value={time}>{time}</option>)
+                              : <option value={finalHour}>{finalHour}</option>)}
                           </select>
                         </div>
-                        {(isRange?<div className="form-text" id="datesText2">Escoge las horas despues de escoger las fechas</div>:"")}
+                        {(isRange ? <div className="form-text" id="datesText2">Escoge las horas despues de escoger las fechas</div> : "")}
                       </div>
                     )}
                   </strong>
@@ -185,8 +200,8 @@ export const KeeperForm = ({ }) => {
             })}
           </div>
           {(value.length > 1 ?
-            <Link to={(((finalHour==""||hour=="")?"#":`/checkout/keeper/${store.currentUser.id}`))}>
-              <button className="btn btn-green" onMouseDown={()=>console.log(hour+""+finalHour)} role="button" disabled={((finalHour == "" || hour == "")?true:false)}>Reservar</button>
+            <Link to={(((finalHour == "" || hour == "") ? "#" : `/checkout/keeper/${store.currentUser.id}`))}>
+              <button className="btn btn-green" onMouseDown={() => console.log(hour + "" + finalHour)} role="button" disabled={((finalHour == "" || hour == "") ? true : false)}>Reservar</button>
             </Link> : "")}
         </div>
       </div>

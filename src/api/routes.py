@@ -86,8 +86,10 @@ def login_user():
     acces_token = create_access_token(identity = user.id)
     acces_jti=get_jti(acces_token)
     refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
-   
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
+    pets = []
+    if user.user_type == "owner":
+        pets = [{"name": pet.name, "category": pet.category} for pet in user.pets]
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type, "pets":[{}for pet in user]}), 201
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)

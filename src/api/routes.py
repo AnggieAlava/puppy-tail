@@ -464,7 +464,7 @@ def getpetAvatar(pet_id):
 @api.route('/booking', methods=["POST"])
 def createBooking():
     data = request.get_json(force=True)
-    booking = Booking(**data, status='pending')
+    booking = Booking(**data)
     # booking.start_date = data["start_date"]
     # booking.end_date = data["end_date"]
     # booking.keeper_id = data["keeper_id"]
@@ -472,7 +472,7 @@ def createBooking():
     #     booking.pets_id = data["pets_id"]
     # if hasattr(data, "owner_id"):
     #     booking.owner_id = data["owner_id"]
-    # booking.status = 'pending'
+    # booking.status = 'approved'
     db.session.add(booking)
     db.session.commit()
     return jsonify({"msg":"Booking created successfully"}), 201

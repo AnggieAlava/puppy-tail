@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Link } from "react-router-dom";
 import "../../styles/checkout.css"
+import moment from 'moment';
 
 const Checkout = () => {
     const [success, setSuccess] = useState(false);
@@ -11,6 +12,7 @@ const Checkout = () => {
     const [orderID, setOrderID] = useState(false);
     const { store, actions } = useContext(Context);
     const { createPayment } = actions;
+    const { createBooking } = actions;
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState('');
     const phoneNumber = store.currentUser.phone_number;
@@ -51,9 +53,15 @@ const Checkout = () => {
             console.log(details)
             console.log(actions)
             setSuccess(true);
-            actions.createPayment(details)
-            const { createPayment } = actions;
-
+            actions.createPayment(details);
+            actions.createBooking({
+                start_date:moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
+                end_date:moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
+                status:"approved",
+                pets_id:[],
+                owner_id:store.userInfo.userId,
+                keeper_id:store.currentUser.id,
+            })
         });
     };
 
@@ -90,15 +98,15 @@ const Checkout = () => {
                     <div className="product-info">
                         <div className="product-text">
                             <h6 className="m-2"><i className="fa-solid fa-user checkout-icon"></i> Cuidador: {store.currentUser.first_name} {store.currentUser.last_name}</h6>
-                            <hr/>
+                            <hr />
                             <h6 className="m-2"><i className="fa-regular fa-calendar checkout-icon"></i> Desde: {store.dates.start_date} / {store.dates.start_hour} </h6>
-                            <hr/>
+                            <hr />
                             <h6 className="m-2"><i className="fa-solid fa-calendar checkout-icon"></i> Hasta: {store.dates.end_date} / {store.dates.end_hour}</h6>
-                            <hr/>
+                            <hr />
                             <h6 className="m-2"><i className="fa-solid fa-shop checkout-icon"></i> Reserva: {store.dates.service}</h6>
-                            <hr/>
+                            <hr />
                             <h6 className="m-2"><i className="fa-solid fa-location-dot checkout-icon"></i> Ubicacion: {store.currentUser.location}</h6>
-                            <hr/>
+                            <hr />
                         </div>
                         <div className="product-price-btn">
                             <h6 className="m-2"><i className="fa-brands fa-paypal checkout-icon"></i> Precio: {store.currentUser.hourly_pay}</h6>
@@ -133,17 +141,17 @@ const Checkout = () => {
                                         </div>
 
                                         <h6><i className="fa-solid fa-user checkout-icon"></i> {store.currentUser.first_name} {store.currentUser.last_name}</h6>
-                                        <hr/>
+                                        <hr />
                                         <h6><i className="fa-solid fa-calendar-days checkout-icon"></i> {store.dates.start_date} {store.dates.end_date} {store.dates.start_hour} {store.dates.end_hour}</h6>
-                                        <hr/>
+                                        <hr />
                                         <h6><i className="fa-solid fa-earth-americas checkout-icon"></i> {store.currentUser.location}</h6>
-                                        <hr/>
+                                        <hr />
                                         <h6><i className="fa-solid fa-handshake checkout-icon"></i> {store.dates.service}</h6>
-                                        <hr/>
+                                        <hr />
                                         <h6><i className="fa-solid fa-dollar-sign checkout-icon"></i> {store.currentUser.hourly_pay}</h6>
                                     </div>
                                     <div className="modal-body">
-                                    <button className="btn-green me-3  d-print-none"onClick={() => window.print()}>Imprimir</button>
+                                        <button className="btn-green me-3  d-print-none" onClick={() => window.print()}>Imprimir</button>
                                         <Link to={"/profile/" + store.userInfo.user_type + "/" + store.userInfo.userId}>
                                             <button className="btn-green d-print-none">Ir a mi perfil</button></Link>
                                     </div>

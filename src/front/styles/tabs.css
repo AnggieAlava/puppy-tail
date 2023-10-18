@@ -296,8 +296,8 @@ footer p a:hover{
     .nav-tabs {
         display: inline-block;
         width: 100%;
-        padding-left: 100px;
-        padding-right: 100px;
+        padding-left: 50px;
+        padding-right: 50px;
         text-align: center;
     }
 

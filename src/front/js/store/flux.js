@@ -12,6 +12,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
+      bookings:[],
       dates: null //Si se cambia este null ir tambien a keeperForm en setRange y cambiar el argumento de setDates
     },
     actions: {
@@ -202,7 +203,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != "null") {
+        if (localStorage.hasOwnProperty("userInfo") != null) {
           userData = JSON.parse(localStorage.getItem("userInfo"))
         }
         if (token) {
@@ -231,10 +232,10 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       logout: () => {
-        setStore({ accessToken: "null" });
+        setStore({ accessToken: null });
         setStore({ userInfo: {} })
         localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", "null");
+        localStorage.setItem("accessToken", null);
       },
 
       getUserInfo: async () => {
@@ -460,6 +461,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en el pago:", resp);
         }
       },
+      getBookings: async (type, id) =>{
+        const {apiFetchProtected } = getActions();
+        const response = await apiFetchProtected(`/bookings/${type}/${id}`,"GET")
+        if (response.code != 200){
+          console.error(response.status+": "+response.statusText)
+        }
+        setStore({bookings:response.data})
+        return response;
+      }
     }
   };
 };

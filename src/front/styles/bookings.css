@@ -1,0 +1,15 @@
+.rounded-img{
+    border-radius: 4.25rem;
+    max-width: 250px;
+    max-height: 250px;
+}
+p{
+    margin: 0;
+}
+.card{
+    background-color: #BFC1B9;
+    border-radius: 1.25rem;
+}
+.card-body{
+    padding-top: 0;
+}

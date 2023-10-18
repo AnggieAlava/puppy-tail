@@ -26,11 +26,12 @@ class Booking(db.Model, SerializerMixin):
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.Enum(Status))
+    service = db.Column(db.String, nullable=True)
+    cost = db.Column(db.Float, nullable=True)
     #Many to one relationship booking to keeper
-    keeper = relationship("Keeper", back_populates="booking")
     keeper_id = db.Column(db.Integer, db.ForeignKey('keeper.id'), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=True)
-    pets_id = db.Column(db.ARRAY(db.Integer), nullable=True)
+    keeper = relationship("Keeper",back_populates="booking")
     #Many to many bookings/pets
     pets = relationship("Pet", secondary="booking_pet",
                         back_populates="bookings")

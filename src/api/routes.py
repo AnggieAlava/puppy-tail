@@ -168,7 +168,7 @@ def get_owner(owner_id):
         "description": owner.description,
         "email": owner.email,
         "profile_pic": imgUrl,
-        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id}
             for pet in owner.pets]
     }
     return jsonify(owner_data), 200
@@ -320,6 +320,7 @@ def createPet():
     new_pet.size = size
     new_pet.category = (data["category"].lower()).title()
     new_pet.owner_id = owner_id
+    new_pet.owner = Owner.query.get(owner_id)
     db.session.add(new_pet)
     db.session.commit()
     # retornar el objeto creado
@@ -344,7 +345,8 @@ def getPet(pet_id):
             "size": pet.size,
             "category": pet.category,
             "owner_id": pet.owner_id,
-            "bookings": pet.bookings
+            "bookings": pet.bookings,
+            "profile_pic": getpetAvatar(pet_id)
         }
         return jsonify(pet_data), 200
     if request.method == 'PUT':
@@ -383,7 +385,6 @@ def uploadPicture(user_id):
     #user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
-    print(request.files)
     file = request.files["avatar"]
     #Extraer la extension del archivo
     extension = file.filename.split(".")[1]
@@ -432,12 +433,6 @@ def uploadpetAvatar(pet_id):
     #Guardar en firebase
     resource = bucket.blob(filename)
     resource.upload_from_filename(temp.name, content_type="image/"+extension)
-    #Borra imagen actual de firebase si existe
-    # if pet.profile_pic != "":
-    #     previousAvatar = bucket.blob(pet.profile_pic)
-    #     previousAvatar.delete()
-    #     print("Previous avatar deleted from Firebase")
-    #Agrega la nueva imagen a nuestra base de datos
     pet.profile_pic = filename
     db.session.add(pet)
     db.session.commit()
@@ -458,24 +453,54 @@ def getpetAvatar(pet_id):
 @api.route('/booking', methods=["POST"])
 def createBooking():
     data = request.get_json(force=True)
-    booking = Booking(**data, status='pending')
-    # booking.start_date = data["start_date"]
-    # booking.end_date = data["end_date"]
-    # booking.keeper_id = data["keeper_id"]
-    # if hasattr(data, "pets_id"):
-    #     booking.pets_id = data["pets_id"]
-    # if hasattr(data, "owner_id"):
-    #     booking.owner_id = data["owner_id"]
-    # booking.status = 'pending'
+    booking = Booking()
+    booking.start_date = data["start_date"]
+    booking.end_date = data["end_date"]
+    booking.keeper = Keeper.query.get(data["keeper_id"])
+    if 'owner_id' in data:
+        print(data['owner_id'])
+        booking.owner_id = data['owner_id']
+    if 'cost' in data:
+        print(data['cost'])
+        booking.cost = data['cost']
+    if 'service' in data:
+        print(data['service'])
+        booking.service = data['service']
+    for pet in data['pets']:
+        pet = Pet.query.get(pet)
+        booking.pets.append(pet)
+    booking.status = 'approved'
     db.session.add(booking)
     db.session.commit()
     return jsonify({"msg":"Booking created successfully"}), 201
 
 @api.route('/bookings', methods=["GET"])
-def getBookings():
+def getAllBookings():
     bookings = Booking.query.all()
     bookings = [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in bookings]
     return jsonify(bookings), 200
+
+@api.route('bookings/<string:user_type>/<int:id>', methods=["GET"])
+def getuserBookings(user_type,id):    
+    if user_type == 'owner':
+        bookings = Booking.query.filter_by(owner_id=id).order_by(desc(Booking.start_date)).all()
+    elif user_type == 'keeper':
+        bookings = Booking.query.filter_by(keeper_id=id).order_by(desc(Booking.start_date)).all()
+    bookings = [{"id":booking.id, "start_date": booking.start_date, "end_date": booking.end_date,"keeper":{"id":booking.keeper.id, "first_name":booking.keeper.first_name, "last_name": booking.keeper.last_name, "location": booking.keeper.location, "profile_pic":getprofilePic(booking.keeper.id), "phone_number":booking.keeper.phone_number}, "cost": booking.cost, "service": booking.service, "status": booking.status, "pets":[{"id":pet.id, "name": pet.name, "size": pet.size, "category":pet.category, "profile_pic": getpetAvatar(pet.id), "owner_first_name": pet.owner.first_name, "owner_last_name": pet.owner.last_name, "email": pet.owner.email} for pet in booking.pets], "owner":{"id": booking.pets[0].owner.id, "first_name":booking.pets[0].owner.first_name, "last_name":booking.pets[0].owner.last_name,"email": booking.pets[0].owner.email, "owner_profile_pic": getprofilePic(booking.pets[0].owner.id)}} for booking in bookings]
+    return jsonify(bookings), 200
+
+def getbookingPets(pets):
+    allPets = []
+    for pet in pets:
+        temp_pet = Pet.query.get(pet)
+        temp_pet = {
+            "name": temp_pet.name,
+            "size": temp_pet.size,
+            "category": temp_pet.category,
+            "profile_pic": getpetAvatar(temp_pet.id)
+        }
+        allPets.append(temp_pet)
+    return allPets
 
 @api.route('/bookings/<int:keeper_id>/', methods=["GET"])
 def getdailySlots(keeper_id):

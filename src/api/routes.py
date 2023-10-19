@@ -466,13 +466,13 @@ def createBooking():
     booking.end_date = data["end_date"]
     booking.keeper = Keeper.query.get(data["keeper_id"])
     if 'owner_id' in data:
-        print(data['owner_id'])
+        print('Owner')
         booking.owner_id = data['owner_id']
     if 'cost' in data:
-        print(data['cost'])
+        print('Cost')
         booking.cost = data['cost']
     if 'service' in data:
-        print(data['service'])
+        print('Service')
         booking.service = data['service']
     for pet in data['pets']:
         pet = Pet.query.get(pet)

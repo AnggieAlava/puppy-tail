@@ -116,10 +116,12 @@ export const KeeperForm = ({ }) => {
   function checkPet(index, id){
     let petCard = document.getElementById("pet"+index)
     let cardContainer = document.getElementById('card'+index)
+    let petImg = document.getElementById('petImg'+index)
     let isChecked = petCard.checked
     if(isChecked){
       petCard.checked = !isChecked
       cardContainer.classList.remove('pet-card-checked')
+      petImg.classList.remove('pet-card-img')
       let index = selectedPets.indexOf(id)
       if(index!==-1){
         let tempArr = selectedPets
@@ -131,109 +133,112 @@ export const KeeperForm = ({ }) => {
     else if (!isChecked){
       petCard.checked = !isChecked
       cardContainer.classList.add('pet-card-checked')
+      petImg.classList.add('pet-card-img')
       let tempArr = [...selectedPets,id]
       setSelectedPets(tempArr)
     }
   }
   return (
-    <div className="container d-flex flex-column justify-content-center pb-4 text-start p-4" id="calendar">
-      <h2 className="row"><strong>Reservar</strong></h2>
-      <div className="row gap-2">
-        {/* Dos columnas principales */}
-        <div className="col px-0">
-          <h2 className="input-group-text">Servicios</h2>
-          {/* Escogencia de servicios */}
-          {Array.isArray(store.currentUser.services) && (store.currentUser.hourly_pay != null) ? store.currentUser.services.map((service, index) => {
-            return (
-              <div className="form-check form-check-inline" key={index}>
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
-                <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
-              </div>
-            )
-          }) : store.currentUser.first_name + " no ha establecido servicios o tarifa"}
-
-          <h2 className="input-group-text">Mascotas</h2>
-          {Array.isArray(store.ownerPets) ? store.ownerPets.map((pet, index) => {
-            return (
-              <div className="form-check form-check-inline py-1 px-0" key={index}>
-                {/* <label className="btn" htmlFor={"pet"+index}>{pet.name}</label> */}
-                <div className="text-center d-block custom-button-check pb-1" id={"card"+index} onClick={()=>checkPet(index, pet.id)}>
-                  <input className="btn btn-check" type="checkbox" disabled autoComplete="off" id={"pet" + index} />
-                  <div><img onError={(event)=>imgErrorHandler(event)} src={pet.profile_pic} className="pet-avatar p-1" /></div>
-                  <label htmlFor={"pet"+index}>{pet.name}</label>
-                </div>
-              </div>
-            )
-          }) : "Inicia sesion en este dispositivo para escoger mascota"}
-
-
-          <h2 className="input-group-text mt-2">Disponibilidad</h2>
-          <div className="d-flex justify-content-center">
-            <Calendar onChange={(date) => getSlots(date)} minDate={new Date()} maxDate={maxDate} allowPartialRange={true}
-              tileDisabled={({ date }) => disabledCalendar.includes(date.getDay())} selectRange={isRange}
-              returnValue="range" value={value} locale="es" />
-          </div>
-          {/* Aqui irian las horas del calendario si fueran en la columna 1*/}
-        </div>
-        <div className="col">
-          {/* Horas a escoger, se esconde si escoges el rol de cuidador */}
-          <div className="row">
-            <h2 className="input-group-text">Reserva</h2>
-          </div>
-          <div className="d-block">
-            <small>Tarifa</small>
-            <p>{(store.currentUser.hourly_pay ? "$" + store.currentUser.hourly_pay + "/hora" :
-              "Sin tarifa establecida por " + store.currentUser.first_name)}</p>
-          </div>
-          <div className="row mb-2">
-            {value.map((date, index) => {
+    <div className="container-fluid snow-bg">
+      <div className="container d-flex flex-column justify-content-center pb-4 text-start p-4" id="calendar">
+        <h2 className="row"><strong>Reservar</strong></h2>
+        <div className="row gap-2">
+          {/* Dos columnas principales */}
+          <div className="col px-0">
+            <h2 className="input-group-text">Servicios</h2>
+            {/* Escogencia de servicios */}
+            {Array.isArray(store.currentUser.services) && (store.currentUser.hourly_pay != null) ? store.currentUser.services.map((service, index) => {
               return (
-                <div key={index} id="Reserva">
-                  <strong>
-                    {((index == 0) ?
-                      <div className="mb-3">
-                        <label htmlFor="basic-url" className="form-label">Fecha de inicio</label>
-                        <div className="input-group">
-                          <span className="input-group-text" id="basic-addon3">
-                            {days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}
-                          </span>
-                          <select className="form-select" id="startHour" disabled={edit} onChange={(e) => sendDate(e)}>
-                            {times.map((time, index) =>
-                              <option key={index} value={time}>{time}</option>
-                            )}
-                          </select>
-                        </div>
-                        {(isRange ? <div className="form-text" id="datesText1">Escoge las horas despues de escoger las fechas</div> : "")}
-                      </div>
-                      :
-                      <div className="mb-3">
-                        <label htmlFor="basic-url" className="form-label">Fecha final</label>
-                        <div className="input-group">
-                          <span className="input-group-text" id="basic-addon3">
-                            {(date == null ? "Escoger fecha final" :
-                              (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
-                          </span>
-                          <select className="form-select" id="endHour" disabled={(isRange ? edit : true)} onChange={(e) => sendDate(e)}
-                            defaultValue={"Escoge hora"}>
-                            {(isRange ?
-                              secondTimes.map((time, index) =>
-                                <option key={index} value={time}>{time}</option>)
-                              : <option value={finalHour}>{finalHour}</option>)}
-                          </select>
-                        </div>
-                        {(isRange ? <div className="form-text" id="datesText2">Escoge las horas despues de escoger las fechas</div> : "")}
-                      </div>
-                    )}
-                  </strong>
+                <div className="form-check form-check-inline" key={index}>
+                  <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
+                  <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
                 </div>
               )
-            })}
+            }) : store.currentUser.first_name + " no ha establecido servicios o tarifa"}
+
+            <h2 className="input-group-text">Mascotas</h2>
+            {Array.isArray(store.ownerPets) ? store.ownerPets.map((pet, index) => {
+              return (
+                <div className="form-check form-check-inline py-1 px-0" key={index}>
+                  {/* <label className="btn" htmlFor={"pet"+index}>{pet.name}</label> */}
+                  <div className="text-center d-block custom-button-check pb-1" id={"card"+index} onClick={()=>checkPet(index, pet.id)}>
+                    <input className="btn btn-check" type="checkbox" disabled autoComplete="off" id={"pet" + index} />
+                    <div className="pb-3"><img id={"petImg"+index}onError={(event)=>imgErrorHandler(event)} src={pet.profile_pic} className="pet-avatar p-1" /></div>
+                    <label className="larger-label" htmlFor={"pet"+index}>{pet.name}</label>
+                  </div>
+                </div>
+              )
+            }) : "Inicia sesion en este dispositivo para escoger mascota"}
+
+
+            <h2 className="input-group-text mt-2">Disponibilidad</h2>
+            <div className="d-flex justify-content-center">
+              <Calendar onChange={(date) => getSlots(date)} minDate={new Date()} maxDate={maxDate} allowPartialRange={true}
+                tileDisabled={({ date }) => disabledCalendar.includes(date.getDay())} selectRange={isRange}
+                returnValue="range" value={value} locale="es" />
+            </div>
+            {/* Aqui irian las horas del calendario si fueran en la columna 1*/}
           </div>
-          {(value.length > 1 ?
-            <Link to={(((finalHour == "" || hour == "") ? "#" : selectedPets[0]!==undefined?`/checkout/keeper/${store.currentUser.id}`:'#'))}>
-              <button className="btn btn-green" onMouseDown={() => console.log(hour + "" + finalHour)} role="button" disabled={((finalHour == "" || hour == "") ? true : (selectedPets[0]!==undefined)?false:true)}>Reservar</button>
-            </Link> : "")}
-            {(selectedPets.length<1? value.length>1?<div className="form-text"><strong>Selecciona al menos una mascota para continuar con la reserva</strong></div>:"" : "")}
+          <div className="col">
+            {/* Horas a escoger, se esconde si escoges el rol de cuidador */}
+            <div className="row">
+              <h2 className="input-group-text">Reserva</h2>
+            </div>
+            <div className="d-block">
+              <small>Tarifa</small>
+              <p>{(store.currentUser.hourly_pay ? "$" + store.currentUser.hourly_pay + "/hora" :
+                "Sin tarifa establecida por " + store.currentUser.first_name)}</p>
+            </div>
+            <div className="row mb-2">
+              {value.map((date, index) => {
+                return (
+                  <div key={index} id="Reserva">
+                    <strong>
+                      {((index == 0) ?
+                        <div className="mb-3">
+                          <label htmlFor="basic-url" className="form-label">Fecha de inicio</label>
+                          <div className="input-group">
+                            <span className="input-group-text" id="basic-addon3">
+                              {days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}
+                            </span>
+                            <select className="form-select" id="startHour" disabled={edit} onChange={(e) => sendDate(e)}>
+                              {times.map((time, index) =>
+                                <option key={index} value={time}>{time}</option>
+                              )}
+                            </select>
+                          </div>
+                          {(isRange ? <div className="form-text" id="datesText1">Escoge las horas despues de escoger las fechas</div> : "")}
+                        </div>
+                        :
+                        <div className="mb-3">
+                          <label htmlFor="basic-url" className="form-label">Fecha final</label>
+                          <div className="input-group">
+                            <span className="input-group-text" id="basic-addon3">
+                              {(date == null ? "Escoger fecha final" :
+                                (`${days[date.getDay()] + " " + date.getDate().toString() + "-" + (date.getMonth() + 1).toString() + "-" + date.getFullYear().toString()}`))}
+                            </span>
+                            <select className="form-select" id="endHour" disabled={(isRange ? edit : true)} onChange={(e) => sendDate(e)}
+                              defaultValue={"Escoge hora"}>
+                              {(isRange ?
+                                secondTimes.map((time, index) =>
+                                  <option key={index} value={time}>{time}</option>)
+                                : <option value={finalHour}>{finalHour}</option>)}
+                            </select>
+                          </div>
+                          {(isRange ? <div className="form-text" id="datesText2">Escoge las horas despues de escoger las fechas</div> : "")}
+                        </div>
+                      )}
+                    </strong>
+                  </div>
+                )
+              })}
+            </div>
+            {(value.length > 1 ?
+              <Link to={(((finalHour == "" || hour == "") ? "#" : selectedPets[0]!==undefined?`/checkout/keeper/${store.currentUser.id}`:'#'))}>
+                <button className="btn btn-green" onMouseDown={() => console.log(hour + "" + finalHour)} role="button" disabled={((finalHour == "" || hour == "") ? true : (selectedPets[0]!==undefined)?false:true)}>Reservar</button>
+              </Link> : "")}
+              {(selectedPets.length<1? value.length>1?<div className="form-text"><strong>Selecciona al menos una mascota para continuar con la reserva</strong></div>:"" : "")}
+          </div>
         </div>
       </div>
     </div>

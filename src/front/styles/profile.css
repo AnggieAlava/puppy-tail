@@ -49,6 +49,7 @@ input, textarea{
 }
 .custom-button-check{
     background-color: #F7E1D2;
+    padding: 10px;
     border-radius: 0.75rem;
 }
 .custom-button-check:hover{
@@ -58,8 +59,15 @@ input, textarea{
     background-color: #BFC1B9 !important;
     border: 1px solid black;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
-    font-weight: bold;
-    
+    font-weight: bold;  
 }
-
+.pet-card-img{
+    border: 1px solid black;
+}
+.snow-bg{
+    background-color: snow;
+}
+.larger-label{
+    font-size: large;
+}
 

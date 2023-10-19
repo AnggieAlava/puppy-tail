@@ -82,7 +82,7 @@ export const Pets = (props) => {
                                 </div>
                                 {/* Operacion ternaria para mostrar botones de editar */}
                                 {(edit == false ? "" : <div className="d-flex flex-row justify-content-center gap-3">
-                                    <button type="button" className="btn btn-orange" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => fillForm(pet)}>Editar</button>
+                                    {(store.userInfo.userId===store.currentUser.id)?<button type="button" className="btn btn-orange" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => fillForm(pet)}>Editar</button>:""}
                                     {/* <!-- Modal --> */}
                                     <div className="modal fade" id="editPet" tabIndex="-1" aria-labelledby="editPetLabel" aria-hidden="true">
                                         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">

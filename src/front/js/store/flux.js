@@ -97,7 +97,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               console.log("Successfully updated pet: " + data);
-              //getActions().getOwnerPets(obj.owner_id);
               const { pets } = getStore()
               let arr = pets
               for (let pet in arr) {
@@ -148,7 +147,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               console.log({ data } + " Succesfully deleted pet from server");
-              //setStore({pets:data})
               getActions().getOwnerPets(obj.owner_id);
             });
         } catch (error) {
@@ -224,7 +222,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-
         console.log({ resp });
         const { message, token, user_id, user_type, pets } = resp.data;
         localStorage.setItem("accessToken", token);
@@ -480,7 +477,25 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         setStore({ bookings: response.data })
         return response;
-      }
+      },
+      createBooking: async (bookingData) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/booking", "POST", {
+          start_date: bookingData.start_date,
+          end_date: bookingData.end_date,
+          status: bookingData.status,
+          keeper_id: bookingData.keeper_id,
+          owner_id: bookingData.owner_id,
+          pets_id: bookingData.pets_id,
+        });
+        if (resp.code === 201) {
+          console.log("Booking created successfully:", resp.data);
+          return resp;
+        } else {
+          console.error("Error en el booking:", resp);
+        }
+      },
+
     }
   };
 };

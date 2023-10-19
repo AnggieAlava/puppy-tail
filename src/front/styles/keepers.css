@@ -1,3 +1,150 @@
-.card-wrap {
-  padding-bottom: 150px;
+
+
+.card {
+  background-color: #8ec2a8;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card img {
+  max-width: 100%;
+  height: 100%;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+
+.btn-primary {
+  background-color: #0C3A23;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #08601E;
+}
+
+.show-filters-button {
+  background-color: #0C3A23;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.show-filters-button:hover {
+  background-color: #08601E;
+}
+.filter-container {
+  text-align: center;
+  padding: 10px;
+}
+
+
+.show-filters-button {
+  background-color: #0C3A23; 
+  color: #fff; 
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+.filter-home {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+
+.filter-home input[type="text"],
+.filter-home select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #0C3A23;
+  color: #fff;
+}
+
+.filter-home select {
+  width: 150px;
+}
+
+
+.filter-home input[type="text"],
+.filter-home select {
+  margin: 5px;
+}
+
+
+.show-filters-button:focus {
+  outline: none;
+}
+
+
+.active-filters {
+  background-color: #0C3A23;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+
+.active-filter-button {
+  background-color: #fff; 
+  color: #0C3A23; 
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+
+.clear-filters-button {
+  background-color: #9b8a8a; 
+  color: #fff; 
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.linea-decorativa {
+  border-top: 3px solid #0C3A23; 
+  margin: 50px 0 20px 0; 
+  width: 100%; 
 }

@@ -6,11 +6,14 @@ import { Link } from "react-router-dom";
 
 const FooterSignupPage = () => {
     return (
-        <div className="container-fluid footer-signup text-center pt-5 mt-4">
-            <p className="text-white">Siguenos en todas nuestras redes sociales y mantente al tanto de las novedades que la plataforma tiene para ofrecerte</p>
-            <Link to="/login" ><button className="btn btn-success btn-footer-signup">Iniciar sesion</button></Link>
+        <>
+        <img src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0c4a6dce47c6_Section%20Curve%2004.svg" loading="lazy" height="128" alt="" className="top-squiggle top-footer"/>
+        <div className="container-fluid footer-signup text-center ">
+            {/* <h6 className="text-white pt-3">Siguenos en todas nuestras redes sociales y mantente al tanto de las novedades que la plataforma tiene para ofrecerte</h6> */}
+            <Link to="/login" ><button className="btn btn-orange btn-footer-signup">Iniciar sesion</button></Link>
             <SocialMedia />
         </div>
+        </>
     );
 };
 

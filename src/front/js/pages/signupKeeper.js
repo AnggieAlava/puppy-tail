@@ -27,7 +27,8 @@ export const SignupKeeper = (props) => {
     const last_name = data.get("last_name");
     const email = data.get("email");
     const location = selectedLocation;
-    const phone_number = `${selectedCountryCode}${data.get("phone_number")}`;
+    const phone_number_with_plus = `${selectedCountryCode}${data.get("phone_number")}`;
+    const phone_number = phone_number_with_plus.substring(1);
     const password = data.get("password");
     const { signupKeeper } = actions;
     let resp = await signupKeeper(
@@ -42,10 +43,13 @@ export const SignupKeeper = (props) => {
     console.log(resp);
   }
   return (
-
-    <div className="container-fluid wrap-signup-keeper text-center">
+<>
+    <div id="footer" className="container-fluid wrap-signup-keeper text-center">
+    <img className="top-signup-keeper" src="https://img.freepik.com/vector-gratis/ninos-dibujados-mano-ilustracion-animales_23-2149709864.jpg?t=st=1697339162~exp=1697339762~hmac=828bd98e3b1a82262ba3b7956db883304cf3f3fd57c6aa2b23f80de8b86d96f2"
+   />
+    <div className="bg-signup-keeper p-5">
       <form className="form-signup pe-3" onSubmit={signupKeeper}>
-        <h1 className="title-sinup-keeper">Bienvenido Cuidador</h1>
+        <h4 className="title-sinup-keeper">Bienvenido Cuidador</h4>
         <div className="mb-3 form-group">
           <label htmlFor="inputName" className="form-label mt-2">
             Nombre
@@ -144,6 +148,8 @@ export const SignupKeeper = (props) => {
         </button>
       </form>
     </div>
+    </div>
+    </>
   );
 };
 SignupKeeper.propTypes = {

@@ -1,17 +1,17 @@
 .fa-check{
     margin-right: 5px;
-    color: rgb(0, 255, 13);
+    color: #0C3A25;
     font-size: 1.5rem;
 }
 .list-card {
-    font-family: 'Roboto';
+    font-family: 'Young Serif', serif;
     border:none;
 }
-
 .list-img{
-    border-radius: 20px;
-    width: 100%;
-    height: 25%;
+    padding:20px;
+    border-radius:2.5rem;
+    width: 90%;
+    height: 20%;
 }
 
 .list-title{
@@ -21,4 +21,22 @@
 
 .list-text{
     font-size: 1.3rem;
+}
+
+.bg-services{
+    border-radius:2.5rem;
+    padding:20px;
+    background-color:snow;
+}
+
+
+.separate-feature {
+    border-right: 2px solid #ccc; 
+    padding-right: 15px; 
+
+    
+    @media (max-width: 767px) {
+        border-right: none;
+        padding-right: 0; 
+    }
 }

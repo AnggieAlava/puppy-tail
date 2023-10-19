@@ -12,9 +12,8 @@ export const OwnerInfo = ({ owner }) => {
     const [currentUser, setUser] = useState({})
 
     useEffect(() => {
-       {console.log(store.currentUser.description)}
         loadData()
-    }, [store.currentUser.description])
+    }, [])
     async function loadData() {
         let resp = actions.getOwner(params.theid)
         setAvatar(resp.profile_pic)

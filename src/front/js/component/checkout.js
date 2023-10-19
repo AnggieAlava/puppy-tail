@@ -55,12 +55,14 @@ const Checkout = () => {
             setSuccess(true);
             actions.createPayment(details);
             actions.createBooking({
-                start_date:moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
-                end_date:moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
-                status:"approved",
-                pets_id:[],
-                owner_id:store.userInfo.userId,
-                keeper_id:store.currentUser.id,
+                start_date: moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
+                end_date: moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
+                status: "approved",
+                pets: store.dates.pets,
+                owner_id: store.userInfo.userId,
+                keeper_id: store.currentUser.id,
+                cost: store.currentUser.hourly_pay, //CAMBIAR
+                service: store.dates.service
             })
         });
     };

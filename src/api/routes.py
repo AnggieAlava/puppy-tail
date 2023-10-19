@@ -665,3 +665,11 @@ def createPayment():
 
     return jsonify({"message": "Compra registrada con éxito"}), 200
     
+
+@api.route('/seed', methods=['POST', 'GET'])
+def puppy_tail():
+    seed()
+    response_body = {
+        "message" : "Data cargada"
+    }
+    return jsonify(response_body),200

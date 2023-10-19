@@ -12,6 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
+      bookings: [],
+      ownerPets: [],
       dates: null //Si se cambia este null ir tambien a keeperForm en setRange y cambiar el argumento de setDates
     },
     actions: {
@@ -95,7 +97,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               console.log("Successfully updated pet: " + data);
-              //getActions().getOwnerPets(obj.owner_id);
               const { pets } = getStore()
               let arr = pets
               for (let pet in arr) {
@@ -146,7 +147,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               console.log({ data } + " Succesfully deleted pet from server");
-              //setStore({pets:data})
               getActions().getOwnerPets(obj.owner_id);
             });
         } catch (error) {
@@ -202,12 +202,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
-        if (localStorage.hasOwnProperty("userInfo") != "null") {
+        let pets = []
+        if (localStorage.hasOwnProperty("userInfo") != null) {
           userData = JSON.parse(localStorage.getItem("userInfo"))
+        }
+        if (localStorage.hasOwnProperty("ownerPets") != null) {
+          pets = JSON.parse(localStorage.getItem("ownerPets"))
         }
         if (token) {
           setStore({ accessToken: token });
           setStore({ userInfo: userData })
+          setStore({ownerPets: pets})
         }
       },
 
@@ -218,13 +223,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           password,
         });
         console.log({ resp });
-        const { message, token, user_id, user_type } = resp.data;
+        const { message, token, user_id, user_type, pets } = resp.data;
         localStorage.setItem("accessToken", token);
         if (token != "null") {
           setStore({ accessToken: token });
           let userData = { "userId": user_id, "user_type": user_type }
+          setStore({ ownerPets: pets })
           setStore({ userInfo: userData })
-          console.log(userData)
+          localStorage.setItem("ownerPets", JSON.stringify(pets))
           localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
@@ -236,6 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         localStorage.removeItem("userInfo");
         localStorage.removeItem("accessToken");
         localStorage.removeItem("keeper");
+        localStorage.removeItem("ownerPets")
         localStorage.removeItem("__paypal_storage__");
       },
 
@@ -462,6 +469,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en el pago:", resp);
         }
       },
+      getBookings: async (type, id) => {
+        const { apiFetchProtected } = getActions();
+        const response = await apiFetchProtected(`/bookings/${type}/${id}`, "GET")
+        if (response.code != 200) {
+          console.error(response.status + ": " + response.statusText)
+        }
+        setStore({ bookings: response.data })
+        return response;
+      },
       createBooking: async (bookingData) => {
         const { apiFetch } = getActions();
         const resp = await apiFetch("/booking", "POST", {
@@ -470,7 +486,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           status: bookingData.status,
           keeper_id: bookingData.keeper_id,
           owner_id: bookingData.owner_id,
-          pets_id: bookingData.pets_id,
+          pets: bookingData.pets,
+          cost: bookingData.cost,
+          service: bookingData.service
         });
         if (resp.code === 201) {
           console.log("Booking created successfully:", resp.data);

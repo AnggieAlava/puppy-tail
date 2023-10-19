@@ -40,4 +40,26 @@ input, textarea{
 .modal{
     border:none;
 }
+.pet-avatar{
+    width: 8rem;
+    object-fit: cover;
+    border-radius: 4.25rem;
+    aspect-ratio: 1;
+    height: 8rem;
+}
+.custom-button-check{
+    background-color: #F7E1D2;
+    border-radius: 0.75rem;
+}
+.custom-button-check:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.pet-card-checked{
+    background-color: #BFC1B9 !important;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+    
+}
+
 

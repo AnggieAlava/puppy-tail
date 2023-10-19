@@ -88,8 +88,8 @@ def login_user():
     refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
     pets = []
     if user.user_type == "owner":
-        pets = [{"name": pet.name, "category": pet.category} for pet in user.pets]
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type, "pets":[{}for pet in user]}), 201
+        pets = [{"id":pet.id,"name": pet.name, "category": pet.category, "profile_pic": getpetAvatar(pet.id), "size":pet.size} for pet in user.pets]
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type, "pets":pets}), 201
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
@@ -414,7 +414,7 @@ def getprofilePic(user_id):
         return ""
     bucket = storage.bucket(name="puppy-tail.appspot.com")
     resource = bucket.blob(user.profile_pic)
-    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(days=5), method="GET")
     return picture_url
 
 @api.route('/pet_avatar/<int:pet_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL PET CON JWT
@@ -449,7 +449,7 @@ def getpetAvatar(pet_id):
         return ""
     bucket = storage.bucket(name="puppy-tail.appspot.com")
     resource = bucket.blob(pet.profile_pic)
-    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(days=5), method="GET")
     return picture_url
 
 @api.route('/booking', methods=["POST"])

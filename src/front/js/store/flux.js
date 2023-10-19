@@ -12,7 +12,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
-      bookings:[],
+      bookings: [],
+      ownerPets: [],
       dates: null //Si se cambia este null ir tambien a keeperForm en setRange y cambiar el argumento de setDates
     },
     actions: {
@@ -203,12 +204,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
+        let pets = []
         if (localStorage.hasOwnProperty("userInfo") != null) {
           userData = JSON.parse(localStorage.getItem("userInfo"))
+        }
+        if (localStorage.hasOwnProperty("ownerPets") != null) {
+          pets = JSON.parse(localStorage.getItem("ownerPets"))
         }
         if (token) {
           setStore({ accessToken: token });
           setStore({ userInfo: userData })
+          setStore({ownerPets: pets})
         }
       },
 
@@ -220,22 +226,27 @@ const getState = ({ getStore, getActions, setStore }) => {
         });
 
         console.log({ resp });
-        const { message, token, user_id, user_type } = resp.data;
+        const { message, token, user_id, user_type, pets } = resp.data;
         localStorage.setItem("accessToken", token);
         if (token != "null") {
           setStore({ accessToken: token });
           let userData = { "userId": user_id, "user_type": user_type }
+          setStore({ ownerPets: pets })
           setStore({ userInfo: userData })
+          localStorage.setItem("ownerPets", JSON.stringify(pets))
           localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
       },
 
       logout: () => {
-        setStore({ accessToken: null });
+        setStore({ accessToken: "null" });
         setStore({ userInfo: {} })
-        localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", null);
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("keeper");
+        localStorage.removeItem("ownerPets")
+        localStorage.removeItem("__paypal_storage__");
       },
 
       getUserInfo: async () => {
@@ -461,13 +472,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.error("Error en el pago:", resp);
         }
       },
-      getBookings: async (type, id) =>{
-        const {apiFetchProtected } = getActions();
-        const response = await apiFetchProtected(`/bookings/${type}/${id}`,"GET")
-        if (response.code != 200){
-          console.error(response.status+": "+response.statusText)
+      getBookings: async (type, id) => {
+        const { apiFetchProtected } = getActions();
+        const response = await apiFetchProtected(`/bookings/${type}/${id}`, "GET")
+        if (response.code != 200) {
+          console.error(response.status + ": " + response.statusText)
         }
-        setStore({bookings:response.data})
+        setStore({ bookings: response.data })
         return response;
       }
     }

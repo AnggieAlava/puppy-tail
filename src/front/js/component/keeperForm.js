@@ -5,11 +5,13 @@ import { Context } from "../store/appContext";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import "../../styles/profile.css"
+import stock_pet from "../../img/stock_pet_black.png"
 
 export const KeeperForm = ({ }) => {
   const { store, actions } = useContext(Context)
   //Calendar use
   const [value, setValue] = useState([]);
+  const [selectedPets, setSelectedPets] = useState([])
   const [isRange, setisRange] = useState(false)
   const [times, setTimes] = useState([])
   const [secondTimes, setsecondTimes] = useState([])
@@ -23,6 +25,10 @@ export const KeeperForm = ({ }) => {
   const params = useParams();
 
   useEffect(() => {
+    setcheckoutData();
+  }, [hour, finalHour, selectedPets])
+
+  function setcheckoutData(){
     if (hour != "" && finalHour != "") {
       let start_date = value[0].getDate().toString() + "-" + (value[0].getMonth() + 1).toString() + "-" + value[0].getFullYear().toString()
       let end_date = value[1].getDate().toString() + "-" + (value[1].getMonth() + 1).toString() + "-" + value[1].getFullYear().toString()
@@ -32,12 +38,11 @@ export const KeeperForm = ({ }) => {
         "start_hour": hour,
         "end_hour": finalHour,
         "service": currentService,
+        "pets": selectedPets
       }
       actions.setDates(obj);
     }
-  }, [hour, finalHour])
-
-
+  }
   function setRange(service) {
     //Reset everything when choosing another service type
     actions.setDates(null)
@@ -104,7 +109,31 @@ export const KeeperForm = ({ }) => {
     if (e.target.id == "endHour") {
       setfinalHour(e.target.value)
     }
-
+  }
+  function imgErrorHandler(e) {
+    e.target.src = stock_pet
+  }
+  function checkPet(index, id){
+    let petCard = document.getElementById("pet"+index)
+    let cardContainer = document.getElementById('card'+index)
+    let isChecked = petCard.checked
+    if(isChecked){
+      petCard.checked = !isChecked
+      cardContainer.classList.remove('pet-card-checked')
+      let index = selectedPets.indexOf(id)
+      if(index!==-1){
+        let tempArr = selectedPets
+        tempArr.splice(index, 1)
+        setSelectedPets(tempArr)
+        setcheckoutData()
+      }
+    }
+    else if (!isChecked){
+      petCard.checked = !isChecked
+      cardContainer.classList.add('pet-card-checked')
+      let tempArr = [...selectedPets,id]
+      setSelectedPets(tempArr)
+    }
   }
   return (
     <div className="container d-flex flex-column justify-content-center pb-4 text-start p-4" id="calendar">
@@ -123,18 +152,19 @@ export const KeeperForm = ({ }) => {
             )
           }) : store.currentUser.first_name + " no ha establecido servicios o tarifa"}
 
-
-          {/* SIN TERMINAR */}
-          {/* <h2 className="input-group-text">Mascotas</h2>
-          {Array.isArray(store.currentUser.pets) && (store.currentUser.hourly_pay!=null)? store.currentUser.pets.map((pet, index) => {
+          <h2 className="input-group-text">Mascotas</h2>
+          {Array.isArray(store.ownerPets) ? store.ownerPets.map((pet, index) => {
             return (
-              <div className="form-check form-check-inline" key={index}>
-                <input className="form-check-input" type="radio" name="inlineRadioOptions" onChange={() => setRange(service)} id={"option" + index} value={service} />
-                <label className="form-check-label" htmlFor={"option" + index}>{service}</label>
+              <div className="form-check form-check-inline py-1 px-0" key={index}>
+                {/* <label className="btn" htmlFor={"pet"+index}>{pet.name}</label> */}
+                <div className="text-center d-block custom-button-check pb-1" id={"card"+index} onClick={()=>checkPet(index, pet.id)}>
+                  <input className="btn btn-check" type="checkbox" disabled autoComplete="off" id={"pet" + index} />
+                  <div><img onError={(event)=>imgErrorHandler(event)} src={pet.profile_pic} className="pet-avatar p-1" /></div>
+                  <label htmlFor={"pet"+index}>{pet.name}</label>
+                </div>
               </div>
             )
-          }) : store.currentUser.first_name+" no ha establecido servicios o tarifa"} */}
-          {/* SIN TERMINAR */}
+          }) : "Inicia sesion en este dispositivo para escoger mascota"}
 
 
           <h2 className="input-group-text mt-2">Disponibilidad</h2>
@@ -200,12 +230,12 @@ export const KeeperForm = ({ }) => {
             })}
           </div>
           {(value.length > 1 ?
-            <Link to={(((finalHour == "" || hour == "") ? "#" : `/checkout/keeper/${store.currentUser.id}`))}>
-              <button className="btn btn-green" onMouseDown={() => console.log(hour + "" + finalHour)} role="button" disabled={((finalHour == "" || hour == "") ? true : false)}>Reservar</button>
+            <Link to={(((finalHour == "" || hour == "") ? "#" : selectedPets[0]!==undefined?`/checkout/keeper/${store.currentUser.id}`:'#'))}>
+              <button className="btn btn-green" onMouseDown={() => console.log(hour + "" + finalHour)} role="button" disabled={((finalHour == "" || hour == "") ? true : (selectedPets[0]!==undefined)?false:true)}>Reservar</button>
             </Link> : "")}
+            {(selectedPets.length<1? value.length>1?<div className="form-text"><strong>Selecciona al menos una mascota para continuar con la reserva</strong></div>:"" : "")}
         </div>
       </div>
     </div>
   );
 };
-

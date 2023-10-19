@@ -18,7 +18,6 @@ export const Bookings = () => {
         setBookings(response.data)
     }
     function imgErrorHandler(e){
-        console.log("HANDLING ERROR IMAGE")
         e.target.src = stock_avatar
     }
     function formatDate(date){
@@ -27,13 +26,13 @@ export const Bookings = () => {
     }
     return (
         <div className='container-fluid text-left'>
-            <div className='d-flex flex-row flex-nowrap gap-3 align-items-center card-container'>
+            <div className='d-flex flex-row flex-nowrap gap-3 align-items-center booking-card-container'>
                 {bookings.length<1?"Sin reservas":
                 bookings.map((booking, index)=>{
                     return(
-                        <div className="card rounded" style={{width: "16rem"}} key={index}>
-                            <img onError={imgErrorHandler} src={(params.type=="owner"?booking.keeper.profile_pic:booking.pets[0].profile_pic)} className="card-img-top rounded-img object-fit-cover p-2" />
-                            <div className="card-body">
+                        <div className="card booking-custom-card rounded" style={{width: "16rem"}} key={index}>
+                            <img onError={imgErrorHandler} src={(params.type=="owner"?booking.keeper.profile_pic:booking.pets[0].profile_pic)} className="card-img-top booking-rounded-img object-fit-cover p-2" />
+                            <div className="card-body booking-body-custom">
                                 <h5 className='card-title'>{booking.service}</h5>
                                 <p className="card-text">Inicio: <strong>{formatDate(booking.start_date)}</strong></p>
                                 <p className="card-text">Fin: <strong>{formatDate(booking.end_date)}</strong></p>

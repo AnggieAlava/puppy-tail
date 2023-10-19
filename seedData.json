@@ -121,7 +121,7 @@
                
                 "description": "Amante de los animales y paseador de mascotas.",
                 "email": "juan@example.com",
-                "experience": "Fri, 15 Jul 2023 09:30:00 GMT",
+                "experience": "Fri 15 Jul 2021 09:30:00 GMT",
                 "first_name": "Juan",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 30.0,
@@ -136,7 +136,7 @@
                
                 "description": "Apasionada por cuidar mascotas de todo tipo.",
                 "email": "lauramarano@gmail.com",
-                "experience": "Wed, 20 Oct 2023 14:00:00 GMT",
+                "experience": "Wed 20 Oct 2020 14:00:00 GMT",
                 "first_name": "Laura",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 20.0,
@@ -151,7 +151,7 @@
                
                 "description": "Amante de los animales y cuidador experimentado.",
                 "email": "carlos@example.com",
-                "experience": "Tue, 1 Aug 2023 12:45:00 GMT",
+                "experience": "Tue 1 Aug 2019 12:45:00 GMT",
                 "first_name": "Carlos",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 25.0,
@@ -166,7 +166,7 @@
                
                 "description": "Cuidadora profesional de mascotas.",
                 "email": "maria@gmail.com",
-                "experience": "Sat, 10 Sep 2023 10:15:00 GMT",
+                "experience": "Sat 10 Sep 2018 10:15:00 GMT",
                 "first_name": "Maria",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 30.0,
@@ -181,7 +181,7 @@
                 
                 "description": "Cuidador amante de los perros.",
                 "email": "jose@example.com",
-                "experience": "Sun, 25 Dec 2023 16:30:00 GMT",
+                "experience": "Sun 25 Dec 2021 16:30:00 GMT",
                 "first_name": "Jose",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 25.0,
@@ -196,7 +196,7 @@
                
                 "description": "Cuidadora de gatos y otros animales domésticos.",
                 "email": "ana@gmail.com",
-                "experience": "Tue, 22 Nov 2023 13:15:00 GMT",
+                "experience": "Tue 22 Nov 2017 13:15:00 GMT",
                 "first_name": "Ana",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 20.0,
@@ -211,7 +211,7 @@
                 
                 "description": "Cuidador de mascotas a domicilio.",
                 "email": "diego@example.com",
-                "experience": "Mon, 1 May 2023 08:00:00 GMT",
+                "experience": "Mon 1 May 2018 08:00:00 GMT",
                 "first_name": "Diego",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 25.0,
@@ -226,7 +226,7 @@
                 
                 "description": "Cuidadora de aves exóticas y animales de granja.",
                 "email": "lucia@gmail.com",
-                "experience": "Thu, 20 Apr 2023 11:00:00 GMT",
+                "experience": "Thu 20 Apr 2018 11:00:00 GMT",
                 "first_name": "Lucia",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 30.0,
@@ -241,7 +241,7 @@
                 
                 "description": "Cuidador de reptiles y animales acuáticos.",
                 "email": "pedro@example.com",
-                "experience": "Wed, 5 Jul 2023 17:45:00 GMT",
+                "experience": "Wed 5 Jul 2018 17:45:00 GMT",
                 "first_name": "Pedro",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 25.0,
@@ -256,7 +256,7 @@
                 
                 "description": "Amante de los animales exóticos y especializado en su cuidado.",
                 "email": "mariana@gmail.com",
-                "experience": "Tue, 18 Jan 2023 15:30:00 GMT",
+                "experience": "Tue 18 Jan 2018 15:30:00 GMT",
                 "first_name": "Mariana",
                 "password": "$2b$12$D5GOKDrI7BEIPTGy1FDOc.28kpsHhQUyqTGUmCsceklDhxOE2wwR2",
                 "hourly_pay": 30.0,
@@ -275,70 +275,70 @@
             {
                 "id": 1,
                 "name": "Buddy",
-                "size": "medium",
+                "size": "Mediano",
                 "category": "Labrador",
                 "owner_id": 1
             },
             {
                 "id": 2,
                 "name": "Max",
-                "size": "large",
+                "size": "Grande",
                 "category": "Golden Retriever",
                 "owner_id": 1
             },
             {
                 "id": 3,
                 "name": "Luna",
-                "size": "small",
+                "size": "Pequeño",
                 "category": "Chihuahua",
                 "owner_id": 1
             },
             {
                 "id": 4,
                 "name": "Rocky",
-                "size": "medium",
+                "size": "Mediano",
                 "category": "Bulldog",
                 "owner_id": 1
             },
             {
                 "id": 5,
                 "name": "Coco",
-                "size": "small",
+                "size": "Pequeño",
                 "category": "Pomeranian",
                 "owner_id": 2
             },
             {
                 "id": 6,
                 "name": "Milo",
-                "size": "large",
+                "size": "Grande",
                 "category": "German Shepherd",
                 "owner_id": 2
             },
             {
                 "id": 7,
                 "name": "Daisy",
-                "size": "small",
+                "size": "Pequeño",
                 "category": "Yorkshire Terrier",
                 "owner_id": 2
             },
             {
                 "id": 8,
                 "name": "Leo",
-                "size": "medium",
+                "size": "Mediano",
                 "category": "Labrador",
                 "owner_id": 2
             },
             {
                 "id": 9,
                 "name": "Bigotes",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Siamés",
                 "owner_id": 3
             },
             {
                 "id": 10,
                 "name": "Mitones",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Maine Coon",
                 "owner_id": 3
             },
@@ -352,175 +352,175 @@
             {
                 "id": 12,
                 "name": "Pelusa",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Siamesa",
                 "owner_id": 4
             },
             {
                 "id": 13,
                 "name": "Garfield",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Persa",
                 "owner_id": 4
             },
             {
                 "id": 14,
                 "name": "Max",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Beagle",
                 "owner_id": 4
             },
             {
                 "id": 15,
                 "name": "Buddy",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Labrador",
                 "owner_id": 4
             },
             {
                 "id": 16,
                 "name": "Luna",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Poodle",
                 "owner_id": 4
             },
             {
                 "id": 17,
                 "name": "Rex",
-                "size": "grande",
+                "size": "Grande",
                 "category": "Pastor Alemán",
                 "owner_id": 5
             },
             {
                 "id": 18,
                 "name": "Bella",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Golden Retriever",
                 "owner_id": 5
             },
             {
                 "id": 19,
                 "name": "Rocky",
-                "size": "grande",
+                "size": "Grande",
                 "category": "Bulldog",
                 "owner_id": 5
             },
             {
                 "id": 20,
                 "name": "Milo",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 6
             },
             {
                 "id": 21,
                 "name": "Oliver",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 6
             },
             {
                 "id": 22,
                 "name": "Lucy",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 6
             },
             {
                 "id": 23,
                 "name": "Chloe",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 6
             },
             {
                 "id": 24,
                 "name": "Luna",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 6
             },
             {
                 "id": 25,
                 "name": "Leo",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 7
             },
             {
                 "id": 26,
                 "name": "Buddy",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 7
             },
             {
                 "id": 27,
                 "name": "Nina",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 8
             },
             {
                 "id": 28,
                 "name": "Coco",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 9
             },
             {
                 "id": 29,
                 "name": "Charlie",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 9
             },
             {
                 "id": 30,
                 "name": "Lily",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 9
             },
             {
                 "id": 31,
                 "name": "Daisy",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 9
             },
             {
                 "id": 32,
                 "name": "Max",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 10
             },
             {
                 "id": 33,
                 "name": "Rocky",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 10
             },
             {
                 "id": 34,
                 "name": "Lucy",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 10
             },
             {
                 "id": 35,
                 "name": "Bella",
-                "size": "mediano",
+                "size": "Mediano",
                 "category": "Perro",
                 "owner_id": 10
             },
             {
                 "id": 36,
                 "name": "Milo",
-                "size": "pequeño",
+                "size": "Pequeño",
                 "category": "Gato",
                 "owner_id": 10
             }

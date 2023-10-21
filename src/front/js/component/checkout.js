@@ -55,8 +55,10 @@ const Checkout = () => {
             setSuccess(true);
             actions.createPayment(details);
             actions.createBooking({
-                start_date: moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
-                end_date: moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
+                //start_date: moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
+                //end_date: moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
+                start_date:store.dates.new_start,
+                end_date:store.dates.new_end,
                 status: "approved",
                 pets: store.dates.pets,
                 owner_id: store.userInfo.userId,
@@ -111,7 +113,7 @@ const Checkout = () => {
                             <hr />
                         </div>
                         <div className="product-price-btn">
-                            <h6 className="m-2"><i className="fa-brands fa-paypal checkout-icon"></i> Precio: {store.currentUser.hourly_pay}</h6>
+                            <h6 className="m-2"><i className="fa-brands fa-paypal checkout-icon"></i> Precio: ${store.currentUser.hourly_pay}</h6>
                         </div>
                     </div>
                     <PayPalButtons

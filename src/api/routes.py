@@ -556,7 +556,7 @@ def modifyBooking(booking_id):
         booking.start_date = data["start_date"]
         booking.end_date = data["end_date"]
         booking.status = data["status"]
-        booking.pets_id = data["pets_id"]
+        #booking.pets = data["pets"]
         db.session.commit()
         return jsonify({"msg":"Booking successfully updated"}), 200
 

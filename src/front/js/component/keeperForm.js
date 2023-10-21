@@ -30,11 +30,26 @@ export const KeeperForm = ({ }) => {
 
   function setcheckoutData(){
     if (hour != "" && finalHour != "") {
+      //Unir fechas y horas para enviar a checkout
+      let start_hour = hour.split(":")[0]
+      let start_minutes = hour.split(":")[1]
+      let utc_start_time = new Date(Date.UTC(2020,1,1,Number(start_hour),Number(start_minutes),0,0))
+      console.log(utc_start_time)
+      let new_start = new Date(Date.UTC(value[0].getUTCFullYear(), value[0].getUTCMonth(), value[0].getUTCDate(),0,0,0,0)) //Formato de tiempo para guardar en booking
+      let start_time = new Date(`Dec 20 2019 ${hour}`)
+      new_start.setUTCHours(start_time.getUTCHours(), start_time.getMinutes(),0,0)
+      
+      let new_end = new Date(value[1]) //Formato de tiempo para guardar en booking
+      let end_time = new Date(`Dec 20 2019 ${finalHour}`)
+      new_end.setUTCHours(end_time.getUTCHours(), end_time.getMinutes(),0,0)
+
       let start_date = value[0].getDate().toString() + "-" + (value[0].getMonth() + 1).toString() + "-" + value[0].getFullYear().toString()
       let end_date = value[1].getDate().toString() + "-" + (value[1].getMonth() + 1).toString() + "-" + value[1].getFullYear().toString()
       let obj = {
         "start_date": start_date,
         "end_date": end_date,
+        "new_start": new_start, //Formato de tiempo para booking
+        "new_end": new_end,
         "start_hour": hour,
         "end_hour": finalHour,
         "service": currentService,

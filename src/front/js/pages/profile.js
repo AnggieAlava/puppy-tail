@@ -16,7 +16,7 @@ export const Profile = ({ keeper }) => {
 	return (
 		<div className="container-fluid px-0">
 			
-			{(store.userInfo.userId===store.currentUser.id)?
+			{(store.userInfo.userId===store.currentUser.id)&&store.userInfo.user_type=='owner'?
 			<div>
 				<ul className="nav nav-tabs d-flex justify-content-center align-items-center bg-custom" id="pills-tab" role="tablist">
 					<li className="nav-item" role="presentation">

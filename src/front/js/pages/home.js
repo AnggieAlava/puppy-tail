@@ -23,7 +23,7 @@ export const Home = () => {
 
   return (
     <>
-      <div className="bottom-squiggle-wrapper container-fluid p-2 ">
+      <div className="bottom-squiggle-wrapper container-fluid p-0">
         <img
           src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg"
           loading="lazy"

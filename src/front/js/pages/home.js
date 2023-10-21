@@ -23,7 +23,7 @@ export const Home = () => {
 
   return (
     <>
-      <div className="bottom-squiggle-wrapper container-fluid p-0">
+      <div className="bottom-squiggle-wrapper container-fluid p-2 ">
         <img
           src="https://assets.website-files.com/64149f79022d0c5fc8ce46e8/64149f79022d0cc5c4ce4784_Bottom%20Squiggle.svg"
           loading="lazy"
@@ -33,11 +33,11 @@ export const Home = () => {
           className="bottom-squiggle"
         />
       </div>
-      <div className="home home-bg">
-        <div className="container-fluid p-0 d-flex align-items-center justify-content-center main-card">
-          <div className="card card-header">
-            <div className="card-body text-center">
-              <h1 className="card-title landing-title">
+      <div className="home home-bg ">
+        <div className="container-fluid p-0 d-flex align-items-center justify-content-center main-card tit-home snow-background">
+          <div className="card  tit-home">
+            <div className="card-body text-center tit-home">
+              <h1 className="card-title landing-title tit-home">
                 <span className="cuidamos-text">Busca</span> los{" "}
                 <span className="mascotas-text">mejores cuidadores</span> para tus mascotas
               </h1>

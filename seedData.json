@@ -2,7 +2,7 @@
     {
         "target_class": "Owner",
         "data": [
-              {
+            {
                 "first_name": "Anggie",
                 "last_name": "Alava",
                 "email": "anggie@hotmail.com",
@@ -10,10 +10,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "description": "Soy una amante de la naturaleza",
                 "profile_pic": "",
-                "is_active":true,
-                "pets":[]
-              },
-              {
+                "is_active": true,
+                "pets": []
+            },
+            {
                 "first_name": "Elias",
                 "last_name": "Carmiol",
                 "email": "elias@example.com",
@@ -40,7 +40,7 @@
     {
         "target_class": "Keeper",
         "data": [
-            {             
+            {
                 "description": "Soy un amante de la naturaleza",
                 "first_name": "David",
                 "last_name": "Johnson",
@@ -49,8 +49,11 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
-                "is_active":true,
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
                 "phone_number": "1-555-123-4567"
             },
             {
@@ -62,7 +65,9 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 25,
                 "experience": "Wed 15 Mar 2022 00:00:00 GMT",
-                "services": ["Cuidar mascotas"],
+                "services": [
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "54-9-11-8765-4321"
             },
@@ -75,7 +80,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "57-321-987-6543"
             },
@@ -88,7 +96,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "51-987-654-321"
             },
@@ -101,7 +112,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "56-912-345-678"
             },
@@ -114,7 +128,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "54-11-9876-5432"
             },
@@ -127,7 +144,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "52-55-1234-5678"
             },
@@ -140,7 +160,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "58-414-123-4567"
             },
@@ -153,7 +176,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "506-2222-3333"
             },
@@ -166,7 +192,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2022 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "51-977-555-444"
             },
@@ -179,7 +208,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2021 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "57-310-123-4567"
             },
@@ -192,7 +224,9 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 25,
                 "experience": "Thu 20 Jan 2021 00:00:00 GMT",
-                "services": ["Cuidar mascotas"],
+                "services": [
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "52-55-8765-4321"
             },
@@ -205,7 +239,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2021 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "56-912-987-654"
             },
@@ -218,7 +255,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2021 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "54-11-9876-5432"
             },
@@ -231,7 +271,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2021 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "51-977-555-444"
             },
@@ -244,7 +287,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2018 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "58-414-123-4567"
             },
@@ -257,7 +303,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2018 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "506-2222-3333"
             },
@@ -270,7 +319,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2018 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "593-2-123-4567"
             },
@@ -283,7 +335,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2018 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "51-977-555-444"
             },
@@ -296,7 +351,10 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2018 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "51-977-555-444"
             },
@@ -309,16 +367,18 @@
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2018 00:00:00 GMT",
-                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
                 "is_active": true,
                 "phone_number": "51-977-555-444"
             }
-           
         ]
     },
     {
-        "target_class":"Pet",
-        "data":[
+        "target_class": "Pet",
+        "data": [
             {
                 "name": "Frida",
                 "size": "Mediano",
@@ -409,8 +469,29 @@
                 "category": "Ragdoll",
                 "owner_id": "3"
             }
-
         ]
-
+    },
+    {
+        "target_class": "Booking",
+        "data": [
+            {
+                "status": "Approved",
+                "start_date": "10 Oct 2023 15:00:00 GMT",
+                "end_date": "11 Oct 2023 10:00:00 GMT",
+                "keeper_id": "4",
+                "owner_id": "1",
+                "service": "Cuidar mascotas",
+                "cost": 10
+            }
+        ]
+    },
+    {
+        "target_class": "BookingPet",
+        "data": [
+            {
+                "booking_id": "1",
+                "pet_id": "1"
+            }
+        ]
     }
 ]

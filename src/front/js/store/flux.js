@@ -212,7 +212,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         if (token) {
           setStore({ accessToken: token });
           setStore({ userInfo: userData })
-          setStore({ownerPets: pets})
+          setStore({ ownerPets: pets })
         }
       },
 

@@ -1,0 +1,64 @@
+[
+    {
+        "target_class": "Owner",
+        "data": [
+              {
+                "id":1,
+                "first_name": "Anggie",
+                "last_name": "Alava",
+                "email": "anggie@hotmail.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "profile_pic": "",
+                "is_active":true,
+                "pets":[]
+              }
+        ]
+    },
+    {
+        "target_class": "Keeper",
+        "data": [
+            {             
+                "id":2,
+                "description": "Soy un amante de la naturaleza",
+                "first_name": "David",
+                "last_name": "Johnson",
+                "email": "david@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active":true,
+                "phone_number": "1-555-123-4567"
+            }
+           
+        ]
+    },
+    {
+        "target_class": "Pet",
+        "data": [
+            {
+                "id": 1,
+                "name": "Frida",
+                "size": "Mediano",
+                "category": "Doberman",
+                "owner_id": "1"
+            } 
+        ]
+    },
+    {
+        "target_class": "Booking",
+        "data": [
+            {
+                "status": "Approved",
+                "start_date":"Wed 25 Oct 2023 05:00:00 GMT",
+                "end_date":"Wed 25 Oct 2023 06:00:00 GMT",
+                "owner_id":"1",
+                "keeper_id":"2",
+                "service": "Pasear mascotas",
+                "pets":["1"]
+            }        
+        ]
+    }
+]

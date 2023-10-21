@@ -137,7 +137,7 @@ const Keepers = () => {
       <div className="row row-cols-1 row-cols-sm-3 g-4 card-wrap">
         {filterKeepers().map((keeper, index) => (
           <div className="col p-4" key={index}>
-            <div className="card">
+            <div className="card card-profile-home">
               <div className="row no-gutters">
                 <div className="col-md-4">
                   <img

@@ -154,7 +154,7 @@ def hello_protected():
 @api.route('/owner', methods=["GET"])
 def owners_list():
     owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "location": owner.location, "description": owner.description, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "location": owner.location, "description": owner.description, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id}
                    for pet in Pet.query.filter_by(owner_id=owner.id)]}
                    for owner in owners]
     return jsonify(owners_data), 200
@@ -373,7 +373,7 @@ def getPet(pet_id):
 @api.route('/pets', methods=['GET'])
 def getAllPets():
     pets = Pet.query.all()
-    pets_data = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings, "owner": [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email} for owner in Owner.query.filter_by(id=pet.owner_id)]}
+    pets_data = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "owner": [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email} for owner in Owner.query.filter_by(id=pet.owner_id)]}
                  for pet in pets]
     return jsonify(pets_data), 200
 
@@ -382,7 +382,7 @@ def getAllPets():
 def getPetsByOwner(owner_id):
     pets = Pet.query.filter_by(owner_id=owner_id)
 
-    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category,"profile_pic": getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
+    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category,"profile_pic": getpetAvatar(pet.id), "owner_id": pet.owner_id}
             for pet in pets]
     return jsonify(pets), 200
 
@@ -692,3 +692,11 @@ def createPayment():
 
     return jsonify({"message": "Compra registrada con éxito"}), 200
     
+
+@api.route('/seed', methods=['POST', 'GET'])
+def puppy_tail():
+    seed()
+    response_body = {
+        "message" : "Data cargada"
+    }
+    return jsonify(response_body),200

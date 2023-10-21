@@ -3,6 +3,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from sqlalchemyseeder import ResolvingSeeder
 # from sqlalchemy_jsonfield import JSONField
 from enum import Enum
 
@@ -134,3 +135,13 @@ class Order(db.Model,SerializerMixin):
     description = db.Column(db.String(200), nullable=False) 
     payee_email = db.Column(db.String(200), nullable=False) 
     status = db.Column(db.String(50), nullable=False) 
+
+
+def seed():
+    seeder = ResolvingSeeder(db.session)
+    seeder.register(Owner)
+    seeder.register(Keeper)
+    seeder.register(Pet)
+    seeder.register(Booking)
+    seeder.load_entities_from_json_file("seedData.json")
+    db.session.commit()

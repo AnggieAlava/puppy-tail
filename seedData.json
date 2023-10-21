@@ -3,23 +3,44 @@
         "target_class": "Owner",
         "data": [
               {
-                "id":1,
                 "first_name": "Anggie",
                 "last_name": "Alava",
                 "email": "anggie@hotmail.com",
                 "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Soy una amante de la naturaleza",
                 "profile_pic": "",
                 "is_active":true,
                 "pets":[]
-              }
+              },
+              {
+                "first_name": "Elias",
+                "last_name": "Carmiol",
+                "email": "elias@example.com",
+                "location": "Argentina",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Soy un amante de los animales",
+                "profile_pic": "",
+                "is_active": true,
+                "pets": []
+            },
+            {
+                "first_name": "Francisco",
+                "last_name": "Salvatierra",
+                "email": "francisco@example.com",
+                "location": "Chile",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Amo a los perros y gatos",
+                "profile_pic": "",
+                "is_active": true,
+                "pets": []
+            }
         ]
     },
     {
         "target_class": "Keeper",
         "data": [
             {             
-                "id":2,
                 "description": "Soy un amante de la naturaleza",
                 "first_name": "David",
                 "last_name": "Johnson",
@@ -31,34 +52,150 @@
                 "services": ["Pasear mascotas", "Cuidar mascotas"],
                 "is_active":true,
                 "phone_number": "1-555-123-4567"
+            },
+            {
+                "description": "Soy un amante de los animales",
+                "first_name": "Ana",
+                "last_name": "Gonzalez",
+                "email": "ana@example.com",
+                "location": "Argentina",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 25,
+                "experience": "Wed 15 Mar 2022 00:00:00 GMT",
+                "services": ["Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "54-9-11-8765-4321"
+            },
+            {
+                "description": "Experto en mascotas",
+                "first_name": "María",
+                "last_name": "López",
+                "email": "maria@example.com",
+                "location": "Colombia",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "57-321-987-6543"
+            },
+            {
+                "description": "Amante de los animales exóticos",
+                "first_name": "Rafael",
+                "last_name": "Gómez",
+                "email": "rafael@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "51-987-654-321"
+            },
+            {
+                "description": "Cuido con cariño a tus mascotas",
+                "first_name": "Carolina",
+                "last_name": "Pérez",
+                "email": "carolina@example.com",
+                "location": "Chile",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "56-912-345-678"
+            },
+            {
+                "description": "Especialista en perros grandes",
+                "first_name": "Javier",
+                "last_name": "Martínez",
+                "email": "javier@example.com",
+                "location": "Argentina",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "54-11-9876-5432"
+            },
+            {
+                "description": "Amante de los gatos",
+                "first_name": "Isabel",
+                "last_name": "Ramírez",
+                "email": "isabel@example.com",
+                "location": "México",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "52-55-1234-5678"
+            },
+            {
+                "description": "Experto en aves tropicales",
+                "first_name": "Antonio",
+                "last_name": "Hernández",
+                "email": "antonio@example.com",
+                "location": "Venezuela",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "58-414-123-4567"
+            },
+            {
+                "description": "Cuido con amor a tus perros",
+                "first_name": "Sofía",
+                "last_name": "García",
+                "email": "sofia@example.com",
+                "location": "Costa Rica",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "506-2222-3333"
+            },
+            {
+                "description": "Especialista en reptiles",
+                "first_name": "Manuel",
+                "last_name": "Lara",
+                "email": "manuel@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": ["Pasear mascotas", "Cuidar mascotas"],
+                "is_active": true,
+                "phone_number": "51-977-555-444"
             }
            
         ]
     },
     {
-        "target_class": "Pet",
-        "data": [
+        "target_class":"Pet",
+        "data":[
             {
-                "id": 1,
                 "name": "Frida",
                 "size": "Mediano",
                 "category": "Doberman",
                 "owner_id": "1"
-            } 
-        ]
-    },
-    {
-        "target_class": "Booking",
-        "data": [
+            },
             {
-                "status": "Approved",
-                "start_date":"Wed 25 Oct 2023 05:00:00 GMT",
-                "end_date":"Wed 25 Oct 2023 06:00:00 GMT",
-                "owner_id":"1",
-                "keeper_id":"2",
-                "service": "Pasear mascotas",
-                "pets":["1"]
-            }        
+                "name": "Luna",
+                "size": "Mediano",
+                "category": "Bulldog",
+                "owner_id": "1"
+            },
+            {
+                "name": "Max",
+                "size": "Pequeño",
+                "category": "Chihuahua",
+                "owner_id": "1"
+            }
+
         ]
+
     }
 ]

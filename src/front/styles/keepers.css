@@ -1,7 +1,7 @@
 
 
-.card {
-  background-color: #8ec2a8;
+.card-profile-home {
+  background-color: #BFC1B9;
   border: 1px solid #ddd;
   border-radius: 10px;
   margin: 10px;
@@ -9,7 +9,7 @@
   transition: transform 0.2s;
 }
 
-.card:hover {
+.card-profile-home:hover {
   transform: scale(1.02);
 }
 
@@ -148,3 +148,4 @@
   margin: 50px 0 20px 0; 
   width: 100%; 
 }
+

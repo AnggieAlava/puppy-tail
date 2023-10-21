@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import FilterLocation from "../component/filterLocation";
 import Keepers from "../component/keepers";
+import "../../styles/home.css"
 
 export const Home = () => {
   const [filters, setFilters] = useState({
@@ -32,7 +33,7 @@ export const Home = () => {
           className="bottom-squiggle"
         />
       </div>
-      <div className="home">
+      <div className="home home-bg">
         <div className="container-fluid p-0 d-flex align-items-center justify-content-center main-card">
           <div className="card card-header">
             <div className="card-body text-center">

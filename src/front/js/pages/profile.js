@@ -54,7 +54,7 @@ export const Profile = ({ keeper }) => {
 			{/* FIN */}
 			
 			{/* Componente condicional aqui, pasar user type por props */}
-			{(params.type == 'owner' ? < Pets owner_id={params.theid} /> : store.userInfo.user_type=="owner"?<KeeperForm keeper={keeper} />:store.userInfo.user_type=="keeper"?<Bookings />:"Registrate o inicia sesion para interactuar con el cuidador")}
+			{(params.type == 'owner' ? < Pets owner_id={params.theid} /> : store.userInfo.user_type=="owner"?<KeeperForm keeper={keeper} />:store.userInfo.user_type=="keeper"?<div className="pt-3"><Bookings /></div>:"Registrate o inicia sesion para interactuar con el cuidador")}
 
 		</div>
 	);

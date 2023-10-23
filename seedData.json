@@ -59,7 +59,7 @@
                 "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
-                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
                 "services": [
                     "Pasear mascotas",
                     "Cuidar mascotas"
@@ -75,7 +75,7 @@
                 "location": "Argentina",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 25,
-                "experience": "Wed 15 Mar 2022 00:00:00 GMT",
+                "experience": "Wed 15 Mar 2021 00:00:00 GMT",
                 "services": [
                     "Cuidar mascotas"
                 ],
@@ -90,7 +90,7 @@
                 "location": "Colombia",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
-                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "experience": "Thu 20 Jan 2020 00:00:00 GMT",
                 "services": [
                     "Pasear mascotas",
                     "Cuidar mascotas"
@@ -106,7 +106,7 @@
                 "location": "Perú",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
-                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "experience": "Thu 20 Jan 2020 00:00:00 GMT",
                 "services": [
                     "Pasear mascotas",
                     "Cuidar mascotas"
@@ -493,35 +493,35 @@
         "data": [
             {
                 "status": "Approved",
-                "start_date": "16 Oct 2023 15:00:00 GMT",
-                "end_date": "16 Oct 2023 10:00:00 GMT",
+                "start_date": "24 Oct 2023 10:00:00 GMT",
+                "end_date": "24 Oct 2023 11:00:00 GMT",
                 "keeper_id": "5",
                 "owner_id": "1",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "12 Oct 2023 15:00:00 GMT",
-                "end_date": "13 Oct 2023 10:00:00 GMT",
-                "keeper_id": "5",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "10 Nov 2023 15:00:00 GMT",
-                "end_date": "10 Nov 2023 16:00:00 GMT",
-                "keeper_id": "5",
-                "owner_id": "4",
                 "service": "Pasear mascotas",
                 "cost": 30
             },
             {
                 "status": "Approved",
-                "start_date": "10 Oct 2023 15:00:00 GMT",
-                "end_date": "10 Oct 2023 16:00:00 GMT",
+                "start_date": "24 Oct 2023 16:00:00 GMT",
+                "end_date": "24 Oct 2023 17:00:00 GMT",
+                "keeper_id": "5",
+                "owner_id": "2",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "26 Nov 2023 8:00:00 GMT",
+                "end_date": "27 Nov 2023 20:00:00 GMT",
+                "keeper_id": "5",
+                "owner_id": "4",
+                "service": "Cuidar mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "30 Oct 2023 10:00:00 GMT",
+                "end_date": "30 Oct 2023 11:00:00 GMT",
                 "keeper_id": "5",
                 "owner_id": "3",
                 "service": "Pasear mascotas",
@@ -529,7 +529,7 @@
             },
             {
                 "status": "Approved",
-                "start_date": "10 Nov 2023 15:00:00 GMT",
+                "start_date": "10 Nov 2023 8:00:00 GMT",
                 "end_date": "13 Nov 2023 10:00:00 GMT",
                 "keeper_id": "6",
                 "owner_id": "1",
@@ -538,17 +538,17 @@
             },
             {
                 "status": "Approved",
-                "start_date": "22 Oct 2023 15:00:00 GMT",
+                "start_date": "25 Oct 2023 9:00:00 GMT",
                 "end_date": "25 Oct 2023 10:00:00 GMT",
                 "keeper_id": "6",
                 "owner_id": "2",
-                "service": "Cuidar mascotas",
+                "service": "Pasear mascotas",
                 "cost": 30
             },
             {
                 "status": "Approved",
-                "start_date": "1 Nov 2023 15:00:00 GMT",
-                "end_date": "1 Nov 2023 16:00:00 GMT",
+                "start_date": "26 Oct 2023 8:00:00 GMT",
+                "end_date": "26 Oct 2023 9:00:00 GMT",
                 "keeper_id": "6",
                 "owner_id": "3",
                 "service": "Pasear mascotas",
@@ -556,8 +556,8 @@
             },
             {
                 "status": "Approved",
-                "start_date": "2 Nov 2023 15:00:00 GMT",
-                "end_date": "2 Nov 2023 16:00:00 GMT",
+                "start_date": "28 Oct 2023 15:00:00 GMT",
+                "end_date": "28 Oct 2023 16:00:00 GMT",
                 "keeper_id": "6",
                 "owner_id": "4",
                 "service": "Pasear mascotas",
@@ -574,11 +574,11 @@
             },
             {
                 "status": "Approved",
-                "start_date": "1 Nov 2023 15:00:00 GMT",
-                "end_date": "3 Nov 2023 10:00:00 GMT",
+                "start_date": "30 Oct 2023 10:00:00 GMT",
+                "end_date": "30 Oct 2023 11:00:00 GMT",
                 "keeper_id": "7",
                 "owner_id": "2",
-                "service": "Cuidar mascotas",
+                "service": "Pasear mascotas",
                 "cost": 30
             },
             {
@@ -634,213 +634,6 @@
                 "owner_id": "4",
                 "service": "Pasear mascotas",
                 "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "13 Nov 2023 15:00:00 GMT",
-                "end_date": "15 Nov 2023 10:00:00 GMT",
-                "keeper_id": "9",
-                "owner_id": "1",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "16 Nov 2023 15:00:00 GMT",
-                "end_date": "18 Nov 2023 10:00:00 GMT",
-                "keeper_id": "9",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "9 Nov 2023 15:00:00 GMT",
-                "end_date": "9 Nov 2023 16:00:00 GMT",
-                "keeper_id": "9",
-                "owner_id": "3",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "23 Oct 2023 11:00:00 GMT",
-                "end_date": "23 Oct 2023 12:00:00 GMT",
-                "keeper_id": "9",
-                "owner_id": "4",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "18 Nov 2023 15:00:00 GMT",
-                "end_date": "22 Nov 2023 10:00:00 GMT",
-                "keeper_id": "10",
-                "owner_id": "1",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "23 Nov 2023 15:00:00 GMT",
-                "end_date": "25 Nov 2023 10:00:00 GMT",
-                "keeper_id": "10",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "5 Nov 2023 15:00:00 GMT",
-                "end_date": "5 Nov 2023 16:00:00 GMT",
-                "keeper_id": "10",
-                "owner_id": "3",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "4 Oct 2023 17:00:00 GMT",
-                "end_date": "4 Oct 2023 18:00:00 GMT",
-                "keeper_id": "10",
-                "owner_id": "4",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "30 Nov 2023 15:00:00 GMT",
-                "end_date": "2 Dec 2023 10:00:00 GMT",
-                "keeper_id": "8",
-                "owner_id": "1",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "4 Dec 2023 15:00:00 GMT",
-                "end_date": "10 Dec 2023 10:00:00 GMT",
-                "keeper_id": "12",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "10 Nov 2023 15:00:00 GMT",
-                "end_date": "10 Nov 2023 16:00:00 GMT",
-                "keeper_id": "7",
-                "owner_id": "3",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "6 Nov 2023 15:00:00 GMT",
-                "end_date": "6 Nov 2023 16:00:00 GMT",
-                "keeper_id": "7",
-                "owner_id": "4",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "10 Dec 2023 15:00:00 GMT",
-                "end_date": "12 Dec 2023 10:00:00 GMT",
-                "keeper_id": "6",
-                "owner_id": "1",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "12 Dec 2023 15:00:00 GMT",
-                "end_date": "13 Dec 2023 10:00:00 GMT",
-                "keeper_id": "7",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "10 Oct 2023 15:00:00 GMT",
-                "end_date": "10 Oct 2023 16:00:00 GMT",
-                "keeper_id": "6",
-                "owner_id": "3",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "29 Oct 2023 15:00:00 GMT",
-                "end_date": "29 Oct 2023 16:00:00 GMT",
-                "keeper_id": "10",
-                "owner_id": "4",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "14 Dec 2023 15:00:00 GMT",
-                "end_date": "15 Dec 2023 10:00:00 GMT",
-                "keeper_id": "12",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "2 Dec 2023 15:00:00 GMT",
-                "end_date": "2 Dec 2023 16:00:00 GMT",
-                "keeper_id": "5",
-                "owner_id": "3",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "10 Oct 2023 15:00:00 GMT",
-                "end_date": "11 Oct 2023 10:00:00 GMT",
-                "keeper_id": "7",
-                "owner_id": "4",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "16 Dec 2023 15:00:00 GMT",
-                "end_date": "17 Dec 2023 10:00:00 GMT",
-                "keeper_id": "5",
-                "owner_id": "1",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "15 Dec 2023 15:00:00 GMT",
-                "end_date": "17 Dec 2023 10:00:00 GMT",
-                "keeper_id": "20",
-                "owner_id": "2",
-                "service": "Cuidar mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "5 Oct 2023 15:00:00 GMT",
-                "end_date": "5 Oct 2023 16:00:00 GMT",
-                "keeper_id": "10",
-                "owner_id": "3",
-                "service": "Pasear mascotas",
-                "cost": 30
-            },
-            {
-                "status": "Approved",
-                "start_date": "2 Oct 2023 15:00:00 GMT",
-                "end_date": "2 Oct 2023 16:00:00 GMT",
-                "keeper_id": "5",
-                "owner_id": "4",
-                "service": "Pasear mascotas",
-                "cost": 30
             }
         ]
     },
@@ -853,51 +646,47 @@
             },
             {
                 "booking_id": "2",
-                "pet_id": "5"
-            },
-            {
-                "booking_id": "3",
-                "pet_id": "9"
-            },
-            {
-                "booking_id": "4",
-                "pet_id": "13"
-            },
-            {
-                "booking_id": "5",
-                "pet_id": "2"
-            },
-            {
-                "booking_id": "5",
-                "pet_id": "6"
-            },
-            {
-                "booking_id": "6",
-                "pet_id": "10"
-            },
-            {
-                "booking_id": "7",
-                "pet_id": "14"
-            },
-            {
-                "booking_id": "8",
-                "pet_id": "3"
-            },
-            {
-                "booking_id": "9",
                 "pet_id": "8"
             },
             {
-                "booking_id": "10",
+                "booking_id": "3",
+                "pet_id": "2"
+            },
+            {
+                "booking_id": "4",
+                "pet_id": "11"
+            },
+            {
+                "booking_id": "5",
+                "pet_id": "3"
+            },
+            {
+                "booking_id": "6",
+                "pet_id": "6"
+            },
+            {
+                "booking_id": "7",
                 "pet_id": "13"
             },
             {
-                "booking_id": "11",
+                "booking_id": "8",
                 "pet_id": "16"
             },
             {
+                "booking_id": "9",
+                "pet_id": "4"
+            },
+            {
+                "booking_id": "10",
+                "pet_id": "7"
+            },
+            {
+                "booking_id": "11",
+                "pet_id": "10"
+            },
+            {
                 "booking_id": "12",
-                "pet_id": "1"
+                "pet_id": "15"
             },
             {
                 "booking_id": "13",
@@ -909,103 +698,11 @@
             },
             {
                 "booking_id": "15",
-                "pet_id": "13"
+                "pet_id": "12"
             },
             {
                 "booking_id": "16",
-                "pet_id": "1"
-            },
-            {
-                "booking_id": "17",
-                "pet_id": "5"
-            },
-            {
-                "booking_id": "18",
-                "pet_id": "10"
-            },
-            {
-                "booking_id": "19",
-                "pet_id": "13"
-            },
-            {
-                "booking_id": "20",
-                "pet_id": "1"
-            },
-            {
-                "booking_id": "21",
-                "pet_id": "2"
-            },
-            {
-                "booking_id": "22",
-                "pet_id": "9"
-            },
-            {
-                "booking_id": "23",
-                "pet_id": "13"
-            },
-            {
-                "booking_id": "24",
-                "pet_id": "1"
-            },
-            {
-                "booking_id": "25",
-                "pet_id": "5"
-            },
-            {
-                "booking_id": "26",
-                "pet_id": "9"
-            },
-            {
-                "booking_id": "27",
-                "pet_id": "13"
-            },
-            {
-                "booking_id": "28",
-                "pet_id": "1"
-            },
-            {
-                "booking_id": "29",
-                "pet_id": "5"
-            },
-            {
-                "booking_id": "30",
-                "pet_id": "15"
-            },
-            {
-                "booking_id": "31",
-                "pet_id": "13"
-            },
-            {
-                "booking_id": "32",
-                "pet_id": "1"
-            },
-            {
-                "booking_id": "33",
-                "pet_id": "5"
-            },
-            {
-                "booking_id": "34",
-                "pet_id": "9"
-            },
-            {
-                "booking_id": "35",
-                "pet_id": "13"
-            },
-            {
-                "booking_id": "36",
                 "pet_id": "14"
-            },
-            {
-                "booking_id": "37",
-                "pet_id": "11"
-            },
-            {
-                "booking_id": "38",
-                "pet_id": "4"
-            },
-            {
-                "booking_id": "39",
-                "pet_id": "16"
             }
         ]
     }

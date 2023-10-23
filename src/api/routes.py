@@ -12,7 +12,7 @@ from datetime import timezone
 from firebase_admin import storage
 import tempfile
 import datetime
-from sqlalchemy import asc, desc
+from sqlalchemy import asc, desc, or_
 from datetime import date
 import numpy as np
 import locale
@@ -462,8 +462,19 @@ def getpetAvatar(pet_id):
 def createBooking():
     data = request.get_json(force=True)
     booking = Booking()
-    booking.start_date = data["start_date"]
-    booking.end_date = data["end_date"]
+    #Obtener los datos de fecha y hora del front y creat el datetime obj en el backend
+    final_start_date = data["start_date"]
+    final_start_date = datetime.datetime.strptime(final_start_date, '%d-%m-%Y').date()
+    start_hour = data["start_hour"]
+    final_start_date = datetime.datetime.combine(final_start_date, datetime.time(int(start_hour.split(":")[0]),int(start_hour.split(":")[1]),0,0))
+    final_end_date = data["end_date"]
+    final_end_date = datetime.datetime.strptime(final_end_date, '%d-%m-%Y').date()
+    end_hour = data["end_hour"]
+    final_end_date = datetime.datetime.combine(final_end_date, datetime.time(int(end_hour.split(":")[0]),int(end_hour.split(":")[1]),0,0))
+    print(final_start_date)
+    print(final_end_date)
+    booking.start_date = final_start_date
+    booking.end_date = final_end_date
     booking.keeper = Keeper.query.get(data["keeper_id"])
     if 'owner_id' in data:
         print('Owner')
@@ -517,8 +528,6 @@ def getdailySlots(keeper_id):
     start_date = request.args.get('start_date')+" 00:00:00"
     end_date = request.args.get('start_date') +" 23:59:59"
     if request.args.get('end_date') != None:
-        print("Getting end_date: ")
-        print(request.args.get('end_date'))
         end_date = request.args.get('end_date') +" 23:59:59"
     #Getting working hours and making a list of all available working slots for the day
     working_hours = Keeper.query.get(keeper_id).working_hours
@@ -526,9 +535,9 @@ def getdailySlots(keeper_id):
     slots = slots.tolist()
     slots.pop() #Removes last 30min slot we won't offer due to 1-hour minimum service
     #Getting reservations for the day
-    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.end_date<=end_date).all()
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(((Booking.start_date >= start_date) & (Booking.start_date <= end_date)).self_group()|((Booking.end_date >= start_date) & (Booking.end_date <= end_date)).self_group()).all()
     if len(bookings) < 1:
-        return jsonify([""]+[slot.strftime('%-H:%M') for slot in slots]), 200
+        return [""]+[slot.strftime('%-H:%M') for slot in slots]
     #Remove any conflicting slots based on booking times
     timetoRemove = []
     #Making start_date a datetime object from str
@@ -583,19 +592,13 @@ def getmaxDate(keeper_id):
     start_slots = start_slots.tolist()
     start_slots.pop()
     end_slots = start_slots
-    # end_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
-    # end_slots = end_slots.tolist()
-    #end_slots.pop()
     bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(((Booking.start_date >= start) & (Booking.start_date <= end)).self_group()|((Booking.end_date >= start) & (Booking.end_date <= end)).self_group()).order_by(asc(Booking.start_date)).all()
-
     if bookings is None:
         bookings = []
     if start.date() == end.date():
-         same_slots = getdailySlots(keeper_id)
-         same_slots = same_slots[0].get_json() #Tuple object
-         dupslots = same_slots
-         return ([[""]+same_slots,[""]+dupslots]), 200
-
+        daily_slots = getdailySlots(keeper_id)
+        dup_slots = daily_slots
+        return jsonify([daily_slots,dup_slots]), 200
     for booking in bookings:
         if booking.start_date>start+datetime.timedelta(days=1) and booking.end_date<end-datetime.timedelta(days=1):
             #Ver si algun booking esta entre los dias de la reserva pero no directamente en los dias selecionados start y end
@@ -603,19 +606,22 @@ def getmaxDate(keeper_id):
         last_hour_start = datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1) #Ultima hora laboral del dia inicial seleccionado
 
         if booking.start_date > start and booking.start_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1) and booking.end_date > datetime.datetime.combine(start, datetime.time(working_hours[1].hour, working_hours[1].minute,00)):
-            #Booking inicia el dia seleccionado pero termina otro dia
+            #La reserva inicia el dia seleccionado pero termina otro dia
             return jsonify([[],[]]),200
         if booking.start_date > datetime.datetime.combine(start, datetime.time(23,59,59)) and booking.start_date < datetime.datetime.combine(end, datetime.time(00,00,00)):
-            #Booking inicia despues de mi inicio solicitado
+            #La reserva inicia despues de mi inicio solicitado
             return jsonify([[],[]]),200
         if booking.start_date > start and booking.end_date <= last_hour_start:
             #El inicio y fin de la reserva estan en el dia de inicio seleccionado
+            print("El inicio y fin de la reserva estan en el dia de inicio seleccionado")
             end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
             start_slots = start_slots[start_slots.index(end_time)::]
         if booking.start_date > datetime.datetime.combine(end, datetime.time(00,00,00)):
+            print("La reserva empieza el dia final de mi solicitud")
             start_time = datetime.time(booking.start_date.hour, booking.start_date.minute)
             end_slots = end_slots[:end_slots.index(start_time):]
         if booking.end_date > datetime.datetime.combine(start, datetime.time(00,00,00)) and booking.end_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1):
+            print("El dia final de la reserva encuentra entre las horas habiles del dia inicial de mi solicitud")
             end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
             start_slots = start_slots[start_slots.index(end_time)::]
 

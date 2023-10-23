@@ -8,7 +8,7 @@ const Keepers = () => {
   const [keepers, setKeepers] = useState([]);
   const [filters, setFilters] = useState({
     first_name: "",
-    services: "0",
+    services: "",
     experience: "",
     location: ""
   });
@@ -50,10 +50,10 @@ const Keepers = () => {
 
   function filterKeepers() {
     return keepers.filter((keeper) => {
-      const nameMatches = keeper.first_name.toLowerCase().includes(filters.first_name.toLowerCase());
+      const nameMatches = filters.first_name ? keeper.first_name.toLowerCase().includes(filters.first_name.toLowerCase()) : true;
       const serviceMatches = filters.services === "" || keeper.services.includes(filters.services);
       const experienceMatches = filters.experience === "" || calculateExperienceInYears(keeper.experience) >= parseInt(filters.experience);
-      const locationMatches = keeper.location.toLowerCase().includes(filters.location.toLowerCase());
+      const locationMatches = filters.location ? keeper.location.toLowerCase().includes(filters.location.toLowerCase()) : true;
 
       return nameMatches && serviceMatches && experienceMatches && locationMatches;
     });

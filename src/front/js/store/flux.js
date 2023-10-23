@@ -32,7 +32,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               return resp.json();
             })
             .then((data) => {
-              console.log(data);
               setStore({ pets: data });
             });
         } catch (error) {
@@ -55,6 +54,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               setStore({ pets: data });
+              if (owner_id === getStore().userInfo.userId) {
+                setStore({ ownerPets: data })
+                localStorage.setItem("ownerPets", JSON.stringify(data))
+              }
               return "ok";
             });
         } catch (error) {
@@ -96,17 +99,18 @@ const getState = ({ getStore, getActions, setStore }) => {
               return response.json();
             })
             .then((data) => {
-              console.log("Successfully updated pet: " + data);
               const { pets } = getStore()
               let arr = pets
               for (let pet in arr) {
                 if (arr[pet].id == obj.id) {
                   arr[pet] = obj
-                  console.log({ obj })
-                  console.log(arr[pet])
                 }
               }
               setStore({ pets: arr })
+              if (parseInt(obj.owner_id) === getStore().userInfo.userId) {
+                setStore({ ownerPets: arr })
+                localStorage.setItem("ownerPets", JSON.stringify(arr))
+              }
             });
         } catch (error) {
           console.error(error);
@@ -123,7 +127,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               return resp.json();
             })
             .then((data) => {
-              console.log(data);
               setStore({ singlePet: data });
             });
         } catch (error) {
@@ -146,7 +149,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               return response.json();
             })
             .then((data) => {
-              console.log({ data } + " Succesfully deleted pet from server");
               getActions().getOwnerPets(obj.owner_id);
             });
         } catch (error) {
@@ -222,7 +224,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-        console.log({ resp });
         const { message, token, user_id, user_type, pets } = resp.data;
         localStorage.setItem("accessToken", token);
         if (token != "null") {
@@ -262,11 +263,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           password,
         });
         if (resp.code === 201) {
-          console.log("Signup Succesfully");
           return resp;
         }
         navigate("/login");
-        console.log(resp);
       },
 
       signupKeeper: async (
@@ -287,11 +286,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           password,
         });
         if (resp.code === 201) {
-          console.log("Signup Succesfully");
           return resp;
         }
         navigate("/login");
-        console.log(resp);
       },
       getKeeper: async (id) => {
         const { apiFetch } = getActions()
@@ -341,7 +338,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         let user = currentUser
         user["profile_pic"] = data.public_url
         setStore({ currentUser: user })
-        console.log("User info updated")
         return user
       },
       uploadpetAvatar: async (formData, id) => {
@@ -389,9 +385,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             return resp.json();
           }).then(data => {
-            console.log("retrieved owner data successfully => " + data)
             setStore({ currentUser: data })
             setStore({ pets: data.pets })
+            if (getStore().userInfo.userId == data.id) {
+              setStore({ ownerPets: data.pets })
+              localStorage.setItem("ownerPets", JSON.stringify(data.pets))
+            }
             return data;
           })
         } catch (error) {
@@ -429,7 +428,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         return resp.data
       },
       requestPasswordRecovery: async (email) => {
-        console.log(email);
         const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
 
 
@@ -463,7 +461,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           status: details.status
         });
         if (resp.code === 200) {
-          console.log("Pago exitoso:", resp.data);
           return resp;
         } else {
           console.error("Error en el pago:", resp);
@@ -483,8 +480,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         const resp = await apiFetch("/booking", "POST", {
           start_date: bookingData.start_date,
           end_date: bookingData.end_date,
-          start_hour:bookingData.start_hour,
-          end_hour:bookingData.end_hour,
+          start_hour: bookingData.start_hour,
+          end_hour: bookingData.end_hour,
           status: bookingData.status,
           keeper_id: bookingData.keeper_id,
           owner_id: bookingData.owner_id,
@@ -493,7 +490,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           service: bookingData.service
         });
         if (resp.code === 201) {
-          console.log("Booking created successfully:", resp.data);
           return resp;
         } else {
           console.error("Error en el booking:", resp);

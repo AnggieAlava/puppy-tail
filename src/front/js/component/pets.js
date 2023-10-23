@@ -40,8 +40,6 @@ export const Pets = (props) => {
     }
 
     async function updatePet() {
-        console.log(preview)
-        console.log(currentPet.profile_pic)
         if (preview != (stock_pet && currentPet.profile_pic)) {
             const formData = new FormData()
             formData.append("avatar", document.getElementById("petImg").files[0])

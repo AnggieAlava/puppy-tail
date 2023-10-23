@@ -4,7 +4,6 @@ import { Context } from "../store/appContext";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Link } from "react-router-dom";
 import "../../styles/checkout.css"
-import moment from 'moment';
 
 const Checkout = () => {
     const [success, setSuccess] = useState(false);
@@ -55,8 +54,6 @@ const Checkout = () => {
             setSuccess(true);
             actions.createPayment(details);
             actions.createBooking({
-                //start_date: moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
-                //end_date: moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
                 start_date: store.dates.start_date,
                 end_date: store.dates.end_date,
                 start_hour:store.dates.start_hour,

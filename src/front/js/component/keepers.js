@@ -89,15 +89,23 @@ const Keepers = () => {
         <div className="select-container">
           <select
             name="services"
+            style={{ color: "gray" }}
             value={filters.services}
             onChange={(e) => handleFilterChange("services", e.target.value)}
           >
             <option value="0" disabled>
+
               Tipo de trabajo
             </option>
-            <option value="Cuidar mascotas">Cuidar mascotas</option>
-            <option value="Pasear mascotas">Pasear mascotas</option>
-            <option value="Organizar fiesta">Organizar fiesta</option>
+            <option value="Cuidar mascotas" style={{ color: "gray" }}>
+              Cuidar mascotas
+            </option>
+            <option value="Pasear mascotas" style={{ color: "gray" }}>
+              Pasear mascotas
+            </option>
+            <option value="Organizar fiesta" style={{ color: "gray" }}>
+              Organizar fiesta
+            </option>
           </select>
         </div>
         <input

@@ -33,11 +33,11 @@ export const Home = () => {
           className="bottom-squiggle"
         />
       </div>
-      <div className="home home-bg">
-        <div className="container-fluid p-0 d-flex align-items-center justify-content-center main-card">
-          <div className="card card-header">
-            <div className="card-body text-center">
-              <h1 className="card-title landing-title">
+      <div className="home home-bg ">
+        <div className="container-fluid p-0 d-flex align-items-center justify-content-center main-card tit-home snow-background">
+          <div className="card  tit-home">
+            <div className="card-body text-center tit-home">
+              <h1 className="card-title landing-title tit-home">
                 <span className="cuidamos-text">Busca</span> los{" "}
                 <span className="mascotas-text">mejores cuidadores</span> para tus mascotas
               </h1>

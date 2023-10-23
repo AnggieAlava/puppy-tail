@@ -33,7 +33,7 @@ class Booking(db.Model, SerializerMixin):
     keeper_id = db.Column(db.Integer, db.ForeignKey('keeper.id'), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=True)
     keeper = relationship("Keeper",back_populates="booking")
-    #Many to many bookings/pets
+    # #Many to many bookings/pets
     pets = relationship("Pet", secondary="booking_pet",
                         back_populates="bookings")
 
@@ -137,11 +137,12 @@ class Order(db.Model,SerializerMixin):
     status = db.Column(db.String(50), nullable=False) 
 
 
-def seed():
+def seed(file):
     seeder = ResolvingSeeder(db.session)
     seeder.register(Owner)
     seeder.register(Keeper)
     seeder.register(Pet)
     seeder.register(Booking)
-    seeder.load_entities_from_json_file("seedData.json")
+    seeder.register(BookingPet)
+    seeder.load_entities_from_json_file(file)
     db.session.commit()

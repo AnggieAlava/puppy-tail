@@ -22,7 +22,7 @@ export const Bookings = () => {
     }
     function formatDate(date){
         let jsDate = new Date(date)
-        return jsDate.getDate()+"-"+(jsDate.getMonth()+1).toString()+"-"+jsDate.getFullYear()+" "+jsDate.getHours()+":"+(jsDate.getMinutes() < 10 ? '0' : '') + jsDate.getMinutes()
+        return jsDate.getUTCDate()+"-"+(jsDate.getUTCMonth()+1).toString()+"-"+jsDate.getUTCFullYear()+" "+jsDate.getUTCHours()+":"+(jsDate.getUTCMinutes() < 10 ? '0' : '') + jsDate.getUTCMinutes()
     }
     return (
         <div className='container-fluid text-left'>
@@ -50,21 +50,3 @@ export const Bookings = () => {
         </div>
     )
 }
-
-
-{/* <div className="card mb-3"  key={index}>
-    <div className="row g-0">
-        <div className="col-md-4">
-            <img src={booking.keeper.profile_pic} className="img-fluid rounded-start" alt="..." />
-        </div>
-        <div className="col-md-8">
-            <div className="card-body">
-                <h5 className="card-title">Paseo a mascotas</h5>
-                <p className="card-text">Fecha inicial: {booking.start_date}</p>
-                <p className="card-text">Fecha final: {booking.end_date}</p>
-                <p className="card-text">Cuidador: {booking.keeper.first_name}</p>
-                <p className="card-text"><small className="text-body-secondary">Total: $15</small></p>
-            </div>
-        </div>
-    </div>
-</div> */}

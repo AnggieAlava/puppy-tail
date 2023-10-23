@@ -483,6 +483,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         const resp = await apiFetch("/booking", "POST", {
           start_date: bookingData.start_date,
           end_date: bookingData.end_date,
+          start_hour:bookingData.start_hour,
+          end_hour:bookingData.end_hour,
           status: bookingData.status,
           keeper_id: bookingData.keeper_id,
           owner_id: bookingData.owner_id,

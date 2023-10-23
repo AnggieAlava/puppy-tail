@@ -57,8 +57,10 @@ const Checkout = () => {
             actions.createBooking({
                 //start_date: moment(store.dates.start_date, "DD-MM-YYYY").toISOString(),
                 //end_date: moment(store.dates.end_date, "DD-MM-YYYY").toISOString(),
-                start_date:store.dates.new_start,
-                end_date:store.dates.new_end,
+                start_date: store.dates.start_date,
+                end_date: store.dates.end_date,
+                start_hour:store.dates.start_hour,
+                end_hour:store.dates.end_hour,
                 status: "approved",
                 pets: store.dates.pets,
                 owner_id: store.userInfo.userId,

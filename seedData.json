@@ -17,7 +17,7 @@
                 "first_name": "Elias",
                 "last_name": "Carmiol",
                 "email": "elias@example.com",
-                "location": "Argentina",
+                "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "description": "Soy un amante de los animales",
                 "profile_pic": "",
@@ -28,7 +28,7 @@
                 "first_name": "Francisco",
                 "last_name": "Salvatierra",
                 "email": "francisco@example.com",
-                "location": "Chile",
+                "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "description": "Amo a los perros y gatos",
                 "profile_pic": "",
@@ -72,7 +72,7 @@
                 "first_name": "Ana",
                 "last_name": "Gonzalez",
                 "email": "ana@example.com",
-                "location": "Argentina",
+                "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 25,
                 "experience": "Wed 15 Mar 2021 00:00:00 GMT",
@@ -87,7 +87,7 @@
                 "first_name": "María",
                 "last_name": "López",
                 "email": "maria@example.com",
-                "location": "Colombia",
+                "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2020 00:00:00 GMT",
@@ -103,7 +103,7 @@
                 "first_name": "Rafael",
                 "last_name": "Gómez",
                 "email": "rafael@example.com",
-                "location": "Perú",
+                "location": "Ecuador",
                 "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
                 "hourly_pay": 30,
                 "experience": "Thu 20 Jan 2020 00:00:00 GMT",
@@ -392,7 +392,7 @@
         "data": [
             {
                 "name": "Frida",
-                "size": "Mediano",
+                "size": "Grande",
                 "category": "Doberman",
                 "owner_id": "1"
             },
@@ -416,7 +416,7 @@
             },
             {
                 "name": "Tiger",
-                "size": "Mediano",
+                "size": "Pequeño",
                 "category": "Bengal",
                 "owner_id": "2"
             },
@@ -434,31 +434,31 @@
             },
             {
                 "name": "Smokey",
-                "size": "Mediano",
+                "size": "Pequeño",
                 "category": "British Shorthair",
                 "owner_id": "2"
             },
             {
                 "name": "Rocky",
-                "size": "Grande",
+                "size": "Pequeño",
                 "category": "Golden Retriever",
                 "owner_id": "3"
             },
             {
                 "name": "Nala",
-                "size": "Mediano",
+                "size": "Pequeño",
                 "category": "Siamés",
                 "owner_id": "3"
             },
             {
                 "name": "Simba",
-                "size": "Mediano",
+                "size": "Pequeño",
                 "category": "Persa",
                 "owner_id": "3"
             },
             {
                 "name": "Bella",
-                "size": "Pequeño",
+                "size": "Mediano",
                 "category": "Maine Coon",
                 "owner_id": "3"
             },
@@ -470,19 +470,19 @@
             },
             {
                 "name": "Natsu",
-                "size": "Mediano",
+                "size": "Pequeño",
                 "category": "Siamés",
                 "owner_id": "4"
             },
             {
-                "name": "   Chocolate",
-                "size": "Mediano",
+                "name": "Chocolate",
+                "size": "Pequeño",
                 "category": "Persa",
                 "owner_id": "4"
             },
             {
-                "name": "Frida",
-                "size": "Pequeño",
+                "name": "Larry",
+                "size": "Mediano",
                 "category": "Maine Coon",
                 "owner_id": "4"
             }

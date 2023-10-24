@@ -62,7 +62,7 @@ export const Pets = (props) => {
             <div className="container text-left">
                 <div className="d-flex flex-row justify-content-between align-items-center mb-2">
                     <h2 style={{ textAlign: "left", alignItems: "center" }}><strong>Mis mascotas</strong></h2>
-                    <button onClick={() => setEdit(!edit)} className="btn btn-orange">Editar</button>
+                    {(store.userInfo.userId===store.currentUser.id)?<button onClick={() => setEdit(!edit)} className="btn btn-orange">Editar</button>:""}
                 </div>
                 {/* Lista de mascotas */}
                 <ul className="p-0 d-flex flex-row flex-wrap justify-content-center align-items-center gap-4">
@@ -81,7 +81,8 @@ export const Pets = (props) => {
                                     </div>
                                     {/* Operacion ternaria para mostrar botones de editar */}
                                     {(edit == false ? "" : <div className="d-flex flex-row justify-content-center gap-3">
-                                        {(store.userInfo.userId===store.currentUser.id)?<button type="button" className="btn btn-orange" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => fillForm(pet)}>Editar</button>:""}
+                                        {/* {(store.userInfo.userId===store.currentUser.id)?<button type="button" className="btn btn-orange" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => fillForm(pet)}>Editar</button>:""} */}
+                                        <button type="button" className="btn btn-orange" data-bs-toggle="modal" data-bs-target="#editPet" onClick={() => fillForm(pet)}>Editar</button>
                                         {/* <!-- Modal --> */}
                                         <div className="modal fade" id="editPet" tabIndex="-1" aria-labelledby="editPetLabel" aria-hidden="true">
                                             <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -161,6 +162,7 @@ export const Pets = (props) => {
                             </div>
                         );
                     }))}
+                    {(store.userInfo.userId===store.currentUser.id)?
                     <div className="px-4">
                         <div className="d-flex flex-column align-items-center text-center gap-4">
                             <button className="btn btn-outline-dark rounded-circle" data-bs-toggle="modal" data-bs-target="#addPet" style={{ aspectRatio: "1", width: "5rem", height: "5rem", fontSize: "42px", paddingTop: "2" }}>+</button>
@@ -216,6 +218,7 @@ export const Pets = (props) => {
                             {/* Fin de modal */}
                         </div>
                     </div>
+                    :""}
                 </ul>
             </div>
         </div>

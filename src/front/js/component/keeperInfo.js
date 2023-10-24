@@ -88,7 +88,7 @@ export const KeeperInfo = ({ keeper }) => {
     return (
         <div className="container">
             <div className="d-flex align-items-center justify-content-end">
-                <button type="button" className="btn btn-green" data-bs-toggle="modal" data-bs-target="#editUser" onClick={loadServices} >Editar</button>
+            {(store.userInfo.userId===store.currentUser.id)?<button type="button" className="btn btn-green" data-bs-toggle="modal" data-bs-target="#editUser" onClick={loadServices} >Editar</button>:""}
                 {/* <!-- Modal --> */}
                 <div className="modal fade" id="editUser" tabIndex="-1" aria-labelledby="editUserLabel" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">

@@ -45,7 +45,7 @@ export const Bookings = () => {
                                         <small>Costo: ${booking.cost}</small>
                                         {(store.userInfo.user_type == 'owner' ?
                                             <a href={`https://api.whatsapp.com/send?phone=${booking.keeper.phone_number}`} target='_blank'><i class="fa-brands fa-whatsapp fa-xl"></i></a>
-                                            : "")} //AGREGAR MASCOTAS AQUI PARA EL CASO DEL KEEPER
+                                            : "")}
                                     </div>
                                 </div>
                             </div>

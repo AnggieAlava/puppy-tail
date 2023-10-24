@@ -151,8 +151,9 @@ const Keepers = () => {
                   <img
                     onError={imgErrorHandler}
                     src={keeper.profile_pic}
-                    className="card-img"
+                    className="card-img object-fit-cover"
                     alt="..."
+                    style={{width:"100%",height:"100%", objectFit:"cover", borderRadius:"10px 10px 0 0"}}
                   />
                 </div>
                 <div className="col-md-8">

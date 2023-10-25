@@ -12,6 +12,8 @@ from datetime import timezone
 from firebase_admin import storage
 import tempfile
 import datetime
+from sqlalchemy import asc, desc, or_
+from datetime import date
 import numpy as np
 import locale
 
@@ -19,6 +21,12 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
+
+import os
+
+
+frontend_url = os.environ.get("FRONTEND_URL")
+
 
 api = Blueprint('api', __name__)
 # Agregado al boilerplate
@@ -58,6 +66,8 @@ def create_keeper():
         return jsonify({"msg": "Email already registered"}), 400
     new_keeper = Keeper()
     signup_by_type(new_keeper, data)
+    if 'phone_number' in data and data['phone_number']:
+        new_keeper.phone_number = data['phone_number']
     if hasattr(data, "services") is False:
         new_keeper.services = []
     if hasattr(data, "description") is False:
@@ -82,8 +92,10 @@ def login_user():
     acces_token = create_access_token(identity = user.id)
     acces_jti=get_jti(acces_token)
     refresh_token=create_refresh_token(identity=user.id, additional_claims={"accesToken": acces_jti})
-   
-    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type}), 201
+    pets = []
+    if user.user_type == "owner":
+        pets = [{"id":pet.id,"name": pet.name, "category": pet.category, "profile_pic": getpetAvatar(pet.id), "size":pet.size} for pet in user.pets]
+    return jsonify({"message": "Login successful", "token":acces_token, "refreshToken": refresh_token, "user_id":user.id, "user_type":user.user_type, "pets":pets}), 201
 
 @api.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
@@ -142,7 +154,7 @@ def hello_protected():
 @api.route('/owner', methods=["GET"])
 def owners_list():
     owners = Owner.query.all()
-    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "location": owner.location, "description": owner.description, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings}
+    owners_data = [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email, "location": owner.location, "description": owner.description, "profile_pic": owner.profile_pic, "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id}
                    for pet in Pet.query.filter_by(owner_id=owner.id)]}
                    for owner in owners]
     return jsonify(owners_data), 200
@@ -164,7 +176,7 @@ def get_owner(owner_id):
         "description": owner.description,
         "email": owner.email,
         "profile_pic": imgUrl,
-        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
+        "pets": [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "profile_pic":getpetAvatar(pet.id), "owner_id": pet.owner_id}
             for pet in owner.pets]
     }
     return jsonify(owner_data), 200
@@ -230,6 +242,7 @@ def keepers_list():
             "profile_pic": getprofilePic(keeper.id),
             "experience": experience_date,
             "services": services,
+            "phone_number": keeper.phone_number,
             "working_hours": [str(time) for time in keeper.working_hours] if keeper.working_hours else []
         }
 
@@ -254,6 +267,7 @@ def get_keeper(keeper_id):
         "location": keeper.location,
         "experience": keeper.experience,
         "hourly_pay": keeper.hourly_pay,
+        "phone_number": keeper.phone_number,
         "description": keeper.description,
         "bookings": [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in keeper.booking],
         "services": [service for service in keeper.services] if keeper.services else [],
@@ -272,6 +286,8 @@ def updateKeeper(keeper_id):
         keeper.hourly_pay = locale.atof((data["hourly_pay"]).replace(',','.')) 
     keeper.description = data["description"]
     keeper.experience = data["experience"]
+    if "phone_number" in data:
+        keeper.phone_number = data["phone_number"]
     keeper.services = [service for service in data["services"]]
     keeper.location = data["location"]
     db.session.commit()
@@ -282,6 +298,7 @@ def updateKeeper(keeper_id):
         "hourly_pay":keeper.hourly_pay,
         "description":keeper.description,
         "experience":keeper.experience,
+        "phone_number":keeper.phone_number,
         "services": [service for service in keeper.services],
         "location": keeper.location
     }
@@ -311,6 +328,7 @@ def createPet():
     new_pet.size = size
     new_pet.category = (data["category"].lower()).title()
     new_pet.owner_id = owner_id
+    new_pet.owner = Owner.query.get(owner_id)
     db.session.add(new_pet)
     db.session.commit()
     # retornar el objeto creado
@@ -335,7 +353,8 @@ def getPet(pet_id):
             "size": pet.size,
             "category": pet.category,
             "owner_id": pet.owner_id,
-            "bookings": pet.bookings
+            "bookings": pet.bookings,
+            "profile_pic": getpetAvatar(pet_id)
         }
         return jsonify(pet_data), 200
     if request.method == 'PUT':
@@ -354,7 +373,7 @@ def getPet(pet_id):
 @api.route('/pets', methods=['GET'])
 def getAllPets():
     pets = Pet.query.all()
-    pets_data = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "bookings": pet.bookings, "owner": [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email} for owner in Owner.query.filter_by(id=pet.owner_id)]}
+    pets_data = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category, "owner_id": pet.owner_id, "owner": [{"id": owner.id, "first_name": owner.first_name, "last_name": owner.last_name, "email": owner.email} for owner in Owner.query.filter_by(id=pet.owner_id)]}
                  for pet in pets]
     return jsonify(pets_data), 200
 
@@ -363,7 +382,7 @@ def getAllPets():
 def getPetsByOwner(owner_id):
     pets = Pet.query.filter_by(owner_id=owner_id)
 
-    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category,"profile_pic": getpetAvatar(pet.id), "owner_id": pet.owner_id, "bookings": pet.bookings}
+    pets = [{"id": pet.id, "name": pet.name, "size": pet.size, "category": pet.category,"profile_pic": getpetAvatar(pet.id), "owner_id": pet.owner_id}
             for pet in pets]
     return jsonify(pets), 200
 
@@ -374,7 +393,6 @@ def uploadPicture(user_id):
     #user_id = get_jwt_identity()
     user = User.query.get(user_id)
     #Recibir archivo
-    print(request.files)
     file = request.files["avatar"]
     #Extraer la extension del archivo
     extension = file.filename.split(".")[1]
@@ -402,7 +420,7 @@ def getprofilePic(user_id):
         return ""
     bucket = storage.bucket(name="puppy-tail.appspot.com")
     resource = bucket.blob(user.profile_pic)
-    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(days=5), method="GET")
     return picture_url
 
 @api.route('/pet_avatar/<int:pet_id>', methods=["POST"]) #CAMBIAR A JWT Y CONSEGUIR EL PET CON JWT
@@ -423,12 +441,6 @@ def uploadpetAvatar(pet_id):
     #Guardar en firebase
     resource = bucket.blob(filename)
     resource.upload_from_filename(temp.name, content_type="image/"+extension)
-    #Borra imagen actual de firebase si existe
-    # if pet.profile_pic != "":
-    #     previousAvatar = bucket.blob(pet.profile_pic)
-    #     previousAvatar.delete()
-    #     print("Previous avatar deleted from Firebase")
-    #Agrega la nueva imagen a nuestra base de datos
     pet.profile_pic = filename
     db.session.add(pet)
     db.session.commit()
@@ -443,46 +455,89 @@ def getpetAvatar(pet_id):
         return ""
     bucket = storage.bucket(name="puppy-tail.appspot.com")
     resource = bucket.blob(pet.profile_pic)
-    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(minutes=60), method="GET")
+    picture_url = resource.generate_signed_url(version="v4", expiration=datetime.timedelta(days=5), method="GET")
     return picture_url
 
 @api.route('/booking', methods=["POST"])
 def createBooking():
     data = request.get_json(force=True)
-    booking = Booking(**data, status='pending')
-    # booking.start_date = data["start_date"]
-    # booking.end_date = data["end_date"]
-    # booking.keeper_id = data["keeper_id"]
-    # if hasattr(data, "pets_id"):
-    #     booking.pets_id = data["pets_id"]
-    # if hasattr(data, "owner_id"):
-    #     booking.owner_id = data["owner_id"]
-    # booking.status = 'pending'
+    booking = Booking()
+    #Obtener los datos de fecha y hora del front y creat el datetime obj en el backend
+    final_start_date = data["start_date"]
+    final_start_date = datetime.datetime.strptime(final_start_date, '%d-%m-%Y').date()
+    start_hour = data["start_hour"]
+    final_start_date = datetime.datetime.combine(final_start_date, datetime.time(int(start_hour.split(":")[0]),int(start_hour.split(":")[1]),0,0))
+    final_end_date = data["end_date"]
+    final_end_date = datetime.datetime.strptime(final_end_date, '%d-%m-%Y').date()
+    end_hour = data["end_hour"]
+    final_end_date = datetime.datetime.combine(final_end_date, datetime.time(int(end_hour.split(":")[0]),int(end_hour.split(":")[1]),0,0))
+    print(final_start_date)
+    print(final_end_date)
+    booking.start_date = final_start_date
+    booking.end_date = final_end_date
+    booking.keeper = Keeper.query.get(data["keeper_id"])
+    if 'owner_id' in data:
+        print('Owner')
+        booking.owner_id = data['owner_id']
+    if 'cost' in data:
+        print('Cost')
+        booking.cost = data['cost']
+    if 'service' in data:
+        print('Service')
+        booking.service = data['service']
+    for pet in data['pets']:
+        pet = Pet.query.get(pet)
+        booking.pets.append(pet)
+    booking.status = 'approved'
     db.session.add(booking)
     db.session.commit()
     return jsonify({"msg":"Booking created successfully"}), 201
 
 @api.route('/bookings', methods=["GET"])
-def getBookings():
+def getAllBookings():
     bookings = Booking.query.all()
     bookings = [{"booking_id": booking.id,"start_date": booking.start_date, "end_date": booking.end_date, "status": booking.status, "keeper_id": booking.keeper_id} for booking in bookings]
     return jsonify(bookings), 200
 
+@api.route('bookings/<string:user_type>/<int:id>', methods=["GET"])
+def getuserBookings(user_type,id):    
+    if user_type == 'owner':
+        bookings = Booking.query.filter_by(owner_id=id).order_by(desc(Booking.start_date)).all()
+    elif user_type == 'keeper':
+        bookings = Booking.query.filter_by(keeper_id=id).order_by(desc(Booking.start_date)).all()
+    bookings = [{"id":booking.id, "start_date": booking.start_date, "end_date": booking.end_date,"keeper":{"id":booking.keeper.id, "first_name":booking.keeper.first_name, "last_name": booking.keeper.last_name, "location": booking.keeper.location, "profile_pic":getprofilePic(booking.keeper.id), "phone_number":booking.keeper.phone_number}, "cost": booking.cost, "service": booking.service, "status": booking.status, "pets":[{"id":pet.id, "name": pet.name, "size": pet.size, "category":pet.category, "profile_pic": getpetAvatar(pet.id), "owner_first_name": pet.owner.first_name, "owner_last_name": pet.owner.last_name, "email": pet.owner.email} for pet in booking.pets], "owner":{"id": booking.pets[0].owner.id, "first_name":booking.pets[0].owner.first_name, "last_name":booking.pets[0].owner.last_name,"email": booking.pets[0].owner.email, "owner_profile_pic": getprofilePic(booking.pets[0].owner.id)}} for booking in bookings]
+    return jsonify(bookings), 200
+
+def getbookingPets(pets):
+    allPets = []
+    for pet in pets:
+        temp_pet = Pet.query.get(pet)
+        temp_pet = {
+            "name": temp_pet.name,
+            "size": temp_pet.size,
+            "category": temp_pet.category,
+            "profile_pic": getpetAvatar(temp_pet.id)
+        }
+        allPets.append(temp_pet)
+    return allPets
+
 @api.route('/bookings/<int:keeper_id>/', methods=["GET"])
-def getavailableSlots(keeper_id):
+def getdailySlots(keeper_id):
     if request.args.get('start_date') is None:
         return jsonify({"msg": "No start date added to request"}), 400
     start_date = request.args.get('start_date')+" 00:00:00"
     end_date = request.args.get('start_date') +" 23:59:59"
+    if request.args.get('end_date') != None:
+        end_date = request.args.get('end_date') +" 23:59:59"
     #Getting working hours and making a list of all available working slots for the day
     working_hours = Keeper.query.get(keeper_id).working_hours
     slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
     slots = slots.tolist()
     slots.pop() #Removes last 30min slot we won't offer due to 1-hour minimum service
     #Getting reservations for the day
-    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(Booking.start_date>=start_date, Booking.start_date<=end_date).all()
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(((Booking.start_date >= start_date) & (Booking.start_date <= end_date)).self_group()|((Booking.end_date >= start_date) & (Booking.end_date <= end_date)).self_group()).all()
     if len(bookings) < 1:
-        return jsonify([slot.strftime('%-H:%M') for slot in slots]), 200
+        return [""]+[slot.strftime('%-H:%M') for slot in slots]
     #Remove any conflicting slots based on booking times
     timetoRemove = []
     #Making start_date a datetime object from str
@@ -495,8 +550,8 @@ def getavailableSlots(keeper_id):
     for time in timetoRemove:
         if time in slots:    
             slots.remove(time)
-    slots = [slot.strftime('%-H:%M') for slot in slots]
-    return jsonify(slots), 200
+    slots = [""]+[slot.strftime('%-H:%M') for slot in slots]
+    return slots
 
 @api.route("/booking/<int:booking_id>", methods=["PUT", "DELETE"])
 def modifyBooking(booking_id):
@@ -510,12 +565,73 @@ def modifyBooking(booking_id):
         booking.start_date = data["start_date"]
         booking.end_date = data["end_date"]
         booking.status = data["status"]
-        booking.pets_id = data["pets_id"]
+        #booking.pets = data["pets"]
         db.session.commit()
         return jsonify({"msg":"Booking successfully updated"}), 200
+
+@api.route("/bookings/maxDate/<int:keeper_id>", methods=["GET"])
+def getmaxDate(keeper_id):
+    if request.args.get('start_date') is None:
+        return jsonify({"msg": "No start date added to request"}), 400
+    start_date = request.args.get('start_date')+" 00:00:00"
+    if request.args.get('end_date') is None:
+        return jsonify({"msg": "No end date added to request"}), 400
+    end_date = request.args.get('end_date') +" 23:59:59"
+    start = datetime.datetime.strptime(start_date, '%Y-%m-%d %H:%M:%S').date()
+    end = datetime.datetime.strptime(end_date, '%Y-%m-%d %H:%M:%S').date()
+    delta = (end-start).days
+    #Make start and end dates date objs to compare with bookings
+    if delta > 30: #Allow reservations no bigger than 30 days
+        end = start+datetime.timedelta(days=30)
+        end = datetime.datetime.combine(end, datetime.time(23,59,59))
+    if delta <= 30:
+        end = datetime.datetime.combine(end, datetime.time(23,59,59))
+    start = datetime.datetime.combine(start, datetime.time(00,00,00))
+    working_hours = Keeper.query.get(keeper_id).working_hours
+    start_slots = np.array([datetime.time(h,m) for h in range(working_hours[0].hour,working_hours[1].hour) for m in [0,30]])
+    start_slots = start_slots.tolist()
+    start_slots.pop()
+    end_slots = start_slots
+    bookings = db.session.query(Booking).where(Booking.keeper_id==keeper_id).filter(((Booking.start_date >= start) & (Booking.start_date <= end)).self_group()|((Booking.end_date >= start) & (Booking.end_date <= end)).self_group()).order_by(asc(Booking.start_date)).all()
+    if bookings is None:
+        bookings = []
+    if start.date() == end.date():
+        daily_slots = getdailySlots(keeper_id)
+        dup_slots = daily_slots
+        return jsonify([daily_slots,dup_slots]), 200
+    for booking in bookings:
+        if booking.start_date>start+datetime.timedelta(days=1) and booking.end_date<end-datetime.timedelta(days=1):
+            #Ver si algun booking esta entre los dias de la reserva pero no directamente en los dias selecionados start y end
+            return jsonify([[],[]]),200
+        last_hour_start = datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1) #Ultima hora laboral del dia inicial seleccionado
+
+        if booking.start_date > start and booking.start_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1) and booking.end_date > datetime.datetime.combine(start, datetime.time(working_hours[1].hour, working_hours[1].minute,00)):
+            #La reserva inicia el dia seleccionado pero termina otro dia
+            return jsonify([[],[]]),200
+        if booking.start_date > datetime.datetime.combine(start, datetime.time(23,59,59)) and booking.start_date < datetime.datetime.combine(end, datetime.time(00,00,00)):
+            #La reserva inicia despues de mi inicio solicitado
+            return jsonify([[],[]]),200
+        if booking.start_date > start and booking.end_date <= last_hour_start:
+            #El inicio y fin de la reserva estan en el dia de inicio seleccionado
+            print("El inicio y fin de la reserva estan en el dia de inicio seleccionado")
+            end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
+            start_slots = start_slots[start_slots.index(end_time)::]
+        if booking.start_date > datetime.datetime.combine(end, datetime.time(00,00,00)):
+            print("La reserva empieza el dia final de mi solicitud")
+            start_time = datetime.time(booking.start_date.hour, booking.start_date.minute)
+            end_slots = end_slots[:end_slots.index(start_time):]
+        if booking.end_date > datetime.datetime.combine(start, datetime.time(00,00,00)) and booking.end_date < datetime.datetime.combine(start, working_hours[1])-datetime.timedelta(hours=1):
+            print("El dia final de la reserva encuentra entre las horas habiles del dia inicial de mi solicitud")
+            end_time = datetime.time(booking.end_date.hour,booking.end_date.minute,00)
+            start_slots = start_slots[start_slots.index(end_time)::]
+
+    slots = [start_slots, end_slots]
+    slots = [[time.strftime('%-H:%M') for time in slot] for slot in slots]
+    return jsonify([[""]+slots[0],[""]+slots[1]]),200
     
 @api.route('/recoverypassword', methods=['POST'])
 def recovery_password():
+   
    email= request.json.get("email")
    user=User.query.filter_by(email=email).first()
    if  user is None:
@@ -532,7 +648,7 @@ def send_simple_message(user_email, token):
     body = f"""Estimado Usuario,
 Hemos recibido una solicitud para restablecer la contraseña de tu cuenta en Puppy Tail.
 Para recuperar la contraseña, haz clic aquí:
-https://refactored-journey-xg7pwwg665pcgw-3000.app.github.dev/changePassword?token={token}
+{frontend_url}/changePassword?token={token}
 Si no solicitaste este cambio de contraseña, por favor ignora este mensaje o contáctanos inmediatamente si crees que tu cuenta está en peligro.
 El enlace expirará en 5 minutos por motivos de seguridad. Si el enlace ha caducado, puedes solicitar un nuevo enlace de recuperación de contraseña en la página de inicio de sesión de Puppy Tail.
 Gracias,
@@ -582,3 +698,11 @@ def createPayment():
 
     return jsonify({"message": "Compra registrada con éxito"}), 200
     
+
+@api.route('/seed', methods=['POST', 'GET'])
+def puppy_tail():
+    seed()
+    response_body = {
+        "message" : "Data cargada"
+    }
+    return jsonify(response_body),200

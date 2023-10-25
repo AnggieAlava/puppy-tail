@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 605a09ba7dc8
+Revision ID: 343197d065d6
 Revises: 
-Create Date: 2023-10-07 22:12:32.706384
+Create Date: 2023-10-24 00:01:17.836617
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '605a09ba7dc8'
+revision = '343197d065d6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -60,6 +60,7 @@ def upgrade():
     sa.Column('experience', sa.Date(), nullable=True),
     sa.Column('services', sa.ARRAY(sa.String(length=50)), nullable=True),
     sa.Column('working_hours', sa.ARRAY(sa.Time()), nullable=True),
+    sa.Column('phone_number', sa.String(length=20), nullable=True),
     sa.ForeignKeyConstraint(['id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -73,9 +74,10 @@ def upgrade():
     sa.Column('start_date', sa.DateTime(), nullable=False),
     sa.Column('end_date', sa.DateTime(), nullable=False),
     sa.Column('status', sa.Enum('pending', 'approved', 'archived', 'canceled', 'done', 'pto', name='status'), nullable=True),
+    sa.Column('service', sa.String(), nullable=True),
+    sa.Column('cost', sa.Float(), nullable=True),
     sa.Column('keeper_id', sa.Integer(), nullable=False),
     sa.Column('owner_id', sa.Integer(), nullable=True),
-    sa.Column('pets_id', sa.ARRAY(sa.Integer()), nullable=True),
     sa.ForeignKeyConstraint(['keeper_id'], ['keeper.id'], ),
     sa.ForeignKeyConstraint(['owner_id'], ['owner.id'], ),
     sa.PrimaryKeyConstraint('id')

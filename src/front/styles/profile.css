@@ -1,6 +1,73 @@
+html, body {
+    font-family: 'Young Serif', serif;
+}
 .textLeft{
     text-align: left !important;
 }
 .wrap-profile{
     margin-top: 110px;
 }
+.bg-custom{
+    background-color: #f7e1d2;
+}
+.btn-green{
+    background-color: #0C3A23;
+    color: white;
+    font-weight: bold;
+}
+.btn-green:hover{
+    background-color: #1a834e;
+    color:white;
+}
+.btn-green:disabled{
+    color:black;
+}
+.btn-orange{
+    background-color: #EE4B4A;
+    color: white;
+    font-weight: bold;
+}
+.btn-orange:hover{
+    background-color: #ff6f6f;
+}
+input, textarea{
+    border: none;
+    color: white;
+}
+.form-control{
+    border: none;
+}
+.modal{
+    border:none;
+}
+.pet-avatar{
+    width: 8rem;
+    object-fit: cover;
+    border-radius: 4.25rem;
+    aspect-ratio: 1;
+    height: 8rem;
+}
+.custom-button-check{
+    background-color: #F7E1D2;
+    padding: 10px;
+    border-radius: 0.75rem;
+}
+.custom-button-check:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.pet-card-checked{
+    background-color: #BFC1B9 !important;
+    border: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    font-weight: bold;  
+}
+.pet-card-img{
+    border: 1px solid black;
+}
+.snow-bg{
+    background-color: snow;
+}
+.larger-label{
+    font-size: large;
+}
+

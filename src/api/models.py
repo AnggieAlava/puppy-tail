@@ -1,8 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy	
+from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from sqlalchemyseeder import ResolvingSeeder
 # from sqlalchemy_jsonfield import JSONField
 from enum import Enum
 
@@ -26,12 +27,13 @@ class Booking(db.Model, SerializerMixin):
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.Enum(Status))
+    service = db.Column(db.String, nullable=True)
+    cost = db.Column(db.Float, nullable=True)
     #Many to one relationship booking to keeper
-    keeper = relationship("Keeper", back_populates="booking")
     keeper_id = db.Column(db.Integer, db.ForeignKey('keeper.id'), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=True)
-    pets_id = db.Column(db.ARRAY(db.Integer), nullable=True)
-    #Many to many bookings/pets
+    keeper = relationship("Keeper",back_populates="booking")
+    # #Many to many bookings/pets
     pets = relationship("Pet", secondary="booking_pet",
                         back_populates="bookings")
 
@@ -45,7 +47,7 @@ class User(db.Model, SerializerMixin):
     email = db.Column(db.String(255), unique=True, nullable=False)
     location = db.Column(db.String(255), unique=False, nullable=True)
     password = db.Column(db.String(255), unique=False, nullable=False)
-    description = db.Column(db.String(2000), unique=False, nullable=True)
+    description = db.Column(db.String(2000), unique=False, nullable=True, default="")
     profile_pic = db.Column(db.String(150), unique=False, nullable=True)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
     user_type = db.Column(db.String(50))
@@ -79,6 +81,7 @@ class Keeper(User, SerializerMixin):
     experience = db.Column(db.Date, nullable=True)
     services = db.Column(db.ARRAY(db.String(50)), nullable=True)
     working_hours = db.Column(db.ARRAY(db.Time), nullable = True, default=('07:00:00','22:00:00'))
+    phone_number = db.Column(db.String(20), nullable=True)
     #One keeper to many bookings
     booking = relationship("Booking", back_populates='keeper')
 
@@ -132,3 +135,14 @@ class Order(db.Model,SerializerMixin):
     description = db.Column(db.String(200), nullable=False) 
     payee_email = db.Column(db.String(200), nullable=False) 
     status = db.Column(db.String(50), nullable=False) 
+
+
+def seed(file):
+    seeder = ResolvingSeeder(db.session)
+    seeder.register(Owner)
+    seeder.register(Keeper)
+    seeder.register(Pet)
+    seeder.register(Booking)
+    seeder.register(BookingPet)
+    seeder.load_entities_from_json_file(file)
+    db.session.commit()

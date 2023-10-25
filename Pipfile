@@ -24,6 +24,7 @@ SQLAlchemy-serializer = "*"
 firebase-admin = "*"
 numpy = "*"
 sqlalchemy-jsonfield = "*"
+sqlalchemy-seeder = "*"
 
 [requires]
 python_version = "3.10"

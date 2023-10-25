@@ -29,6 +29,9 @@
   
   .social-icon i {
     font-size: 35px;
+    color: #FF6F6F;
+  }
+  .social-icon i:hover {
     color: white;
   }
   

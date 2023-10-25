@@ -1,0 +1,46 @@
+.footer-signup {
+  font-size: 1.5rem;
+  font-family: 'Young Serif', serif;
+  background-color:#2B2C30;
+}
+  
+  .btn-footer-signup {
+    border-radius:4.2rem;
+    font-size: 1.5rem;
+    font-weight: 400;
+    padding: 15px 35px;
+  }
+  .btn-footer-signup:hover {
+   color:snow;
+  }
+  .top-squiggle{
+    -webkit-text-size-adjust: 100%;
+  --graphite: #2b2c30;
+  --ivory: #f7e1d2;
+  --gray: #58595c;
+  --stone: #bfc1b9;
+  --fern: #0c3a23;
+  --gold: #edbc4f;
+  --cyan: #00bcd4;
+  --grey: #647076;
+  --black: #000000;
+  --white: #ffffff;
+  --coral: #EE4B4A;
+  --snow: #FFFCFA;
+  color: var(--graphite);
+  font-family: tenon,sans-serif;
+  line-height: 1.6;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+  border: 0;
+  vertical-align: middle;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  margin-bottom: -8px;
+}
+.top-footer{
+  background-color:#F7E1D2;
+}

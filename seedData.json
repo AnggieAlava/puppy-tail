@@ -1,0 +1,709 @@
+[
+    {
+        "target_class": "Owner",
+        "data": [
+            {
+                "first_name": "Anggie",
+                "last_name": "Alava",
+                "email": "anggie@hotmail.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Soy una amante de la naturaleza",
+                "profile_pic": "",
+                "is_active": true,
+                "pets": []
+            },
+            {
+                "first_name": "Elias",
+                "last_name": "Carmiol",
+                "email": "elias@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Soy un amante de los animales",
+                "profile_pic": "",
+                "is_active": true,
+                "pets": []
+            },
+            {
+                "first_name": "Francisco",
+                "last_name": "Salvatierra",
+                "email": "francisco@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Amo a los perros y gatos",
+                "profile_pic": "",
+                "is_active": true,
+                "pets": []
+            },
+            {
+                "first_name": "Suzy",
+                "last_name": "Mantuano",
+                "email": "suzy@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "description": "Amo a los perros y gatos",
+                "profile_pic": "",
+                "is_active": true,
+                "pets": []
+            }
+        ]
+    },
+    {
+        "target_class": "Keeper",
+        "data": [
+            {
+                "description": "Soy un amante de la naturaleza",
+                "first_name": "David",
+                "last_name": "Johnson",
+                "email": "david@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "15551234567"
+            },
+            {
+                "description": "Soy un amante de los animales",
+                "first_name": "Ana",
+                "last_name": "Gonzalez",
+                "email": "ana@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 25,
+                "experience": "Wed 15 Mar 2021 00:00:00 GMT",
+                "services": [
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "5491187654321"
+            },
+            {
+                "description": "Experto en mascotas",
+                "first_name": "María",
+                "last_name": "López",
+                "email": "maria@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2020 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "573219876543"
+            },
+            {
+                "description": "Amante de los animales exóticos",
+                "first_name": "Rafael",
+                "last_name": "Gómez",
+                "email": "rafael@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2020 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "51987654321"
+            },
+            {
+                "description": "Cuido con cariño a tus mascotas",
+                "first_name": "Carolina",
+                "last_name": "Pérez",
+                "email": "carolina@example.com",
+                "location": "Chile",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "56912345678"
+            },
+            {
+                "description": "Especialista en perros grandes",
+                "first_name": "Javier",
+                "last_name": "Martínez",
+                "email": "javier@example.com",
+                "location": "Argentina",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "541198765432"
+            },
+            {
+                "description": "Amante de los gatos",
+                "first_name": "Isabel",
+                "last_name": "Ramírez",
+                "email": "isabel@example.com",
+                "location": "México",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "525512345678"
+            },
+            {
+                "description": "Experto en aves tropicales",
+                "first_name": "Antonio",
+                "last_name": "Hernández",
+                "email": "antonio@example.com",
+                "location": "Venezuela",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "584141234567"
+            },
+            {
+                "description": "Cuido con amor a tus perros",
+                "first_name": "Sofía",
+                "last_name": "García",
+                "email": "sofia@example.com",
+                "location": "Costa Rica",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "50622223333"
+            },
+            {
+                "description": "Especialista en reptiles",
+                "first_name": "Manuel",
+                "last_name": "Lara",
+                "email": "manuel@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2022 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "51977555444"
+            },
+            {
+                "description": "Apasionado por la naturaleza",
+                "first_name": "Andrés",
+                "last_name": "Gómez",
+                "email": "andres@example.com",
+                "location": "Colombia",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2021 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "573101234567"
+            },
+            {
+                "description": "Amante de los animales silvestres",
+                "first_name": "Luis",
+                "last_name": "Martínez",
+                "email": "luis@example.com",
+                "location": "México",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 25,
+                "experience": "Thu 20 Jan 2021 00:00:00 GMT",
+                "services": [
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "525587654321"
+            },
+            {
+                "description": "Experta en mascotas felinas",
+                "first_name": "Laura",
+                "last_name": "Pérez",
+                "email": "laura@example.com",
+                "location": "Chile",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2021 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "56912987654"
+            },
+            {
+                "description": "Especialista en aves exóticas",
+                "first_name": "Pedro",
+                "last_name": "García",
+                "email": "pedro@example.com",
+                "location": "Argentina",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2021 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "541198765432"
+            },
+            {
+                "description": "Cuido con cariño a tus perros y gatos",
+                "first_name": "Carmen",
+                "last_name": "Ramírez",
+                "email": "carmen@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2021 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "51977555444"
+            },
+            {
+                "description": "Experto en reptiles tropicales",
+                "first_name": "Fernando",
+                "last_name": "Hernández",
+                "email": "fernando@example.com",
+                "location": "Venezuela",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "584141234567"
+            },
+            {
+                "description": "Cuido con amor a tus animales domésticos",
+                "first_name": "Sara",
+                "last_name": "Gómez",
+                "email": "sara@example.com",
+                "location": "Costa Rica",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "50622223333"
+            },
+            {
+                "description": "Especialista en perros de raza",
+                "first_name": "Diego",
+                "last_name": "Lara",
+                "email": "diego@example.com",
+                "location": "Ecuador",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "59321234567"
+            },
+            {
+                "description": "Amante de los animales marinos",
+                "first_name": "Juan Marcos",
+                "last_name": "Martínez",
+                "email": "juanmarcos@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "51977555444"
+            },
+            {
+                "description": "Amante de los animales marinos",
+                "first_name": "Maria Isabel",
+                "last_name": "Martínez",
+                "email": "isabelma@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "51977555444"
+            },
+            {
+                "description": "Amante de los animales marinos",
+                "first_name": "Monse",
+                "last_name": "Martínez",
+                "email": "monse@example.com",
+                "location": "Perú",
+                "password": "$2b$12$em1rs8qsTfk9gcE5qrNqae62l0SJ/4fPY1xDT4illukrwBIBr4Kmy",
+                "hourly_pay": 30,
+                "experience": "Thu 20 Jan 2018 00:00:00 GMT",
+                "services": [
+                    "Pasear mascotas",
+                    "Cuidar mascotas"
+                ],
+                "is_active": true,
+                "phone_number": "51977555444"
+            }
+        ]
+    },
+    {
+        "target_class": "Pet",
+        "data": [
+            {
+                "name": "Frida",
+                "size": "Grande",
+                "category": "Doberman",
+                "owner_id": "1"
+            },
+            {
+                "name": "Luna",
+                "size": "Mediano",
+                "category": "Bulldog",
+                "owner_id": "1"
+            },
+            {
+                "name": "Max",
+                "size": "Pequeño",
+                "category": "Chihuahua",
+                "owner_id": "1"
+            },
+            {
+                "name": "Rex",
+                "size": "Grande",
+                "category": "Pastor Alemán",
+                "owner_id": "1"
+            },
+            {
+                "name": "Tiger",
+                "size": "Pequeño",
+                "category": "Bengal",
+                "owner_id": "2"
+            },
+            {
+                "name": "Whiskers",
+                "size": "Mediano",
+                "category": "Maine Coon",
+                "owner_id": "2"
+            },
+            {
+                "name": "Buddy",
+                "size": "Grande",
+                "category": "Labrador Retriever",
+                "owner_id": "2"
+            },
+            {
+                "name": "Smokey",
+                "size": "Pequeño",
+                "category": "British Shorthair",
+                "owner_id": "2"
+            },
+            {
+                "name": "Rocky",
+                "size": "Pequeño",
+                "category": "Golden Retriever",
+                "owner_id": "3"
+            },
+            {
+                "name": "Nala",
+                "size": "Pequeño",
+                "category": "Siamés",
+                "owner_id": "3"
+            },
+            {
+                "name": "Simba",
+                "size": "Pequeño",
+                "category": "Persa",
+                "owner_id": "3"
+            },
+            {
+                "name": "Bella",
+                "size": "Mediano",
+                "category": "Maine Coon",
+                "owner_id": "3"
+            },
+            {
+                "name": "Coco",
+                "size": "Grande",
+                "category": "Golden Retriever",
+                "owner_id": "4"
+            },
+            {
+                "name": "Natsu",
+                "size": "Pequeño",
+                "category": "Siamés",
+                "owner_id": "4"
+            },
+            {
+                "name": "Chocolate",
+                "size": "Pequeño",
+                "category": "Persa",
+                "owner_id": "4"
+            },
+            {
+                "name": "Larry",
+                "size": "Mediano",
+                "category": "Maine Coon",
+                "owner_id": "4"
+            }
+        ]
+    },
+    {
+        "target_class": "Booking",
+        "data": [
+            {
+                "status": "Approved",
+                "start_date": "24 Oct 2023 10:00:00 GMT",
+                "end_date": "24 Oct 2023 11:00:00 GMT",
+                "keeper_id": "5",
+                "owner_id": "1",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "24 Oct 2023 16:00:00 GMT",
+                "end_date": "24 Oct 2023 17:00:00 GMT",
+                "keeper_id": "5",
+                "owner_id": "2",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "26 Nov 2023 8:00:00 GMT",
+                "end_date": "27 Nov 2023 20:00:00 GMT",
+                "keeper_id": "5",
+                "owner_id": "4",
+                "service": "Cuidar mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "30 Oct 2023 10:00:00 GMT",
+                "end_date": "30 Oct 2023 11:00:00 GMT",
+                "keeper_id": "5",
+                "owner_id": "3",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "10 Nov 2023 8:00:00 GMT",
+                "end_date": "13 Nov 2023 10:00:00 GMT",
+                "keeper_id": "6",
+                "owner_id": "1",
+                "service": "Cuidar mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "25 Oct 2023 9:00:00 GMT",
+                "end_date": "25 Oct 2023 10:00:00 GMT",
+                "keeper_id": "6",
+                "owner_id": "2",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "26 Oct 2023 8:00:00 GMT",
+                "end_date": "26 Oct 2023 9:00:00 GMT",
+                "keeper_id": "6",
+                "owner_id": "3",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "28 Oct 2023 15:00:00 GMT",
+                "end_date": "28 Oct 2023 16:00:00 GMT",
+                "keeper_id": "6",
+                "owner_id": "4",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "26 Oct 2023 15:00:00 GMT",
+                "end_date": "29 Oct 2023 10:00:00 GMT",
+                "keeper_id": "7",
+                "owner_id": "1",
+                "service": "Cuidar mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "30 Oct 2023 10:00:00 GMT",
+                "end_date": "30 Oct 2023 11:00:00 GMT",
+                "keeper_id": "7",
+                "owner_id": "2",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "30 Oct 2023 15:00:00 GMT",
+                "end_date": "30 Oct 2023 16:00:00 GMT",
+                "keeper_id": "7",
+                "owner_id": "3",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "29 Oct 2023 16:00:00 GMT",
+                "end_date": "29 Oct 2023 17:00:00 GMT",
+                "keeper_id": "7",
+                "owner_id": "4",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "4 Nov 2023 15:00:00 GMT",
+                "end_date": "7 Nov 2023 10:00:00 GMT",
+                "keeper_id": "8",
+                "owner_id": "1",
+                "service": "Cuidar mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "8 Nov 2023 15:00:00 GMT",
+                "end_date": "12 Nov 2023 10:00:00 GMT",
+                "keeper_id": "8",
+                "owner_id": "2",
+                "service": "Cuidar mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "25 Oct 2023 15:00:00 GMT",
+                "end_date": "25 Oct 2023 16:00:00 GMT",
+                "keeper_id": "8",
+                "owner_id": "3",
+                "service": "Pasear mascotas",
+                "cost": 30
+            },
+            {
+                "status": "Approved",
+                "start_date": "20 Oct 2023 15:00:00 GMT",
+                "end_date": "20 Oct 2023 16:00:00 GMT",
+                "keeper_id": "8",
+                "owner_id": "4",
+                "service": "Pasear mascotas",
+                "cost": 30
+            }
+        ]
+    },
+    {
+        "target_class": "BookingPet",
+        "data": [
+            {
+                "booking_id": "1",
+                "pet_id": "1"
+            },
+            {
+                "booking_id": "2",
+                "pet_id": "8"
+            },
+            {
+                "booking_id": "3",
+                "pet_id": "2"
+            },
+            {
+                "booking_id": "4",
+                "pet_id": "11"
+            },
+            {
+                "booking_id": "5",
+                "pet_id": "3"
+            },
+            {
+                "booking_id": "6",
+                "pet_id": "6"
+            },
+            {
+                "booking_id": "7",
+                "pet_id": "13"
+            },
+            {
+                "booking_id": "8",
+                "pet_id": "16"
+            },
+            {
+                "booking_id": "9",
+                "pet_id": "4"
+            },
+            {
+                "booking_id": "10",
+                "pet_id": "7"
+            },
+            {
+                "booking_id": "11",
+                "pet_id": "10"
+            },
+            {
+                "booking_id": "12",
+                "pet_id": "15"
+            },
+            {
+                "booking_id": "13",
+                "pet_id": "5"
+            },
+            {
+                "booking_id": "14",
+                "pet_id": "9"
+            },
+            {
+                "booking_id": "15",
+                "pet_id": "12"
+            },
+            {
+                "booking_id": "16",
+                "pet_id": "14"
+            }
+        ]
+    }
+]

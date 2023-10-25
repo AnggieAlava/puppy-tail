@@ -2,7 +2,7 @@ import swal from "sweetalert2";
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      accessToken: null,
+      accessToken: "null",
       userInfo: {},
       message: null,
       pets: [],
@@ -12,8 +12,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       getKeepers: [],
       currentUser: [],
       profilePic: null,
+      bookings: [],
+      ownerPets: [],
+      dates: null //Si se cambia este null ir tambien a keeperForm en setRange y cambiar el argumento de setDates
     },
     actions: {
+      setDates: (obj) => {
+        const { dates } = getStore()
+        setStore({ dates: obj })
+      },
       getPets: async () => {
         const { pets } = getStore();
         try {
@@ -25,7 +32,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               return resp.json();
             })
             .then((data) => {
-              console.log(data);
               setStore({ pets: data });
             });
         } catch (error) {
@@ -48,6 +54,10 @@ const getState = ({ getStore, getActions, setStore }) => {
             })
             .then((data) => {
               setStore({ pets: data });
+              if (owner_id === getStore().userInfo.userId) {
+                setStore({ ownerPets: data })
+                localStorage.setItem("ownerPets", JSON.stringify(data))
+              }
               return "ok";
             });
         } catch (error) {
@@ -89,18 +99,18 @@ const getState = ({ getStore, getActions, setStore }) => {
               return response.json();
             })
             .then((data) => {
-              console.log("Successfully updated pet: " + data);
-              //getActions().getOwnerPets(obj.owner_id);
               const { pets } = getStore()
               let arr = pets
               for (let pet in arr) {
                 if (arr[pet].id == obj.id) {
                   arr[pet] = obj
-                  console.log({ obj })
-                  console.log(arr[pet])
                 }
               }
               setStore({ pets: arr })
+              if (parseInt(obj.owner_id) === getStore().userInfo.userId) {
+                setStore({ ownerPets: arr })
+                localStorage.setItem("ownerPets", JSON.stringify(arr))
+              }
             });
         } catch (error) {
           console.error(error);
@@ -117,7 +127,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               return resp.json();
             })
             .then((data) => {
-              console.log(data);
               setStore({ singlePet: data });
             });
         } catch (error) {
@@ -140,8 +149,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               return response.json();
             })
             .then((data) => {
-              console.log({ data } + " Succesfully deleted pet from server");
-              //setStore({pets:data})
               getActions().getOwnerPets(obj.owner_id);
             });
         } catch (error) {
@@ -197,12 +204,17 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadTokens: () => {
         let token = localStorage.getItem("accessToken");
         let userData = {}
+        let pets = []
         if (localStorage.hasOwnProperty("userInfo") != null) {
           userData = JSON.parse(localStorage.getItem("userInfo"))
+        }
+        if (localStorage.hasOwnProperty("ownerPets") != null) {
+          pets = JSON.parse(localStorage.getItem("ownerPets"))
         }
         if (token) {
           setStore({ accessToken: token });
           setStore({ userInfo: userData })
+          setStore({ ownerPets: pets })
         }
       },
 
@@ -212,24 +224,27 @@ const getState = ({ getStore, getActions, setStore }) => {
           email,
           password,
         });
-
-        console.log({ resp });
-        const { message, token, user_id, user_type } = resp.data;
+        const { message, token, user_id, user_type, pets } = resp.data;
         localStorage.setItem("accessToken", token);
-        if(token!=null){
-        setStore({ accessToken: token });
-        setStore({ userInfo: { "userId": user_id, "user_type": user_type } })
-        localStorage.setItem("userInfo", JSON.stringify({ "userId": user_id, "user_type": user_type }))
-        
+        if (token != "null") {
+          setStore({ accessToken: token });
+          let userData = { "userId": user_id, "user_type": user_type }
+          setStore({ ownerPets: pets })
+          setStore({ userInfo: userData })
+          localStorage.setItem("ownerPets", JSON.stringify(pets))
+          localStorage.setItem("userInfo", JSON.stringify(userData))
         }
         return resp.code;
       },
 
       logout: () => {
-        setStore({ accessToken: null });
+        setStore({ accessToken: "null" });
         setStore({ userInfo: {} })
-        localStorage.setItem("userInfo", {});
-        localStorage.setItem("accessToken", null);
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("keeper");
+        localStorage.removeItem("ownerPets")
+        localStorage.removeItem("__paypal_storage__");
       },
 
       getUserInfo: async () => {
@@ -248,11 +263,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           password,
         });
         if (resp.code === 201) {
-          console.log("Signup Succesfully");
           return resp;
         }
         navigate("/login");
-        console.log(resp);
       },
 
       signupKeeper: async (
@@ -260,6 +273,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         last_name,
         email,
         location,
+        phone_number,
         password
       ) => {
         const { apiFetch } = getActions();
@@ -268,14 +282,13 @@ const getState = ({ getStore, getActions, setStore }) => {
           last_name,
           email,
           location,
+          phone_number,
           password,
         });
         if (resp.code === 201) {
-          console.log("Signup Succesfully");
           return resp;
         }
         navigate("/login");
-        console.log(resp);
       },
       getKeeper: async (id) => {
         const { apiFetch } = getActions()
@@ -293,6 +306,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           experience: obj.experience,
           services: obj.services,
           location: obj.location,
+          phone_number: obj.phone_number,
         });
         if (resp.code != 200) {
           console.error("Error saving profile, code: " + resp.code);
@@ -324,7 +338,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         let user = currentUser
         user["profile_pic"] = data.public_url
         setStore({ currentUser: user })
-        console.log("User info updated")
         return user
       },
       uploadpetAvatar: async (formData, id) => {
@@ -372,9 +385,12 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
             return resp.json();
           }).then(data => {
-            console.log("retrieved owner data successfully => " + data)
             setStore({ currentUser: data })
             setStore({ pets: data.pets })
+            if (getStore().userInfo.userId == data.id) {
+              setStore({ ownerPets: data.pets })
+              localStorage.setItem("ownerPets", JSON.stringify(data.pets))
+            }
             return data;
           })
         } catch (error) {
@@ -403,8 +419,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
         return resp.data
       },
+      getrangeSlots: async (id, start_date, end_date) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch(`/bookings/maxDate/${id}/?start_date=${start_date}&end_date=${end_date}`, "GET")
+        if (resp.code != 200) {
+          console.error(resp.status + ": " + resp.statusText)
+        }
+        return resp.data
+      },
       requestPasswordRecovery: async (email) => {
-        console.log(email);
         const response = await getActions().apiFetch(`/recoverypassword`, "POST", { email })
 
 
@@ -429,7 +452,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           paypal_id: details.id,
           create_time: details.create_time,
           payer_email: details.payer.email_address,
-          payer_name:details.payer.name.given_name + " " + details.payer.name.surname,
+          payer_name: details.payer.name.given_name + " " + details.payer.name.surname,
           payer_id: details.payer.payer_id,
           amount_currency: details.purchase_units[0].amount.currency_code,
           amount_value: details.purchase_units[0].amount.value,
@@ -438,12 +461,41 @@ const getState = ({ getStore, getActions, setStore }) => {
           status: details.status
         });
         if (resp.code === 200) {
-          console.log("Pago exitoso:", resp.data);
           return resp;
         } else {
           console.error("Error en el pago:", resp);
         }
       },
+      getBookings: async (type, id) => {
+        const { apiFetchProtected } = getActions();
+        const response = await apiFetchProtected(`/bookings/${type}/${id}`, "GET")
+        if (response.code != 200) {
+          console.error(response.status + ": " + response.statusText)
+        }
+        setStore({ bookings: response.data })
+        return response;
+      },
+      createBooking: async (bookingData) => {
+        const { apiFetch } = getActions();
+        const resp = await apiFetch("/booking", "POST", {
+          start_date: bookingData.start_date,
+          end_date: bookingData.end_date,
+          start_hour: bookingData.start_hour,
+          end_hour: bookingData.end_hour,
+          status: bookingData.status,
+          keeper_id: bookingData.keeper_id,
+          owner_id: bookingData.owner_id,
+          pets: bookingData.pets,
+          cost: bookingData.cost,
+          service: bookingData.service
+        });
+        if (resp.code === 201) {
+          return resp;
+        } else {
+          console.error("Error en el booking:", resp);
+        }
+      },
+
     }
   };
 };

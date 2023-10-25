@@ -21,7 +21,7 @@ export const Logout = () => {
 
   return (
     <li className="nav-item">
-      <Link to="/" onClick={handleLogout} className="nav-link">
+      <Link to="/" onClick={handleLogout} className="nav-link text-navbar">
         Cerrar sesión
       </Link>
     </li>
@@ -30,6 +30,3 @@ export const Logout = () => {
 Logout.propTypes = {
   match: PropTypes.object,
 };
-{
-  //  {(token === null ? "":<button>Profile</button>)}
-}

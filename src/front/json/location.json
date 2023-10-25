@@ -32,10 +32,6 @@
     "es_name": "Brasil"
   },
   {
-    "name": "British Virgin Islands",
-    "es_name": "Islas Vírgenes Británicas"
-  },
-  {
     "name": "Canada",
     "es_name": "Canadá"
   },
@@ -64,6 +60,10 @@
     "es_name": "Curazao"
   },
   {
+    "name": "Denmark",
+    "es_name": "Dinamarca"
+  },
+  {
     "name": "Dominica",
     "es_name": "Dominica"
   },
@@ -78,46 +78,6 @@
   {
     "name": "El Salvador",
     "es_name": "El Salvador"
-  },
-  {
-    "name": "Falkland Islands",
-    "es_name": "Islas Malvinas"
-  },
-  {
-    "name": "Fiji",
-    "es_name": "Fiji"
-  },
-  {
-    "name": "French Guiana",
-    "es_name": "Guyana Francesa"
-  },
-  {
-    "name": "Greenland",
-    "es_name": "Groenlandia"
-  },
-  {
-    "name": "Grenada",
-    "es_name": "Granada"
-  },
-  {
-    "name": "Guadeloupe",
-    "es_name": "Guadalupe"
-  },
-  {
-    "name": "Guam",
-    "es_name": "Guam"
-  },
-  {
-    "name": "Guatemala",
-    "es_name": "Guatemala"
-  },
-  {
-    "name": "Guyana",
-    "es_name": "Guyana"
-  },
-  {
-    "name": "Haiti",
-    "es_name": "Haití"
   },
   {
     "name": "Honduras",
@@ -154,10 +114,6 @@
   {
     "name": "Puerto Rico",
   "es_name": "Puerto Rico"
-  },
-  {
-    "name": "Trinidad and Tobago",
-  "es_name": "Trinidad y Tobago"
   },
   {
     "name": "United States",

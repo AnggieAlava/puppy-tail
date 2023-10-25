@@ -3,7 +3,7 @@ import "../../styles/socialMedia.css"
 
 const SocialMedia = () => {
   return (
-    <div className="social-media container-fluid d-flex justify-content-center">
+    <div className="social-media container-fluid d-flex justify-content-center pb-2">
       <a
         href="https://twitter.com/thepuppytaill"
         className="social-icon twitter"

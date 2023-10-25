@@ -1,4 +1,4 @@
-/* :root{
+:root{
     --font-size-sm:clamp(0.8rem, 0.17vw + 0.76rem, 0.89rem);
     --font-size-base:clamp(1rem, 0.34vw + 0.91rem, 1.19rem);
     --font-size-md:clamp(1.25rem, 0.61vw + 1.1rem, 1.58rem);
@@ -12,7 +12,6 @@
 *::after,
 *::before {
     box-sizing: border-box;
-    font-family: 'Roboto', 'Poppins', sans-serif;
 }
 
 h1 {
@@ -30,6 +29,13 @@ h4 {
 h5 {
     font-size:var(--font-size-md);
 }
-p {
+h6 {
     font-size:var(--font-size-base);
-} */
+}
+p {
+    font-size:var(--font-size-sm);
+}
+
+#app{
+    background-color: snow;
+}

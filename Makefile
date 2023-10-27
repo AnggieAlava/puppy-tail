@@ -13,3 +13,11 @@ load_data:
 
 reset-app: reset_db load_data ## Deletes data and reseed database.
 	
+##@ Backend
+start: ## Starts backend.
+	@docker-compose up -d
+	@pipenv run start
+
+stop: ## Stops postgresql
+	@docker-compose down
+	

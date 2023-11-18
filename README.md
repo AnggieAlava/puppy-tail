@@ -55,7 +55,7 @@
 - Instala los paquetes:` $ npm install`
 - Inicia el servidor de desarrollo de webpack:` $ npm run start`
 
-## Algunas imagenes de lo que es Puppy Tai
+## Algunas imagenes de lo que es Puppy Tail
 
 ![Puppy Tail](./src/front/img/1.png)
 ![Puppy Tail](./src/front/img/6.png)

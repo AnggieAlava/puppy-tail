@@ -20,4 +20,12 @@ start: ## Starts backend.
 
 stop: ## Stops postgresql
 	@docker-compose down
+
+##@ Build
+build-frontend: ## Builds frontend image
+	@npm run build 
+	@docker build -f Dockerfile.front -t puppy-tail-front .
+
+	
+
 	

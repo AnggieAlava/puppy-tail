@@ -4,7 +4,7 @@ services:
   db:
     image: postgres:latest
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
@@ -13,9 +13,7 @@ services:
       POSTGRES_PASSWORD: 1234
 
   back:
-    build:
-      context: .
-      dockerfile: Dockerfile.back
+    image: registry.gitlab.com/anggieprojects/puppy-tail:back
     environment:
       - BACKEND_URL=http://back:8000
       - FRONTEND_URL=http://localhost
@@ -27,9 +25,7 @@ services:
     depends_on:
       - db
   front:
-    build:
-      context: .
-      dockerfile: Dockerfile.front
+    image: registry.gitlab.com/anggieprojects/puppy-tail:front
     ports:
       - "80:80"
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.

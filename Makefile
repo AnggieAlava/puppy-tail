@@ -25,7 +25,7 @@ stop: ## Stops postgresql
 
 ##@ Build
 build-frontend: ## Builds frontend image
-	@npm run build 
+	@BACKEND_URL=http://localhost:81 npm run build 
 	@docker build -f Dockerfile.front -t $(REGISTRY)/puppy-tail:front .
 	@docker push $(REGISTRY)/puppy-tail:front
 

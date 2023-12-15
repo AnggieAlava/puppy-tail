@@ -42,10 +42,10 @@ services:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
         - traefik.constraint-label=traefik-public
-        - traefik.http.routers.ptfront-http.rule=Host(`puppy-tails.angeles.rocks`)
+        - traefik.http.routers.ptfront-http.rule=Host(`puppy-tail.angeles.rocks`)
         - traefik.http.routers.ptfront-http.entrypoints=http
         - traefik.http.routers.ptfront-http.middlewares=https-redirect
-        - traefik.http.routers.ptfront-https.rule=Host(`puppy-tails.angeles.rocks`)
+        - traefik.http.routers.ptfront-https.rule=Host(`puppy-tail.angeles.rocks`)
         - traefik.http.routers.ptfront-https.entrypoints=https
         - traefik.http.routers.ptfront-https.tls=true
         - traefik.http.routers.ptfront-https.tls.certresolver=le

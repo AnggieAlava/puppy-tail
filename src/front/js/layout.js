@@ -19,6 +19,7 @@ import SignupPage from "./pages/signupPage";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
+
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") {
     return <BackendURL />;
   }
@@ -28,19 +29,19 @@ const Layout = () => {
       <BrowserRouter basename={basename}>
         <ScrollToTop>
           <Navbar />
-            <Routes>
-              <Route element={<Landing />} path="/" />
-              <Route element={<Signup />} path="/signup" />
-              <Route element={<Profile />} path="/profile/:type/:theid" />
-              <Route element={<SignupKeeper />} path="/signup/keeper" />
-              <Route element={<Login />} path="/login" />
-              <Route element={<Home />} path="/home" />
-              <Route element={<RecoveryPassword />} path="/recovery" />
-              <Route element={<ChangePassword />} path="/changePassword" />
-              <Route element={<SignupPage />} path="/signuppage" />
-              <Route element={<Checkout />} path="/checkout/keeper/:theid" />
-              <Route element={<NotFound />} path="/*" />
-            </Routes>
+          <Routes>
+            <Route element={<Landing />} path="/" />
+            <Route element={<Signup />} path="/signup" />
+            <Route element={<Profile />} path="/profile/:type/:theid" />
+            <Route element={<SignupKeeper />} path="/signup/keeper" />
+            <Route element={<Login />} path="/login" />
+            <Route element={<Home />} path="/home" />
+            <Route element={<RecoveryPassword />} path="/recovery" />
+            <Route element={<ChangePassword />} path="/changePassword" />
+            <Route element={<SignupPage />} path="/signuppage" />
+            <Route element={<Checkout />} path="/checkout/keeper/:theid" />
+            <Route element={<NotFound />} path="/*" />
+          </Routes>
         </ScrollToTop>
       </BrowserRouter>
     </div>

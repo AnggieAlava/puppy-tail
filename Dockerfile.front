@@ -1,0 +1,4 @@
+FROM nginx:latest
+
+COPY nginx/ /etc/nginx/conf.d
+COPY public/ /usr/share/nginx/html

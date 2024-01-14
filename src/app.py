@@ -18,12 +18,12 @@ from api.models import *
 import firebase_admin
 from firebase_admin import credentials
 
-cred = credentials.Certificate("fb-key.json")
-firebase_admin.initialize_app(cred)
+# cred = credentials.Certificate("fb-key.json")
+# firebase_admin.initialize_app(cred)
 
 #from models import Person
 
-ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
+ENV = "development" #if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False

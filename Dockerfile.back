@@ -1,0 +1,7 @@
+FROM python:3.10
+COPY src/ /app 
+COPY requirements.txt /app
+RUN apt update && apt install -y python3-yaml
+WORKDIR /app
+RUN pip install -r requirements.txt
+CMD ["gunicorn","--bind","0.0.0.0:8000", "wsgi"]

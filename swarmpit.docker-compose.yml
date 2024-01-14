@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: angeles
+      POSTGRES_DB: puppy_tail
+      POSTGRES_PASSWORD: 1234
+
+  back:
+    image: registry.gitlab.com/anggieprojects/puppy-tail:back
+    environment:
+      - BACKEND_URL=https://puppy-api.angeles.rocks
+      - FRONTEND_URL=https://puppy-tail.angeles.rocks
+      - CLIENT_ID="AWsYLI9Dc8AbZPf_KLxEifhBS9lEWCOZuK9UjzFoFOdqz5tcaa8PLseePMBUvm_sPjrofRR5nW1aLEKB"
+      - APP_SECRET="EGZ7-LqIjswMMEZ_m6N1L6-t7Yj_Va1GHDUlYuYCZXMZnl4nQNozBqotjIHBDj2WVMSBNk9cQJacOFBI"
+      - DATABASE_URL=postgres://angeles:1234@db:5432/puppy_tail
+    networks:
+      - net
+      - traefik-public
+    deploy:
+        labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.ptback-http.rule=Host(`puppy-api.angeles.rocks`)
+        - traefik.http.routers.ptback-http.entrypoints=http
+        - traefik.http.routers.ptback-http.middlewares=https-redirect
+        - traefik.http.routers.ptback-https.rule=Host(`puppy-api.angeles.rocks`)
+        - traefik.http.routers.ptback-https.entrypoints=https
+        - traefik.http.routers.ptback-https.tls=true
+        - traefik.http.routers.ptback-https.tls.certresolver=le
+        - traefik.http.services.ptback.loadbalancer.server.port=8000
+    depends_on:
+      - db
+  front:
+    image: registry.gitlab.com/anggieprojects/puppy-tail:front
+    networks:
+      - net
+      - traefik-public
+    deploy:
+        labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.ptfront-http.rule=Host(`puppy-tail.angeles.rocks`)
+        - traefik.http.routers.ptfront-http.entrypoints=http
+        - traefik.http.routers.ptfront-http.middlewares=https-redirect
+        - traefik.http.routers.ptfront-https.rule=Host(`puppy-tail.angeles.rocks`)
+        - traefik.http.routers.ptfront-https.entrypoints=https
+        - traefik.http.routers.ptfront-https.tls=true
+        - traefik.http.routers.ptfront-https.tls.certresolver=le
+        - traefik.http.services.ptfront.loadbalancer.server.port=80
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+volumes:
+  postgres-data:
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+  traefik-public:
+    external: true

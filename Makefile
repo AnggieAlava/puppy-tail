@@ -32,9 +32,3 @@ build-frontend: ## Builds frontend image
 build-backend: ## Builds backend image
 	@docker build -f Dockerfile.back -t $(REGISTRY)/puppy-tail:back .
 	@docker push $(REGISTRY)/puppy-tail:back
-
-
-
-	
-
-	

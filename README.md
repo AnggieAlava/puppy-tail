@@ -69,8 +69,14 @@ Explore the live application [here](https://puppy-tail.angeles.rocks/).
 2. **Start Development Server:**
    - Initiate the webpack development server with `$ npm run start`.
 
-## Professional Images of Puppy Tail
+## Preview
 
-![Puppy Tail](./src/front/img/6.png)
+<!-- ![Puppy Tail](./src/front/img/converter-unit.mp4) -->
 
-Feel free to reach out for any further assistance or inquiries. Thank you for choosing "Puppy Tail" for your pet care needs!
+| Puppy Tail                                       |
+| ------------------------------------------------ |
+| <video src="./src/front/img/converter-unit.mp4"> |
+
+#### Feel free to reach out for any further assistance or inquiries. Thank you for choosing "Puppy Tail" for your pet care needs!
+
+### Enjoy, and happy codding!

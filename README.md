@@ -69,6 +69,12 @@ Explore the live application [here](https://puppy-tail.angeles.rocks/).
 2. **Start Development Server:**
    - Initiate the webpack development server with `$ npm run start`.
 
+## Authors
+
+[Anggie Alava](https://www.linkedin.com/in/anggiealava/)
+
+![Logo](./logo192x192.png)
+
 ## Preview
 
 <!-- ![Puppy Tail](./src/front/img/converter-unit.mp4) -->
